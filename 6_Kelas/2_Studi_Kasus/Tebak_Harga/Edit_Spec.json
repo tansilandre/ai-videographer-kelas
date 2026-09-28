@@ -1,0 +1,526 @@
+{
+  "output": "Contoh_Tebak_Harga_v1.0.mp4",
+  "style": {
+    "caption_y": 0.74,
+    "caption_size": 72,
+    "caption_chunk": 3,
+    "highlight": "#FF5A1F"
+  },
+  "grade": {
+    "contrast": 1.04,
+    "saturation": 0.96,
+    "temperature": 5600,
+    "grain": 3
+  },
+  "narration": {
+    "file": "file:6_Edit/1_Audio/Narration_Take_Callirrhoe_v1.wav",
+    "start": 0.0,
+    "min_silence": 0.15,
+    "text": "Tebak harga rumah ini. Tiga petunjuk. Petunjuk 1: seberang mall besar. Dua: cuma 2 kilo ke tol. Tiga: udah ada smart lock, solar water heater, sama CCTV. Udah ketebak? Bonus: ada rencana stasiun MRT. 1.000 unit udah laku. Harganya... mulai 1,3M-an! Mau lihat langsung? DM Rumah Kita Realty."
+  },
+  "music": {
+    "file": "file:6_Edit/1_Audio/Music_Take_Quiz_Pop_v1.mp3",
+    "at": 3.27,
+    "start": 0,
+    "volume": 0.3,
+    "duck": 0.5,
+    "fade_in": 0.05,
+    "fade_out": 0.4
+  },
+  "segments": [
+    {
+      "id": "S01",
+      "still": "file:2_References/Rani_Mobil_v1.png",
+      "duration": 2.1,
+      "zoom": [
+        1.0,
+        1.08
+      ],
+      "pan": -0.02
+    },
+    {
+      "id": "S02",
+      "duration": 1.45,
+      "background": {
+        "image": "file:2_References/Look_Rumah_Deret_v1.png",
+        "blur": 0,
+        "dim": 0,
+        "zoom": [
+          1.35,
+          1.25
+        ],
+        "pan": -0.08
+      }
+    },
+    {
+      "id": "S03",
+      "still": "file:2_References/Area_Aerial_v1.png",
+      "duration": 2.75,
+      "zoom": [
+        1.0,
+        1.1
+      ],
+      "transition_in": "whip"
+    },
+    {
+      "id": "S04",
+      "duration": 2.75,
+      "transition_in": "whip",
+      "background": {
+        "image": "file:2_References/Area_Aerial_v1.png",
+        "blur": 12,
+        "dim": 0.28
+      }
+    },
+    {
+      "id": "S05",
+      "duration": 5.15,
+      "background": {
+        "image": "file:2_References/Look_Rumah_Depan_v1.png",
+        "blur": 0,
+        "dim": 0,
+        "zoom": [
+          1.0,
+          1.12
+        ],
+        "pan": 0
+      }
+    },
+    {
+      "id": "S06",
+      "still": "file:2_References/Rani_Boulevard_v1.png",
+      "duration": 1.3,
+      "zoom": [
+        1.02,
+        1.08
+      ]
+    },
+    {
+      "id": "S07",
+      "still": "file:2_References/Rencana_MRT_v1.png",
+      "duration": 2.95,
+      "zoom": [
+        1.0,
+        1.1
+      ],
+      "transition_in": "whip"
+    },
+    {
+      "id": "S08",
+      "duration": 2.0,
+      "background": {
+        "image": "file:2_References/Look_Rumah_Deret_v1.png",
+        "blur": 0,
+        "dim": 0.3,
+        "zoom": [
+          1.2,
+          1.3
+        ],
+        "pan": -0.06
+      }
+    },
+    {
+      "id": "S09",
+      "still": "file:2_References/Rani_Cta_v1.png",
+      "duration": 1.3,
+      "zoom": [
+        1.0,
+        1.06
+      ]
+    },
+    {
+      "id": "S10",
+      "duration": 2.15,
+      "transition_in": "flash",
+      "background": {
+        "image": "file:2_References/Look_Rumah_Depan_v1.png",
+        "blur": 0,
+        "dim": 0,
+        "zoom": [
+          1.22,
+          1.0
+        ],
+        "pan": 0
+      }
+    },
+    {
+      "id": "S09B",
+      "still": "file:2_References/Rani_Cta_v1.png",
+      "duration": 1.1,
+      "zoom": [
+        1.06,
+        1.1
+      ]
+    },
+    {
+      "id": "S11",
+      "duration": 2.8,
+      "background": {
+        "image": "file:2_References/Look_Rumah_Deret_v1.png",
+        "blur": 10,
+        "dim": 0.4,
+        "zoom": [
+          1.2,
+          1.25
+        ]
+      }
+    }
+  ],
+  "graphics": [
+    {
+      "segment": "S01",
+      "type": "title",
+      "text": "TEBAK HARGANYA?",
+      "at": 0.2,
+      "y": 0.13,
+      "size": 60,
+      "bg": "#FF5A1F",
+      "color": "#FFFFFF"
+    },
+    {
+      "segment": "S02",
+      "type": "title",
+      "text": "RUMAH 2 LANTAI",
+      "at": 0.1,
+      "y": 0.17,
+      "size": 54,
+      "bg": "#FFFFFF",
+      "color": "#1D1D1B"
+    },
+    {
+      "segment": "S03",
+      "type": "title",
+      "text": "PETUNJUK 1\nSEBERANG MALL BESAR",
+      "at": 0.1,
+      "y": 0.17,
+      "size": 50,
+      "bg": "#FF5A1F",
+      "color": "#FFFFFF"
+    },
+    {
+      "segment": "S04",
+      "type": "title",
+      "text": "PETUNJUK 2",
+      "at": 0.1,
+      "y": 0.14,
+      "size": 50,
+      "bg": "#FF5A1F",
+      "color": "#FFFFFF"
+    },
+    {
+      "segment": "S04",
+      "type": "map",
+      "at": 0,
+      "roads": [
+        {
+          "points": [
+            [
+              -0.05,
+              0.47
+            ],
+            [
+              0.4,
+              0.46
+            ],
+            [
+              0.75,
+              0.43
+            ],
+            [
+              1.05,
+              0.41
+            ]
+          ],
+          "color": "#FFFFFF",
+          "width": 12,
+          "at": 0.1,
+          "draw": 0.6,
+          "label": "JALAN TOL",
+          "label_at": [
+            0.26,
+            0.43
+          ],
+          "label_size": 28
+        },
+        {
+          "points": [
+            [
+              0.28,
+              0.66
+            ],
+            [
+              0.55,
+              0.45
+            ]
+          ],
+          "color": "#FF5A1F",
+          "width": 12,
+          "glow": true,
+          "at": 0.6,
+          "draw": 0.5
+        }
+      ],
+      "places": [
+        {
+          "at_xy": [
+            0.28,
+            0.66
+          ],
+          "label": "CLUSTER ASTER",
+          "color": "#FF5A1F",
+          "at": 0.3,
+          "size": 24,
+          "label_dy": 60
+        },
+        {
+          "at_xy": [
+            0.55,
+            0.45
+          ],
+          "label": "GERBANG TOL",
+          "color": "#FFFFFF",
+          "at": 0.8,
+          "size": 20,
+          "label_dy": -50
+        },
+        {
+          "at_xy": [
+            0.18,
+            0.56
+          ],
+          "label": "MALL",
+          "color": "#FFFFFF",
+          "at": 0.5,
+          "size": 18,
+          "label_dy": -46
+        }
+      ],
+      "distance": {
+        "points": [
+          [
+            0.28,
+            0.66
+          ],
+          [
+            0.55,
+            0.45
+          ]
+        ],
+        "at": 1.0,
+        "label": "± 2 KM KE TOL",
+        "label_at": [
+          0.62,
+          0.6
+        ],
+        "size": 52,
+        "bg": "#FF5A1F",
+        "color": "#FFFFFF"
+      }
+    },
+    {
+      "segment": "S04",
+      "type": "card_text",
+      "text": "Peta ilustrasi, tidak berskala.",
+      "at": 0.2,
+      "y": 0.86,
+      "size": 24,
+      "opacity": 0.75
+    },
+    {
+      "segment": "S05",
+      "type": "title",
+      "text": "PETUNJUK 3",
+      "at": 0.1,
+      "y": 0.14,
+      "size": 50,
+      "bg": "#FF5A1F",
+      "color": "#FFFFFF"
+    },
+    {
+      "segment": "S05",
+      "type": "callouts",
+      "at": 1.4,
+      "y": 0.52,
+      "size": 50,
+      "items": [
+        {
+          "text": "SMART LOCK",
+          "at": 0.0
+        },
+        {
+          "text": "SOLAR WATER HEATER",
+          "at": 0.85
+        },
+        {
+          "text": "3 TITIK CCTV",
+          "at": 2.45
+        }
+      ]
+    },
+    {
+      "segment": "S06",
+      "type": "title",
+      "text": "UDAH KETEBAK?",
+      "at": 0.15,
+      "y": 0.15,
+      "size": 60,
+      "bg": "#FFFFFF",
+      "color": "#1D1D1B"
+    },
+    {
+      "segment": "S07",
+      "type": "badge",
+      "text": "ILUSTRASI RENCANA",
+      "at": 0.0,
+      "corner": "top-right",
+      "top": 200
+    },
+    {
+      "segment": "S07",
+      "type": "title",
+      "text": "BONUS\nRENCANA STASIUN MRT",
+      "at": 0.15,
+      "y": 0.2,
+      "size": 50,
+      "bg": "#FF5A1F",
+      "color": "#FFFFFF"
+    },
+    {
+      "segment": "S08",
+      "type": "counter",
+      "at": 0.1,
+      "from": 0,
+      "to": 1000,
+      "sep": ".",
+      "run": 1.1,
+      "y": 0.4,
+      "size": 200,
+      "caption": "UNIT TERJUAL",
+      "sub": "DUA CLUSTER SEBELUMNYA",
+      "color": "#FFFFFF"
+    },
+    {
+      "segment": "S10",
+      "type": "title",
+      "text": "MULAI 1,3M-AN*",
+      "at": 0.05,
+      "y": 0.15,
+      "size": 76,
+      "bg": "#FF5A1F",
+      "color": "#FFFFFF"
+    },
+    {
+      "segment": "S10",
+      "type": "card_text",
+      "text": "*S&K berlaku, dapat berubah.",
+      "at": 0.3,
+      "y": 0.87,
+      "size": 26,
+      "opacity": 0.9
+    },
+    {
+      "segment": "S11",
+      "type": "endcard",
+      "at": 0,
+      "brand": "RUMAH KITA REALTY",
+      "tagline": "CLUSTER ASTER · KOTA HARAPAN",
+      "cta": "DM UNTUK PROMO TERBARU",
+      "phone": "0812-0000-0000",
+      "disclaimer": "*S&K berlaku. Contoh kelas: nama fiktif, semua gambar dibuat AI.",
+      "accent": "#FF5A1F",
+      "bg_alpha": 0.62
+    }
+  ],
+  "sfx": [
+    {
+      "file": "file:6_Edit/1_Audio/Sfx_Tap_v1.wav",
+      "segment": "S01",
+      "at": 0.2,
+      "volume": 0.4
+    },
+    {
+      "file": "file:6_Edit/1_Audio/Sfx_Tap_v1.wav",
+      "segment": "S02",
+      "at": 0.1,
+      "volume": 0.4
+    },
+    {
+      "file": "file:6_Edit/1_Audio/Sfx_Whoosh_v1.wav",
+      "segment": "S03",
+      "at": -0.28,
+      "volume": 0.7
+    },
+    {
+      "file": "file:6_Edit/1_Audio/Sfx_Tap_v1.wav",
+      "segment": "S03",
+      "at": 0.1,
+      "volume": 0.4
+    },
+    {
+      "file": "file:6_Edit/1_Audio/Sfx_Whoosh_v1.wav",
+      "segment": "S04",
+      "at": -0.28,
+      "volume": 0.7
+    },
+    {
+      "file": "file:6_Edit/1_Audio/Sfx_Tap_v1.wav",
+      "segment": "S04",
+      "at": 1.0,
+      "volume": 0.4
+    },
+    {
+      "file": "file:6_Edit/1_Audio/Sfx_Tap_v1.wav",
+      "segment": "S05",
+      "at": 0.1,
+      "volume": 0.4
+    },
+    {
+      "file": "file:6_Edit/1_Audio/Sfx_Tap_v1.wav",
+      "segment": "S05",
+      "at": 1.4,
+      "volume": 0.4
+    },
+    {
+      "file": "file:6_Edit/1_Audio/Sfx_Tap_v1.wav",
+      "segment": "S05",
+      "at": 2.25,
+      "volume": 0.4
+    },
+    {
+      "file": "file:6_Edit/1_Audio/Sfx_Tap_v1.wav",
+      "segment": "S05",
+      "at": 3.85,
+      "volume": 0.4
+    },
+    {
+      "file": "file:6_Edit/1_Audio/Sfx_Tap_v1.wav",
+      "segment": "S06",
+      "at": 0.15,
+      "volume": 0.4
+    },
+    {
+      "file": "file:6_Edit/1_Audio/Sfx_Whoosh_v1.wav",
+      "segment": "S07",
+      "at": -0.28,
+      "volume": 0.7
+    },
+    {
+      "file": "file:6_Edit/1_Audio/Sfx_Tick_v1.wav",
+      "segment": "S08",
+      "at": 0.1,
+      "volume": 0.35
+    },
+    {
+      "file": "file:6_Edit/1_Audio/Sfx_Ding_v1.wav",
+      "segment": "S10",
+      "at": 0.05,
+      "volume": 1.4
+    },
+    {
+      "file": "file:6_Edit/1_Audio/Sfx_Whoosh_v1.wav",
+      "segment": "S11",
+      "at": -0.2,
+      "volume": 0.5
+    }
+  ]
+}

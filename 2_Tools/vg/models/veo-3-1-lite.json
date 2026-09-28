@@ -1,0 +1,21 @@
+{
+  "id": "veo-3-1-lite",
+  "kind": "video",
+  "provider": "kie-veo",
+  "status": "live-tested",
+  "notes": "Google Veo 3.1 Lite on kie.ai's legacy endpoint (/api/v1/veo/generate, model veo3_lite), the only endpoint where the tier can be chosen. Flat price per clip up to 8 s: 30 credits at 720p, 35 at 1080p (live pricing, 2026-09-24). Speech is generated from quoted dialogue in the prompt; no character or voice lock, so talking shots use frames mode from the storyboard panel. enableTranslation is sent as false so dialogue is not translated. Paid pilot 2026-09-28: 5 of 5 clips at 1080p in frames mode (first + last frame), 35 credits each.",
+  "model": "veo3_lite",
+  "prompt_max": 20000,
+  "params": {
+    "duration": { "type": "integer", "enum": [4, 6, 8], "default": 8 },
+    "aspect_ratio": { "type": "string", "enum": ["16:9", "9:16"], "default": "9:16" },
+    "resolution": { "type": "string", "enum": ["720p", "1080p"], "default": "720p" }
+  },
+  "modes": {
+    "frames": { "frames_list": "imageUrls", "set": { "generationType": "FIRST_AND_LAST_FRAMES_2_VIDEO" } },
+    "text": { "set": { "generationType": "TEXT_2_VIDEO" } }
+  },
+  "limits": { "imageUrls": 2 },
+  "dialogue_fit": { "chars_per_second": 10.5, "lead_s": 0.7 },
+  "pricing": { "keys": ["resolution"], "table": { "720p": 30, "1080p": 35 } }
+}

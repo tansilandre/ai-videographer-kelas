@@ -1,0 +1,34 @@
+{
+  "id": "gemini-omni-flash-1-1",
+  "kind": "video",
+  "provider": "kie",
+  "status": "live-tested",
+  "notes": "Google Gemini Omni 1.1 Flash on kie.ai. Generates speech from quoted dialogue. A hard first frame cannot be combined with image_urls, video_list, character_ids or audio_ids. Verified 2026-09-24 (docs + live runs on 2026-09-22).",
+  "model": "google/gemini-omni-flash-1-1",
+  "prompt_max": 20000,
+  "params": {
+    "duration": { "type": "string", "enum": ["4", "6", "8", "10"], "default": "4" },
+    "aspect_ratio": { "type": "string", "enum": ["16:9", "9:16"], "default": "9:16" },
+    "resolution": { "type": "string", "enum": ["360p", "720p", "1080p", "4k"], "default": "1080p" },
+    "seed": { "type": "integer", "min": 0, "max": 2147483647 }
+  },
+  "modes": {
+    "frames": { "first_frame": "first_frame_url", "last_frame": "last_frame_url" },
+    "character": { "characters": "character_ids", "voices": "audio_ids", "refs": "image_urls" },
+    "text": { "refs": "image_urls" }
+  },
+  "exclusive": { "first_frame_url": ["image_urls", "video_list", "character_ids", "audio_ids"] },
+  "requires": { "last_frame_url": "first_frame_url" },
+  "limits": { "image_urls": 7, "character_ids": 3, "audio_ids": 3 },
+  "media_quota": { "limit": 7, "weights": { "image_urls": 1, "video_list": 2, "character_ids": 1 } },
+  "dialogue_fit": { "chars_per_second": 10.5, "lead_s": 0.7 },
+  "identity": { "voice": true, "character": true },
+  "pricing": {
+    "keys": ["resolution", "duration"],
+    "aliases": { "resolution": { "360p": "std", "720p": "std", "1080p": "std", "4k": "4k" } },
+    "table": {
+      "std": { "4": 63, "6": 84, "8": 105, "10": 126 },
+      "4k": { "4": 147, "6": 168, "8": 189, "10": 210 }
+    }
+  }
+}

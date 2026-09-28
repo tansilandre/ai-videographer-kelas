@@ -1,0 +1,51 @@
+{
+  "project": "Kelas_Contoh_Tebak_Harga",
+  "title": "Tebak Harga (contoh kelas, anonim)",
+  "client": "Rumah Kita Realty (fiktif)",
+  "format": {
+    "aspect_ratio": "9:16",
+    "language": "id",
+    "length_s": 26,
+    "product_share_min": 0.4
+  },
+  "image_defaults": {
+    "resolution": "2K"
+  },
+  "video_defaults": {
+    "resolution": "1080p"
+  },
+  "style_lock": {
+    "image": "Real photograph, not a render. Light: bright warm mid-afternoon sun from camera left, about 5500 K, clear blue sky with soft clouds, one sun only. Colour: green foliage and palms, pale stone paving and white-grey walls, blue sky; no teal-orange grade. Lens: phone main camera for people; 107° rectilinear for architecture, verticals straight. Skin: matte, visible pores, no retouching. No text, no logos, no watermark.",
+    "video": "Register: people are filmed on a friend's phone, handheld and natural; architecture on a stabilised gimbal with slow moves. Light: bright warm mid-afternoon sun from camera left, one sun, constant. Physics: real weight, contact shadows, feet on the ground. Skin: matte, pores visible. Audio: diegetic sound only; no music, no subtitles, no on-screen text."
+  },
+  "look": {
+    "world": "Kota Harapan, a new township on the edge of a big Indonesian city, one sunny weekday afternoon around half past three: Cluster Aster's new two-storey houses, tree-lined boulevards with palms and clipped hedges.",
+    "light": "Bright, warm mid-afternoon sun from camera left under a clear blue sky with soft clouds, short soft shadows.",
+    "grade": "Naturalistic, clean and warm; greens and sky blue stay natural. No teal-orange, no golden-hour glow, no dusk.",
+    "graphics": "One bold sans font. Accent orange #FF5A1F with white text; clue cards are white pills with an orange clue number; captions in the lower third, never over a face; nothing in the top or bottom 10% of the frame; one graphic animates at a time and starts on its word. Forbidden: neon, glow, drop shadows, stock icons, black map screens, text generated inside video.",
+    "style_frames": [
+      {
+        "id": "Look_Rumah_Deret",
+        "refs": [],
+        "prompt": "Use: style frame, the house the reel sells. Scene: a row of four new two-storey modern tropical townhouses on a quiet cluster street in Kota Harapan on a sunny weekday afternoon; flat facades in warm white render with muted accent panels (dusty blue, mauve, terracotta), dark grey pitched roof tiles, warm wood-slat canopies over the carports, narrow balconies with glass rails, young trees, grass strips and pale stone driveways, an asphalt street in front. Composition: vertical 9:16 from the opposite sidewalk at eye height, the middle house centred and whole, its neighbours cut by the frame edges, verticals straight, 24 mm, sky in the top quarter. Lighting: bright warm sun from camera left, soft short shadows, clear blue sky with soft clouds. Constraints: an ordinary new Indonesian housing cluster, believable and a little imperfect (a hose on the lawn, a small crack line in the paving, uneven young trees). Real photograph, not a render. Avoid: people, cars in the driveway, text, signs, house numbers, logos, watermark, golden hour, HDR look, fisheye."
+      },
+      {
+        "id": "Look_Rumah_Depan",
+        "refs": [],
+        "prompt": "Use: style frame, the front of one house for the price reveal. Scene: one new two-storey modern tropical townhouse in Kota Harapan on a sunny weekday afternoon, seen from its own driveway: warm white render with a mauve accent panel around the upper window, dark grey pitched roof tiles, a warm wood-slat canopy over the carport, a glass-railed balcony, a slim young tree in a planter and a strip of grass, pale stone paving leading to a dark wood front door. Composition: vertical 9:16, low eye height 1.2 m, slightly off-centre, the whole facade and roof in frame, verticals straight, 24 mm. Lighting: bright warm sun from camera left, clear blue sky with soft clouds. Constraints: an ordinary new Indonesian housing cluster, believable and a little imperfect (a hose on the lawn, a small crack line in the paving, uneven young trees). Real photograph, not a render. Avoid: people, cars in the driveway, text, signs, house numbers, logos, watermark, golden hour, HDR look, fisheye."
+      }
+    ]
+  },
+  "rules": [
+    "Contoh kelas: semua nama klien, tempat dan nomor telepon fiktif; semua gambar dibuat AI.",
+    "Rencana infrastruktur selalu diberi label ILUSTRASI RENCANA.",
+    "Harga selalu dengan (*) dan 'S&K berlaku, dapat berubah'."
+  ],
+  "characters": [],
+  "assets": [],
+  "shots": [],
+  "models": {
+    "image": "gpt-image-2",
+    "video": "veo-3-1-lite"
+  }
+}

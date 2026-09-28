@@ -1,0 +1,14 @@
+{
+  "project": "Project_Name",
+  "title": "",
+  "client": "",
+  "format": { "aspect_ratio": "9:16", "language": "en", "length_s": 30 },
+  "image_defaults": { "resolution": "2K" },
+  "video_defaults": { "resolution": "1080p" },
+  "style_lock": { "image": "", "video": "" },
+  "look": { "world": "", "light": "", "grade": "", "graphics": "", "style_frames": [] },
+  "rules": [],
+  "characters": [],
+  "assets": [],
+  "shots": []
+}

@@ -1,0 +1,62 @@
+# AI Videographer — agent instructions
+
+This workspace is an AI video production harness. Any request to make, plan, generate or edit a
+video starts with the **`vg-director` skill** (`1_Skills/vg-director/SKILL.md`). Read it first; it
+names the other skills in pipeline order.
+
+## Non-negotiable
+
+1. **No video spend without the human's explicit yes in chat.** Show the review board and the
+   per-shot cost (`vg estimate -p P --stage video`) first. Never run `vg approve` on your own
+   initiative. Even with a yes, `vg approve video` (default `VG_APPROVAL_MODE=terminal` in `.env`)
+   asks a human to type a random code on a real terminal — an agent's shell has none, so it is
+   refused and must hand the human the exact command to run themselves. Each approval pays for
+   exactly one take; a failed clip used up its approval too, so a retry needs a fresh yes and a
+   fresh `vg approve`.
+2. **Never run `vg approve` through script, expect, a pty, tmux or any terminal you control; only
+   the human types the code.** An agent may open the command in the human's own terminal panel for
+   them, but the human types the code. This is friction against accidental or casual approval, not
+   a wall against a hostile agent — the hard limit is a dedicated kie.ai key with a total credit cap.
+3. Images may be generated without asking. Look at every image before using it downstream.
+   **But the human approves the visuals before video:** no storyboard or frame image before the
+   human approves the look (`vg approve look`), and no video before they approve the whole reel as
+   images (`vg edit animatic` + board, then `vg approve visuals`). Run these only after their
+   explicit "approved" in chat; the tool refuses otherwise.
+4. Never edit `5_Projects/*/project.json` (the spend ledger). Write only `1_Script/Shotlist.json`.
+5. Never print, echo, log or commit `KIE_API_KEY` or anything from `.env`.
+6. **Only the human edits `.env`.** The agent only checks it with `vg doctor`; never change
+   `VG_APPROVAL_MODE`, `VG_BUDGET_PROJECT` or `VG_MAX_PER_CALL` yourself — a cap refusal means ask
+   the human whether to raise it.
+7. Follow the client's rules recorded in `Shotlist.json` `rules`.
+8. A task that timed out is collected with `vg resume`, never re-submitted. A target stuck in the
+   `submitting`/`unknown`/`pending` ledger state stays blocked until a human checks the kie.ai
+   dashboard: task exists there → `vg adopt -p P --target <kind:id> --task-id <id>`; nothing was
+   created (or a `pending` row that can never finish) → `vg release -p P --target <kind:id>`.
+   Released rows become `abandoned` and still count toward the budget at their estimate.
+9. **The review page is the human's.** Run `vg review -p P` (in the background) for the look and the
+   reel reviews and wait for its summary; never click its buttons, call its API or approve on the
+   human's behalf. Act on every `NOTE` line before asking again.
+
+## Tool
+
+`vg` below and in every skill means `python3 2_Tools/vg/vg.py` — there is no `vg` on PATH, so the
+full path is run every time. Most commands take `-p P` for the project folder, e.g.
+`python3 2_Tools/vg/vg.py estimate -p P --stage video`. Reference:
+`1_Skills/vg-director/references/cli.md`. Run `vg doctor` if anything looks wrong.
+
+## Workspace convention
+
+- Folders are numbered by stage; `0_Source/` holds untouched inputs, `99_Output/` final deliverables.
+- File names: `Topic_Name.ext` in Title_Case with underscores; dated items `YYYY-MM-DD_Topic.ext`.
+- Versioning: the **tool** names its own generated media (images, frames, clips, the roughcut)
+  `_v1`, `_v2`, ... — plain integers, never edit these by hand. **You** name documents and final
+  deliverables `_vX.Y` (e.g. `Script_Acme_Launch_v1.0.md`, `99_Output/<Project>_v1.0.mp4`).
+- Never overwrite a delivered version; save the next version.
+
+## Developing the harness itself
+
+- Tool code: `2_Tools/vg/` (Python 3.9+, standard library only). Tests:
+  `python3 -m unittest discover -s 2_Tools/vg/tests`. Run them before every commit.
+- New model: one JSON file in `2_Tools/vg/models/` (see its README), marked `untested` until a paid
+  pilot confirms field names and price.
+- Design and decisions: `4_Docs/Specs/`.

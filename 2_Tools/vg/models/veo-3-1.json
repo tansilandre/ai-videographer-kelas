@@ -1,0 +1,24 @@
+{
+  "id": "veo-3-1",
+  "kind": "video",
+  "provider": "kie",
+  "status": "untested",
+  "notes": "Google Veo 3.1 on kie.ai, from docs only (2026-09-24). How to choose the Fast/Lite/Quality tier in this schema is undocumented; pricing below assumes Fast. Background audio is on by default. Refused unless --allow-untested.",
+  "model": "veo-3-1",
+  "prompt_max": 20000,
+  "params": {
+    "duration": { "type": "integer", "enum": [4, 6, 8], "default": 8 },
+    "aspect_ratio": { "type": "string", "enum": ["16:9", "9:16"], "default": "9:16" },
+    "resolution": { "type": "string", "enum": ["720p", "1080p", "4k"], "default": "1080p" }
+  },
+  "modes": {
+    "frames": { "frames_list": "image_urls", "set": { "generation_type": "FIRST_AND_LAST_FRAMES_2_VIDEO" } },
+    "text": { "set": { "generation_type": "TEXT_2_VIDEO" } }
+  },
+  "limits": { "image_urls": 2 },
+  "dialogue_fit": { "chars_per_second": 10.5, "lead_s": 0.7 },
+  "pricing": {
+    "keys": ["resolution"],
+    "table": { "720p": 60, "1080p": 65, "4k": 250 }
+  }
+}

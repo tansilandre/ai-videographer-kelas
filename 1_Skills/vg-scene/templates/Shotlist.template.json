@@ -1,0 +1,73 @@
+{
+  "project": "Example_Project",
+  "title": "Example working title for the video",
+  "client": "Example Client",
+  "format": { "aspect_ratio": "9:16", "language": "en", "length_s": 20 },
+  "models": { "image": "gpt-image-2", "video": "gemini-omni-flash-1-1" },
+  "image_defaults": { "resolution": "2K" },
+  "video_defaults": { "resolution": "1080p" },
+  "style_lock": {
+    "image": "shot on iPhone, natural daylight, realistic skin texture, subtle sensor grain, warm grade, vertical 9:16",
+    "video": "shot on iPhone, handheld, natural light, realistic skin texture, warm grade, vertical 9:16"
+  },
+  "rules": [
+    "Example rule copied from the brief: any price or offer shown on screen carries a disclaimer.",
+    "Example rule copied from the brief: the product itself is always real footage, never AI."
+  ],
+  "characters": [
+    {
+      "name": "Rani",
+      "description": "Woman, late 20s, warm medium skin with natural texture, dark brown hair in a low messy bun, thin silver necklace, black hair tie on left wrist",
+      "portrait": "Char_Rani_Portrait",
+      "voice": {
+        "preset": "sulafat",
+        "name": "Rani - UGC narrator",
+        "description": "Warm, clear female voice, late twenties, conversational",
+        "example": "Okay so this is actually the third one I've tried."
+      }
+    }
+  ],
+  "assets": [
+    {
+      "id": "Char_Rani_Portrait",
+      "kind": "character",
+      "prompt": "Use: character reference portrait, the identity anchor for every later shot. Scene: plain flat light-grey seamless background. Subject: Rani, woman, late 20s, warm medium skin with natural texture, dark brown hair in a low messy bun, thin silver necklace, black hair tie on left wrist, neutral relaxed expression, facing camera. Details: wearing a plain cream t-shirt. Composition: waist-up portrait, centered, eye level. Style: phone photo, candid, unposed. Lighting: soft natural daylight from the left. Constraints: natural skin texture, visible pores, no beauty filter, no smoothing. Avoid: studio-perfect symmetry, airbrushed skin, jewelry or wardrobe not listed above, text, logos.",
+      "refs": [],
+      "aspect_ratio": "3:4"
+    },
+    {
+      "id": "Loc_Desk",
+      "kind": "location",
+      "prompt": "Use: empty location plate, the environment anchor for desk shots. Scene: small apartment desk corner, off-white wall, light wood desk. Subject: the desk and wall, no people. Details: a closed laptop, a ceramic mug, a folded thin blanket on the chair back. Composition: chest-height eye-level framing, vertical. Style: phone photo, candid. Lighting: soft morning daylight from a window on the left. Constraints: no people, no text, no signage. Avoid: clutter, brand logos, screens showing content.",
+      "refs": []
+    }
+  ],
+  "shots": [
+    {
+      "id": "S01",
+      "time": "0-4s",
+      "beat": "HOOK",
+      "source": "ai",
+      "summary": "Rani selfie-talks at her desk, animated and curious, hands gesturing (never holding the product itself — that rule is real footage only).",
+      "vo": "This is the third one I've tried.",
+      "on_screen_text": "3RD TIME'S THE CHARM?",
+      "mode": "character",
+      "duration": "auto",
+      "characters": ["Rani"],
+      "dialogue": "This is the third one I've tried.",
+      "storyboard": null,
+      "first_frame": null,
+      "last_frame": null,
+      "video_prompt": null
+    },
+    {
+      "id": "S02",
+      "time": "4-8s",
+      "beat": "CTA",
+      "source": "mg",
+      "summary": "End card: logo, one-line offer, and the CTA text.",
+      "vo": "",
+      "on_screen_text": "LINK IN BIO"
+    }
+  ]
+}

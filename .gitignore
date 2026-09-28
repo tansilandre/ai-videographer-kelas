@@ -1,0 +1,16 @@
+# secrets
+.env
+*.env
+!.env.example
+# per-video work and release builds stay local
+5_Projects/*
+!5_Projects/README.md
+99_Output/*
+!99_Output/.gitkeep
+# python
+__pycache__/
+*.pyc
+.DS_Store
+
+# compiled renderer
+2_Tools/vg/render/.build/

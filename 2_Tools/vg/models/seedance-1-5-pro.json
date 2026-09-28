@@ -1,0 +1,21 @@
+{
+  "id": "seedance-1-5-pro",
+  "kind": "video",
+  "provider": "kie",
+  "status": "untested",
+  "notes": "ByteDance Seedance 1.5 Pro on kie.ai, silent (generate_audio false), for b-roll. Fields from the raw OpenAPI doc (2026-09-24): prompt, input_urls (0-2 images; 1 = animate this image), aspect_ratio (required, default 1:1, so 9:16 is always sent), resolution, duration (number, 4-12 s), fixed_lens, generate_audio. Priced per second (live pricing 2026-09-24). No character or voice lock. Which durations are accepted inside 4-12 is unverified until a pilot.",
+  "model": "bytedance/seedance-1.5-pro",
+  "prompt_max": 20000,
+  "params": {
+    "duration": { "type": "integer", "enum": [4, 5, 6, 7, 8, 9, 10, 11, 12], "default": 4 },
+    "aspect_ratio": { "type": "string", "enum": ["1:1", "4:3", "3:4", "16:9", "9:16", "21:9"], "default": "9:16" },
+    "resolution": { "type": "string", "enum": ["480p", "720p", "1080p"], "default": "720p" }
+  },
+  "modes": {
+    "frames": { "frames_list": "input_urls", "set": { "generate_audio": false, "fixed_lens": false } },
+    "text": { "set": { "generate_audio": false, "fixed_lens": false } }
+  },
+  "limits": { "input_urls": 2 },
+  "dialogue_fit": { "chars_per_second": 10.5, "lead_s": 0.7 },
+  "pricing": { "keys": ["resolution"], "per_second": true, "table": {"480p": 1.75, "720p": 3.5, "1080p": 7.5} }
+}
