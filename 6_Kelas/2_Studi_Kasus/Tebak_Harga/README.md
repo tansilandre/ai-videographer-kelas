@@ -141,5 +141,5 @@ Cerita lengkapnya: [Pelajaran 13 · Kesalahan yang Kami Buat](../../1_Pelajaran/
 
 ## Bahan lain
 
-- Deck kelas: [Kelas_AI_Videographer_Deck_v1.3.pdf](../../4_Deck/Kelas_AI_Videographer_Deck_v1.3.pdf)
+- Deck kelas: [Kelas_AI_Videographer_Deck_v1.4.pdf](../../4_Deck/Kelas_AI_Videographer_Deck_v1.4.pdf)
 - Mulai kelas dari awal: [Pelajaran 00 · Mulai di Sini](../../1_Pelajaran/Pelajaran_00_Mulai_Di_Sini_v1.2.md)

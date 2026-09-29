@@ -8,6 +8,16 @@ Repo ini berisi dua hal sekaligus: AI Videographer, sebuah *harness* (kumpulan i
 - **[Pelajaran 00 · Mulai di Sini](6_Kelas/1_Pelajaran/Pelajaran_00_Mulai_Di_Sini_v1.2.md)**: pelajaran pertama. Belum pernah memakai terminal? Mulai dari sini.
 - **[Panduan WorkBuddy](6_Kelas/5_WorkBuddy/Panduan_WorkBuddy_v1.1.md)**: memasang dalam tiga langkah dan memakai WorkBuddy dengan Expert AI Videographer, agent untuk workshop.
 
+## Pengajar
+
+<img src="6_Kelas/Foto_Andre_Tansil.jpg" width="160" align="left" alt="Andre Tansil">
+
+Hai, aku **Andre Tansil**, AI Specialist dan AI Automation Builder. Lebih dari 8 tahun aku bekerja di software, business analysis, dan product: mulai sebagai developer, lalu memimpin tim engineering, lalu menjadi product manager. Sekarang aku Senior Business Analyst di ROOTCLOUD dan Community Lead [AICLUB.ID](https://aiclub.id) Tangerang Selatan. Aku lulusan Teknik Telekomunikasi ITB dan S2 di Seoul National University of Science and Technology, tempat aku meriset machine learning. AI Videographer, alat di kelas ini, aku bangun sendiri untuk membuat reel properti dengan AI.
+
+[LinkedIn](https://www.linkedin.com/in/andretansil) · [Instagram @andretansil](https://www.instagram.com/andretansil/)
+
+<br clear="left">
+
 ## Peta folder
 
 | Folder | Isi |
@@ -54,6 +64,8 @@ Kredit WorkBuddy habis? Ada cadangan yang tidak wajib: gateway milikmu sendiri, 
 ## In English
 
 This repository is the AI Videographer harness plus a beginner class taught in Bahasa Indonesia. The harness is a set of agent skills and a small Python CLI that turns a client brief into a 9:16 short-form video, and it refuses to spend video credits until a human has approved the look, the whole reel as stills, and the per-clip cost. The class, in `6_Kelas/`, walks through one example reel from brief to final edit. The workshop runs the harness in WorkBuddy with the AI Videographer Expert and glm-5.3-flash, a fast model that is built into WorkBuddy and follows `vg next` one step at a time; Claude Code works the same way.
+
+Taught by **Andre Tansil**, AI Specialist and AI Automation Builder: 8+ years across software engineering, business analysis and product; Senior Business Analyst at ROOTCLOUD; Community Lead of AICLUB.ID Tangerang Selatan; M.S. from Seoul National University of Science and Technology. [LinkedIn](https://www.linkedin.com/in/andretansil)
 
 Setup takes three steps. (1) Install WorkBuddy, sign in with Google or GitHub, and pick glm-5.3-flash. (2) In WorkBuddy, pick a work folder and send the one message from the [WorkBuddy guide](6_Kelas/5_WorkBuddy/Panduan_WorkBuddy_v1.1.md): its AI clones this repository and runs `bash setup.sh`, which checks the Xcode Command Line Tools and Python, installs FFmpeg with Homebrew, links the skills and installs the Expert (it is safe to run again). (3) Paste your kie.ai and OpenRouter keys into the local Setup AI Videographer page that opens (`python3 2_Tools/vg/vg.py setup`), never into the chat, and click Simpan; then quit and reopen WorkBuddy, open the folder setup printed, and pick the AI Videographer Expert. Its quick prompt "Buat video baru" asks five questions about the product and then works on its own until one of the three gates. Without WorkBuddy, run `bash install.sh`, then `python3 2_Tools/vg/vg.py setup`, or edit `.env` by hand. The model needs no gateway or extra account; an OpenAI-compatible gateway such as SumoPod (`bash 2_Tools/workbuddy/install_workbuddy.sh --add-models`) is only an optional fallback when WorkBuddy credits run out.
 

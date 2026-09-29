@@ -10,6 +10,16 @@ Kamu tidak perlu hafal perintah. Kamu bicara ke *agent* (AI yang bisa membaca fi
 
 Semua contoh di kelas ini memakai satu reel: **Tebak Harga**. Kliennya Rumah Kita Realty, agen properti fiktif. Produknya Cluster Aster di Kota Harapan, kota fiktif. Presenternya Rani, orang yang dibuat AI dari nol, bukan orang asli. Semua gambar di kelas ini dibuat AI.
 
+## Pengajar
+
+<img src="Foto_Andre_Tansil.jpg" width="160" align="left" alt="Andre Tansil">
+
+Hai, aku **Andre Tansil**, AI Specialist dan AI Automation Builder. Lebih dari 8 tahun aku bekerja di software, business analysis, dan product: mulai sebagai developer, lalu memimpin tim engineering, lalu menjadi product manager. Sekarang aku Senior Business Analyst di ROOTCLOUD dan Community Lead [AICLUB.ID](https://aiclub.id) Tangerang Selatan. Aku lulusan Teknik Telekomunikasi ITB dan S2 di Seoul National University of Science and Technology, tempat aku meriset machine learning. AI Videographer, alat di kelas ini, aku bangun sendiri untuk membuat reel properti dengan AI.
+
+[LinkedIn](https://www.linkedin.com/in/andretansil) · [Instagram @andretansil](https://www.instagram.com/andretansil/)
+
+<br clear="left">
+
 ## Untuk siapa
 
 - Untuk pemula total. Kamu belum pernah memakai *terminal* (jendela tempat mengetik perintah ke komputer) atau *coding agent*? Tidak apa-apa. Kita mulai dari nol.
@@ -123,8 +133,8 @@ Di workshop, agent-nya WorkBuddy, aplikasi agent desktop dari Tencent. Expert AI
 
 Slide kelas, urutan dan isinya sama dengan pelajaran:
 
-- [Kelas_AI_Videographer_Deck_v1.3.pptx](4_Deck/Kelas_AI_Videographer_Deck_v1.3.pptx) (PowerPoint)
-- [Kelas_AI_Videographer_Deck_v1.3.pdf](4_Deck/Kelas_AI_Videographer_Deck_v1.3.pdf) (PDF)
+- [Kelas_AI_Videographer_Deck_v1.4.pptx](4_Deck/Kelas_AI_Videographer_Deck_v1.4.pptx) (PowerPoint)
+- [Kelas_AI_Videographer_Deck_v1.4.pdf](4_Deck/Kelas_AI_Videographer_Deck_v1.4.pdf) (PDF)
 
 ## Satu hal untuk diingat
 
