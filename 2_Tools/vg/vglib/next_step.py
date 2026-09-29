@@ -95,8 +95,25 @@ def _video_ask(project, shots, total, pilot, new_take=False):
     return steps + [("THEN", "when they say it is approved, " + AGAIN % project.name)]
 
 
+BRIEF_QUESTIONS = ("1. Brand or client name?  2. What is sold, where, and from what price?  3. Three things that "
+                   "make it worth it?  4. What should the viewer do at the end (DM, WhatsApp, visit)?  5. Real photos "
+                   "of the place? (attach them; without photos every picture is AI)")
+NOT_A_BRIEF = ("README.md", ".gitkeep", ".DS_Store")
+
+
+def _has_brief(project):
+    source = project.path / "0_Source"
+    return source.is_dir() and any(f.is_file() and f.name not in NOT_A_BRIEF for f in source.rglob("*"))
+
+
 def steps(project):
     """The next step as (tag, text) pairs."""
+    planned = project.shotlist_path.is_file() and (project.shotlist().get("shots") or [])
+    if not planned and not _has_brief(project):
+        return [("STAGE", "brief: nothing in 0_Source/ yet"),
+                ("ASK", "Ask the human these five questions in one message, in their language: " + BRIEF_QUESTIONS),
+                ("THEN", "write their answers as 0_Source/Brief.md, copy any photos they attach into 0_Source/, "
+                         "then " + AGAIN % project.name)]
     if not project.shotlist_path.is_file():
         return [("STAGE", "plan: there is no shot list yet"),
                 ("WRITE", "1_Script/Shotlist.json from the brief in 0_Source/, including the look block; "

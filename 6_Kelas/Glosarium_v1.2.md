@@ -10,8 +10,8 @@ Di kelas ini, `vg <perintah>` adalah singkatan dari `python3 2_Tools/vg/vg.py <p
 
 | Istilah | Arti | Pertama muncul |
 |---|---|---|
-| **`.env`** | File pengaturan rahasia di folder repo, berisi API key dan batas biaya. Hanya kamu yang mengeditnya; agent hanya memeriksanya lewat `vg doctor`. | [Pelajaran 00][p00] |
-| **`.env.example`** | Contoh isi `.env`. `bash install.sh` menyalinnya menjadi `.env` kalau `.env` belum ada. | [Pelajaran 04][p04] |
+| **`.env`** | File pengaturan rahasia di folder repo, berisi API key dan batas biaya. Hanya kamu yang mengisinya, lewat halaman setup atau dengan tangan; agent hanya memeriksanya lewat `vg doctor`. | [Pelajaran 00][p00] |
+| **`.env.example`** | Contoh isi `.env`. `bash install.sh` (juga dijalankan oleh `bash setup.sh`) menyalinnya menjadi `.env` kalau `.env` belum ada. | [Pelajaran 04][p04] |
 | **`.srt`** | File teks berisi caption beserta waktunya. Dibuat bersama video final di `99_Output/`, dan bisa dipakai platform video sebagai subtitle. | [Pelajaran 12][p12] |
 | **`0_Source`** | Folder proyek untuk bahan asli dari klien, misalnya brief dan foto rumah. Isinya tidak pernah diubah atau diganti nama. | [Pelajaran 00][p00] |
 | **1080p dan 720p** | Ukuran ketajaman video; 1080p lebih tajam. Satu klip Veo 3.1 Lite 8 detik: 35 kredit di 1080p, 30 kredit di 720p. | [Pelajaran 00][p00] |
@@ -29,8 +29,8 @@ Di kelas ini, `vg <perintah>` adalah singkatan dari `python3 2_Tools/vg/vg.py <p
 | **`ai`, `real`, `mg`** | Label sumber gambar di shot list: `ai` dibuat AI, `real` foto atau video asli dari klien, `mg` grafis bergerak yang dibuat saat edit. Bagian `real` atau `mg` tidak boleh diam-diam diubah jadi `ai`. | [Pelajaran 06][p06] |
 | **Ambience (suara sekitar)** | Suara latar di tempat itu, misalnya jalan yang tenang, burung, angin. Prompt video menyebutnya, dan menulis bahwa tidak ada yang bicara. | [Pelajaran 11][p11] |
 | **Animatic** | Seluruh reel dalam bentuk gambar diam, lengkap dengan caption, grafis, transisi, narasi, musik dan efek suara, sebelum ada video. Gratis, dibuat dengan `vg edit animatic`. | [Pelajaran 00][p00] |
-| **API key (kunci API)** | Kunci rahasia yang membuat alat vg bisa memakai akun kie.ai dan OpenRouter-mu, dan menagih saldomu. Simpan hanya di `.env`; jangan pernah ditempel ke chat. | [Pelajaran 00][p00] |
-| **Approval mode (`VG_APPROVAL_MODE`)** | Cara kamu menyetujui di tiga gerbang, diatur di `.env`. Untuk kelas disarankan `page`: persetujuan adalah klik di halaman review, dan perintah `vg approve` selalu ditolak. `terminal` (isi bawaan `.env.example`): kamu menjalankan perintah persetujuan di terminalmu sendiri dan mengetik kode acak 4 digit. `chat`: agent mencatat persetujuan setelah kamu bilang ya di chat; paling lemah. | [Pelajaran 04][p04] |
+| **API key (kunci API)** | Kunci rahasia yang membuat alat vg bisa memakai akun kie.ai dan OpenRouter-mu, dan menagih saldomu. Tempel di halaman setup, yang menyimpannya di `.env`; jangan pernah ditempel ke chat. | [Pelajaran 00][p00] |
+| **Approval mode (`VG_APPROVAL_MODE`)** | Cara kamu menyetujui di tiga gerbang, diatur di `.env`, biasanya lewat halaman setup. Untuk kelas disarankan `page`: persetujuan adalah klik di halaman review, dan perintah `vg approve` selalu ditolak. `terminal` (isi bawaan `.env.example`): kamu menjalankan perintah persetujuan di terminalmu sendiri dan mengetik kode acak 4 digit. `chat`: agent mencatat persetujuan setelah kamu bilang ya di chat; paling lemah. | [Pelajaran 04][p04] |
 | **Approve (tombol)** | Tombol persetujuan di halaman review dalam mode `page`: *Approve look* (Gerbang 1), *Approve reel* (Gerbang 2), dan *Approve · N credits* per klip di bagian Video (Gerbang 3), yang meminta konfirmasi sekali lagi. Hanya kamu yang mengkliknya. | [Pelajaran 05][p05] |
 
 ## B
@@ -86,7 +86,7 @@ Di kelas ini, `vg <perintah>` adalah singkatan dari `python3 2_Tools/vg/vg.py <p
 | **`Edit_Spec.json` (rencana edit)** | File di `6_Edit/` yang mengatur seluruh edit: segmen, grafis, narasi, musik, efek, transisi, grade, dan caption. Ditulis agent, dipakai untuk animatic dan edit final. | [Pelajaran 00][p00] |
 | **Efek suara (SFX)** | Bunyi pendek yang memperkuat gambar: whoosh, tap, ding, dan tick. Dibuat gratis di komputermu dengan `vg audio sfx`. | [Pelajaran 00][p00] |
 | **End card (kartu penutup)** | Layar penutup berisi nama brand, ajakan, dan nomor telepon. Di reel contoh: S11, dengan nomor 0812-0000-0000. | [Pelajaran 06][p06] |
-| **Expert** | Di WorkBuddy: agent dengan uraian tugas (*job description*) khusus. Expert AI Videographer dipasang dengan `bash 2_Tools/workbuddy/install_workbuddy.sh --add-models`, dan sebelum setiap langkah ia menjalankan `vg next`. | [Pelajaran 00][p00] |
+| **Expert** | Di WorkBuddy: agent dengan uraian tugas (*job description*) khusus. Expert AI Videographer dipasang oleh `bash setup.sh`. Ia punya tiga quick prompt: *Buat video baru*, *Lanjutkan video saya*, dan *Cek setup*. Sebelum setiap langkah ia menjalankan `vg next`. | [Pelajaran 00][p00] |
 | **Eye height** | Tinggi kamera yang ditulis di prompt. *Eye height 1.2 m* berarti kamera setinggi 1,2 meter. | [Pelajaran 02][p02] |
 
 ## F
@@ -94,7 +94,7 @@ Di kelas ini, `vg <perintah>` adalah singkatan dari `python3 2_Tools/vg/vg.py <p
 | Istilah | Arti | Pertama muncul |
 |---|---|---|
 | **FAIL, warn, ok** | Tiga tanda di hasil `vg doctor`. `ok` beres, `warn` peringatan (kamu masih bisa mulai), `FAIL` harus diperbaiki sebelum lanjut. | [Pelajaran 00][p00] |
-| **FFmpeg** | Program pengolah video dan audio, dipakai untuk animatic dan edit final. Dipasang dengan `brew install ffmpeg`. | [Pelajaran 04][p04] |
+| **FFmpeg** | Program pengolah video dan audio, dipakai untuk animatic dan edit final. Dipasang oleh `bash setup.sh`, atau dengan `brew install ffmpeg`. | [Pelajaran 04][p04] |
 | **FFprobe** | Alat pemeriksa file video yang ikut terpasang bersama FFmpeg. Dipakai untuk menghitung jumlah frame. | [Pelajaran 04][p04] |
 | **Fisheye** | Lensa yang melengkungkan gambar. Dilarang di prompt style frame kita. | [Pelajaran 03][p03] |
 | **Flag** | Tambahan di belakang perintah yang diawali dua tanda minus, misalnya `--draft` atau `--voices`. Flag mengubah cara perintah bekerja. | [Pelajaran 09][p09] |
@@ -109,12 +109,12 @@ Di kelas ini, `vg <perintah>` adalah singkatan dari `python3 2_Tools/vg/vg.py <p
 |---|---|---|
 | **Gambar acuan (*reference image*)** | Gambar yang diberikan ke model sebagai pegangan, misalnya potret Rani, supaya wajahnya sama di setiap shot. | [Pelajaran 02][p02] |
 | **`GATE`, `NOTE`, `NEXT`** | Baris ringkasan yang diterima agent setelah kamu klik *Done, back to the agent* (atau yang dibaca dengan `vg review --summary`): status gerbang, catatanmu, dan langkah berikutnya. | [Pelajaran 07][p07] |
-| **Gateway** | Pintu masuk ke banyak model bahasa dengan satu kunci, misalnya SumoPod. WorkBuddy memanggil glm-5.3-flash lewat gateway. | [Pelajaran 04][p04] |
+| **Gateway** | Pintu masuk ke banyak model bahasa dengan satu kunci, misalnya SumoPod. Tidak wajib: glm-5.3-flash sudah ada di WorkBuddy. Gateway hanya cadangan kalau kredit WorkBuddy habis. | [Pelajaran 04][p04] |
 | **Gemini TTS** | Model suara yang mengubah naskah menjadi narasi (google/gemini-3.8-flash-lite-tts, lewat OpenRouter). Sekitar US$0,003 per take 20 detik. | [Pelajaran 00][p00] |
 | **Gerbang** | Titik tempat alat berhenti sampai kamu setuju. Ada tiga: look (Gerbang 1), seluruh reel sebagai gambar (Gerbang 2), dan video (Gerbang 3). | [Pelajaran 00][p00] |
 | **Git dan `git clone`** | Git mengunduh folder proyek dan mencatat versinya. `git clone` mengunduh seluruh repo kelas ke komputermu. | [Pelajaran 04][p04] |
 | **GitHub** | Situs tempat repo kelas disimpan. | [Pelajaran 00][p00] |
-| **glm-5.3-flash** | Model bahasa yang cepat dan murah, otak agent WorkBuddy di workshop, dipanggil lewat SumoPod. Cadangannya MiniMax-M3.1-Flash-Preview. | [Pelajaran 00][p00] |
+| **glm-5.3-flash** | Model bahasa yang cepat dan murah, otak agent WorkBuddy di workshop. Sudah ada di WorkBuddy dan memakai kredit WorkBuddy-mu, jadi tidak perlu akun atau kunci lain. | [Pelajaran 00][p00] |
 | **Golden hour** | Cahaya oranye keemasan menjelang matahari terbenam. Dilarang di look reel contoh, supaya semua shot tetap satu sore yang cerah. | [Pelajaran 03][p03] |
 | **gpt-image-2** | Model gambar yang kita pakai lewat kie.ai, untuk style frame, lembar referensi, storyboard, dan frame. 10 kredit per gambar 2K, tanpa persetujuan biaya. | [Pelajaran 00][p00] |
 | **Grade** | Perlakuan atau olahan warna. Satu grade untuk semua shot membuat reel terasa satu film, tapi grade tidak bisa memperbaiki gambar yang cahayanya salah. | [Pelajaran 05][p05] |
@@ -126,6 +126,7 @@ Di kelas ini, `vg <perintah>` adalah singkatan dari `python3 2_Tools/vg/vg.py <p
 | Istilah | Arti | Pertama muncul |
 |---|---|---|
 | **Halaman review** | Halaman web di komputermu sendiri (`vg review`) tempat kamu melihat look, lembar referensi, reel, dan biaya setiap klip di bagian Video, memilih take, dan menulis catatan. Di mode `page`, di sinilah kamu menyetujui ketiga gerbang. Dengan `--detach`, halaman tetap terbuka tanpa menahan agent. Halaman ini milikmu; agent tidak boleh mengklik tombolnya. | [Pelajaran 00][p00] |
+| **Halaman setup (`vg setup`)** | Halaman kecil di komputermu sendiri, berjudul *Setup AI Videographer*, tempat kamu menempel kunci kie.ai dan OpenRouter lalu klik **Simpan**. Ia menulis kunci langsung ke `.env`, mengecek kunci kie.ai dengan membaca saldomu, dan mengatur persetujuan menjadi klik (`VG_APPROVAL_MODE=page`). Kunci tidak pernah lewat chat. Terbuka sendiri di akhir `bash setup.sh`; buka lagi dengan `vg setup`, atau bilang ke Expert "buka halaman setup". | [Pelajaran 04][p04] |
 | **Halusinasi** | Saat AI menyampaikan sesuatu yang tidak benar dengan nada yakin. Karena itu harga, jarak, dan nama selalu dicek manusia. | [Pelajaran 01][p01] |
 | **Hard cut** | Lihat **Potong keras**. | [Pelajaran 10][p10] |
 | **Harness** | Rangka kerja: kumpulan instruksi (skill) dan alat (vg) yang membuat agent bekerja dengan urutan yang sama setiap kali. | [Pelajaran 00][p00] |
@@ -139,7 +140,7 @@ Di kelas ini, `vg <perintah>` adalah singkatan dari `python3 2_Tools/vg/vg.py <p
 | Istilah | Arti | Pertama muncul |
 |---|---|---|
 | **Image-to-image** | Membuat gambar baru dengan gambar lain sebagai acuan, misalnya lembar putar Rani yang dibuat dari potretnya. | [Pelajaran 08][p08] |
-| **`install.sh`** | Skrip persiapan yang dijalankan dengan `bash install.sh`. Ia memeriksa alat, membuat `.env`, menghubungkan skill untuk Claude Code dan WorkBuddy, lalu menjalankan `vg doctor`. Aman dijalankan ulang. | [Pelajaran 04][p04] |
+| **`install.sh`** | Skrip persiapan yang dijalankan dengan `bash install.sh`. Ia memeriksa alat, membuat `.env`, menghubungkan skill untuk Claude Code dan WorkBuddy, lalu menjalankan `vg doctor`. Aman dijalankan ulang. Di WorkBuddy, `bash setup.sh` menjalankannya untukmu. | [Pelajaran 04][p04] |
 
 ## J
 
@@ -228,6 +229,7 @@ Di kelas ini, `vg <perintah>` adalah singkatan dari `python3 2_Tools/vg/vg.py <p
 | Istilah | Arti | Pertama muncul |
 |---|---|---|
 | **QC (*quality control*)** | Pemeriksaan mutu, misalnya dengan daftar cek sebelum kirim. Hasil pemeriksaan klip dicatat agent di `6_Edit/QC_Review.md`. | [Pelajaran 11][p11] |
+| **Quick prompt** | Tombol pesan siap pakai di WorkBuddy. Expert AI Videographer punya tiga: *Buat video baru*, *Lanjutkan video saya*, dan *Cek setup*. | [Pelajaran 04][p04] |
 
 ## R
 
@@ -249,6 +251,7 @@ Di kelas ini, `vg <perintah>` adalah singkatan dari `python3 2_Tools/vg/vg.py <p
 |---|---|---|
 | **S&K (syarat dan ketentuan)** | Catatan wajib di bawah harga, misalnya "*S&K berlaku, dapat berubah." | [Pelajaran 00][p00] |
 | **Segmen (`segments`)** | Urutan potongan gambar di rencana edit, masing-masing dengan durasinya. Jenisnya `still`, `background`, dan `clip`. | [Pelajaran 09][p09] |
+| **`setup.sh`** | Skrip persiapan satu perintah di folder repo, dijalankan dengan `bash setup.sh`, biasanya oleh AI di WorkBuddy. Ia memeriksa Xcode Command Line Tools dan Python, memasang FFmpeg lewat Homebrew, menghubungkan skill, memasang Expert AI Videographer, lalu membuka halaman setup kalau kunci kie.ai belum ada. Aman dijalankan ulang. | [Pelajaran 04][p04] |
 | **Shot** | Satu potongan gambar tanpa putus. Satu ide per shot. | [Pelajaran 00][p00] |
 | **Shot list** | Daftar semua shot: detik, yang terlihat, dan teks di layar. Ditulis agent ke `1_Script/Shotlist.json`. | [Pelajaran 00][p00] |
 | **`Shotlist.json`** | File rencana proyek di `1_Script/`. Isinya nama proyek dan format, `rules`, `look`, tokoh dan lembar referensinya, lalu daftar shot. Ditulis agent dan dicek dengan `vg validate`. | [Pelajaran 03][p03] |
@@ -259,7 +262,7 @@ Di kelas ini, `vg <perintah>` adalah singkatan dari `python3 2_Tools/vg/vg.py <p
 | **Style frame** | Gambar contoh yang menunjukkan look seluruh reel. Dua atau tiga style frame disetujui di Gerbang 1, lalu jadi acuan semua gambar lain. | [Pelajaran 02][p02] |
 | **Suara sekitar** | Lihat **Ambience**. | [Pelajaran 02][p02] |
 | **Sumber gambar** | Lihat **`ai`, `real`, `mg`**. | [Pelajaran 06][p06] |
-| **SumoPod** | Gateway model bahasa (https://ai.sumopod.com), dibayar dalam rupiah. Di workshop, WorkBuddy memanggil glm-5.3-flash lewat SumoPod dengan kunci milikmu sendiri. | [Pelajaran 00][p00] |
+| **SumoPod** | Gateway model bahasa (https://ai.sumopod.com), dibayar dalam rupiah. Cadangan yang tidak wajib: kalau kredit WorkBuddy habis, glm-5.3-flash bisa dipanggil lewat SumoPod dengan kuncimu sendiri, dipasang dengan `bash 2_Tools/workbuddy/install_workbuddy.sh --add-models`. | [Pelajaran 00][p00] |
 | **Swift dan `swiftc`** | Swift adalah bahasa pemrograman buatan Apple yang dipakai renderer caption dan grafis. `swiftc` adalah penerjemahnya, dan ikut terpasang bersama Xcode Command Line Tools. | [Pelajaran 04][p04] |
 
 ## T
@@ -314,11 +317,12 @@ Di kelas ini, `vg <perintah>` adalah singkatan dari `python3 2_Tools/vg/vg.py <p
 
 ## Perintah vg
 
-Semua perintah dijalankan dari folder repo dengan `python3 2_Tools/vg/vg.py`. Ganti `NAMA_PROYEK` dengan nama folder proyekmu di `5_Projects/`. Sebagian besar dijalankan agent. Yang kamu jalankan sendiri: `bash install.sh`, pemasang Expert WorkBuddy, `vg doctor`, dan halaman review. Di mode `page`, ketiga gerbang adalah klikmu di halaman review; di mode `terminal`, kamu juga menjalankan perintah persetujuan saat alat memintanya.
+Semua perintah dijalankan dari folder repo dengan `python3 2_Tools/vg/vg.py`. Ganti `NAMA_PROYEK` dengan nama folder proyekmu di `5_Projects/`. Sebagian besar dijalankan agent. Yang kamu pakai sendiri: halaman setup (`vg setup`), `vg doctor`, dan halaman review. Persiapannya cukup sekali: di WorkBuddy, AI-nya menjalankan `bash setup.sh` untukmu; tanpa WorkBuddy, kamu menjalankan `bash install.sh`. Di mode `page`, ketiga gerbang adalah klikmu di halaman review; di mode `terminal`, kamu juga menjalankan perintah persetujuan saat alat memintanya.
 
 | Perintah (singkat) | Gunanya | Dibahas di |
 |---|---|---|
 | `vg doctor` | memeriksa alat, `.env`, kunci, dan saldo | [Pelajaran 04][p04] |
+| `vg setup` | membuka halaman setup untuk menempel kunci dan memilih cara persetujuan | [Pelajaran 04][p04] |
 | `vg models` | daftar model gambar dan video yang dikenal alat | [Pelajaran 02][p02] |
 | `vg credits` | saldo kredit kie.ai | [Pelajaran 05][p05] |
 | `vg new` | membuat folder proyek baru dari templat | [Pelajaran 05][p05] |
@@ -343,16 +347,16 @@ Semua perintah dijalankan dari folder repo dengan `python3 2_Tools/vg/vg.py`. Ga
 
 Kembali ke [daftar kelas](README.md).
 
-[p00]: 1_Pelajaran/Pelajaran_00_Mulai_Di_Sini_v1.1.md
+[p00]: 1_Pelajaran/Pelajaran_00_Mulai_Di_Sini_v1.2.md
 [p01]: 1_Pelajaran/Pelajaran_01_Apa_Itu_AI_v1.1.md
 [p02]: 1_Pelajaran/Pelajaran_02_Model_Dan_Agent_v1.1.md
 [p03]: 1_Pelajaran/Pelajaran_03_Cara_Berpikir_Dengan_AI_v1.1.md
-[p04]: 1_Pelajaran/Pelajaran_04_Persiapan_Alat_v1.1.md
-[p05]: 1_Pelajaran/Pelajaran_05_Cara_Kerja_Harness_v1.1.md
+[p04]: 1_Pelajaran/Pelajaran_04_Persiapan_Alat_v1.2.md
+[p05]: 1_Pelajaran/Pelajaran_05_Cara_Kerja_Harness_v1.2.md
 [p06]: 1_Pelajaran/Pelajaran_06_Brief_Ke_Shot_List_v1.1.md
 [p07]: 1_Pelajaran/Pelajaran_07_Look_Dan_Review_v1.1.md
 [p08]: 1_Pelajaran/Pelajaran_08_Karakter_Storyboard_Frame_v1.1.md
-[p09]: 1_Pelajaran/Pelajaran_09_Audio_Dulu_v1.1.md
+[p09]: 1_Pelajaran/Pelajaran_09_Audio_Dulu_v1.2.md
 [p10]: 1_Pelajaran/Pelajaran_10_Edit_Plan_Dan_Animatic_v1.1.md
 [p11]: 1_Pelajaran/Pelajaran_11_Video_Dan_Gerbang_Biaya_v1.1.md
 [p12]: 1_Pelajaran/Pelajaran_12_Edit_Final_Dan_Kirim_v1.1.md

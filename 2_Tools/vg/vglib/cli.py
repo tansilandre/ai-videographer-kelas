@@ -147,6 +147,17 @@ def cmd_estimate(args):
     return 0
 
 
+def cmd_setup(args):
+    from vglib import setup_page
+    if args.stop:
+        setup_page.stop_detached()
+    elif args.detach:
+        setup_page.detach(port=args.port, open_browser=not args.no_open)
+    else:
+        setup_page.serve(port=args.port, open_browser=not args.no_open)
+    return 0
+
+
 def cmd_next(args):
     from vglib import next_step
     next_step.show(resolve(args.project))
@@ -324,6 +335,12 @@ def build_parser():
         return p
 
     add("doctor", cmd_doctor, "check tools, .env, key and balance", project=False)
+    p = add("setup", cmd_setup, "open a local page where the human pastes their API keys into .env (never into "
+            "the chat); it checks the kie.ai key and ends after one save", project=False)
+    p.add_argument("--port", type=int, default=0)
+    p.add_argument("--no-open", action="store_true", help="print the URL instead of opening the browser")
+    p.add_argument("--detach", action="store_true", help="start the page in its own process and return at once")
+    p.add_argument("--stop", action="store_true", help="stop a page started with --detach")
     add("credits", cmd_credits, "print the kie.ai credit balance", project=False)
     add("models", cmd_models, "list models in the registry", project=False)
     p = add("new", cmd_new, "create a project from the template", project=False)

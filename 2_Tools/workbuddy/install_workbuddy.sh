@@ -2,8 +2,11 @@
 # Install the AI Videographer expert into WorkBuddy (macOS). Safe to run again.
 #   bash 2_Tools/workbuddy/install_workbuddy.sh               expert + workspace skills
 #   bash 2_Tools/workbuddy/install_workbuddy.sh --add-models  also add GLM-5.3-Flash and MiniMax-M3.1-Flash-Preview
-#                                                             as custom models (asks for your API key; hidden)
-# Then restart WorkBuddy, open this folder as the workspace, pick the expert and the model.
+#                                                             as custom models through your own gateway key (only
+#                                                             needed off WorkBuddy's credits: glm-5.3-flash is built in)
+#   bash 2_Tools/workbuddy/install_workbuddy.sh --quiet       no closing instructions (setup.sh prints its own)
+# Most people run `bash setup.sh` instead, which calls this. Then restart WorkBuddy, open this folder as the
+# workspace, pick the expert and the model.
 set -euo pipefail
 cd "$(dirname "$0")/../.."
 ROOT="$(pwd)"
@@ -55,6 +58,10 @@ print("registered", name, "in", path)
 PY
 fi
 
+if [ "${1:-}" = "--quiet" ]; then
+  exit 0
+fi
+
 if [ "${1:-}" = "--add-models" ]; then
   echo "== models"
   MODELS="$CFG/models.json"
@@ -83,6 +90,6 @@ fi
 echo "== next"
 echo "1. Quit WorkBuddy (Cmd+Q) and open it again."
 echo "2. Open this folder as the workspace: $ROOT"
-echo "3. Expert Center > My Experts > AI Videographer. Pick the model glm-5.3-flash (or MiniMax-M3.1-Flash-Preview)."
-echo "4. In .env set VG_APPROVAL_MODE=page, so approvals are clicks on the review page."
+echo "3. Expert Center > My Experts > AI Videographer. Pick the model glm-5.3-flash (built into WorkBuddy)."
+echo "4. Paste your API keys on the setup page (it also sets approvals to clicks): python3 2_Tools/vg/vg.py setup"
 python3 "$ROOT/2_Tools/vg/vg.py" doctor | /usr/bin/grep -E "approval mode|skills \(WorkBuddy\)|FAIL" || true

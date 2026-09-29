@@ -4,7 +4,7 @@ Satu checklist untuk setiap tahap. Centang semua kotak sebelum pindah ke tahap b
 
 **Cara membaca perintah di sini.** Alatnya dijalankan dari folder repo dengan `python3 2_Tools/vg/vg.py <perintah>`. Supaya pendek, di bawah ini ditulis `vg <perintah>`. Tidak ada perintah bernama `vg` di komputermu: yang dijalankan selalu versi lengkapnya. Ganti `NAMA_PROYEK` dengan nama folder proyekmu di `5_Projects/`.
 
-Sebagian besar perintah dijalankan oleh agent. Yang kamu jalankan sendiri hanya: `bash install.sh`, pemasang Expert WorkBuddy, dan perintah doctor. Halaman review dibuka oleh agent, tapi yang memakainya kamu: dengan `VG_APPROVAL_MODE=page`, ketiga gerbang adalah klikmu di sana. Kapan pun bingung, `vg next -p NAMA_PROYEK` mencetak satu langkah berikutnya.
+Sebagian besar perintah dijalankan oleh agent. Yang kamu kerjakan sendiri hanya persiapan (tiga langkah di bawah) dan perintah doctor. Halaman review dibuka oleh agent, tapi yang memakainya kamu: dengan `VG_APPROVAL_MODE=page`, ketiga gerbang adalah klikmu di sana. Kapan pun bingung, `vg next -p NAMA_PROYEK` mencetak satu langkah berikutnya.
 
 Alurnya: **1** Brief dan shot list → **2** Look (Gerbang 1) → **3** Karakter dan frame → **4** Audio → **5** Animatic (Gerbang 2) → **6** Video (Gerbang 3) → **7** Edit final.
 
@@ -12,16 +12,20 @@ Alurnya: **1** Brief dan shot list → **2** Look (Gerbang 1) → **3** Karakter
 
 ## Sebelum mulai · Persiapan
 
-- [ ] `bash install.sh` sudah dijalankan di folder repo.
-- [ ] Agent siap: WorkBuddy terpasang, Expert AI Videographer dipasang dengan `bash 2_Tools/workbuddy/install_workbuddy.sh --add-models`, lalu Expert dan model glm-5.3-flash dipilih ([Panduan WorkBuddy](../5_WorkBuddy/Panduan_WorkBuddy_v1.0.md)). Atau: Claude Code terpasang.
-- [ ] Kamu sendiri yang mengisi `KIE_API_KEY` dan `OPENROUTER_API_KEY` di file `.env`, dan mengubah `VG_APPROVAL_MODE` menjadi `page`. Agent tidak pernah mengubah `.env`.
-- [ ] Kamu tidak pernah menempel API key ke chat, termasuk kunci SumoPod.
+Tiga langkah dari [Panduan WorkBuddy](../5_WorkBuddy/Panduan_WorkBuddy_v1.1.md), lalu doctor:
+
+- [ ] **1 · WorkBuddy terpasang.** Kamu masuk dengan Google atau GitHub, dan memilih model **glm-5.3-flash**. Model ini sudah ada di WorkBuddy: tidak perlu akun atau kunci lain.
+- [ ] **2 · AI-nya sudah memasang.** Kamu memilih folder kerja dan mengirim satu pesan dari Panduan. AI-nya mengunduh folder kelas dan menjalankan `bash setup.sh` sampai selesai. Kamu hanya mengklik izinkan, mengklik Install di jendela Apple, atau menempel satu baris Homebrew di Terminal kalau diminta.
+- [ ] **3 · Kunci tersimpan, WorkBuddy dibuka ulang.** Kamu sendiri yang menempel kunci kie.ai (dan OpenRouter) di halaman **Setup AI Videographer**, dengan pilihan **Klik di halaman review**, lalu klik **Simpan**. Halaman itu menunjukkan saldo kie.ai-mu. Lalu kamu menutup WorkBuddy (Cmd + Q), membukanya lagi, membuka folder yang disebut di akhir setup, dan memilih Expert **AI Videographer**.
+- [ ] Kamu tidak pernah menempel API key ke chat, dan agent tidak pernah mengubah `.env`.
 - [ ] Disarankan: API key kie.ai khusus untuk kelas ini, dengan batas kredit total (dibuat di https://kie.ai/api-key).
-- [ ] Doctor bersih, tanpa baris FAIL, dengan baris `ok approval mode page` dan (untuk WorkBuddy) `ok skills (WorkBuddy)`:
+- [ ] Doctor bersih, tanpa baris FAIL, dengan baris `ok approval mode page` dan (untuk WorkBuddy) `ok skills (WorkBuddy)`. Di WorkBuddy klik quick prompt **Cek setup**, atau jalankan sendiri dari folder kelas:
 
 ```bash
 python3 2_Tools/vg/vg.py doctor
 ```
+
+Memakai Claude Code? Ganti langkah 1–3 dengan Langkah 1–8 di [Pelajaran 04](../1_Pelajaran/Pelajaran_04_Persiapan_Alat_v1.2.md): pasang alatnya sendiri, jalankan `bash install.sh`, lalu tempel kunci di halaman setup (`python3 2_Tools/vg/vg.py setup`) atau isi `.env` sendiri.
 
 ---
 

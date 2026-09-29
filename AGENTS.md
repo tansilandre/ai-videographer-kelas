@@ -25,7 +25,8 @@ names the other skills in pipeline order.
    these approvals; otherwise run them only after their explicit "approved" in chat.
 4. Never edit `5_Projects/*/project.json` (the spend ledger). Write only `1_Script/Shotlist.json`.
 5. Never print, echo, log or commit `KIE_API_KEY` or anything from `.env`.
-6. **Only the human edits `.env`.** The agent only checks it with `vg doctor`; never change
+6. **Only the human edits `.env`.** Keys go in through `vg setup` (a local page the human fills in); never
+   ask for a key in the chat. The agent only checks `.env` with `vg doctor`; never change
    `VG_APPROVAL_MODE`, `VG_BUDGET_PROJECT` or `VG_MAX_PER_CALL` yourself — a cap refusal means ask
    the human whether to raise it.
 7. Follow the client's rules recorded in `Shotlist.json` `rules`.

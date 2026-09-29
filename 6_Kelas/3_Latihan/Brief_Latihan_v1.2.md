@@ -4,7 +4,7 @@
 
 ## Untuk kamu: cara memakai brief ini
 
-Brief ini untuk latihan pertamamu dari awal sampai akhir. Kerjakan setelah kamu menyelesaikan Pelajaran 00 sampai 13, dan perintah doctor (Pelajaran 04) sudah bersih tanpa FAIL:
+Brief ini untuk latihan pertamamu dari awal sampai akhir. Kerjakan setelah kamu menyelesaikan Pelajaran 00 sampai 13, dan perintah doctor (Pelajaran 04) sudah bersih tanpa FAIL. Di WorkBuddy, klik quick prompt **Cek setup**, atau jalankan sendiri:
 
 ```bash
 python3 2_Tools/vg/vg.py doctor
@@ -12,11 +12,21 @@ python3 2_Tools/vg/vg.py doctor
 
 Lalu:
 
-1. Buka WorkBuddy dengan folder repo sebagai *workspace*, lalu pilih Expert **AI Videographer** dan model **glm-5.3-flash** (lihat [Panduan WorkBuddy](../5_WorkBuddy/Panduan_WorkBuddy_v1.0.md)). Memakai Claude Code? Buka Claude Code di folder repo.
-2. Ketik: "Buat reel dari brief latihan di 6_Kelas/3_Latihan/Brief_Latihan_v1.1.md."
-3. Agent membuat folder proyek di `5_Projects/` dan menyalin brief ini ke folder `0_Source` proyek itu. Isi `0_Source` tidak boleh diubah.
-4. Ikuti [Checklist per Tahap](Checklist_Per_Tahap_v1.1.md). Centang semua sebelum pindah tahap. Bingung sedang di tahap mana? Tanya agent, atau jalankan sendiri `vg next` (Pelajaran 05), yang mencetak satu langkah berikutnya.
-5. Di tiga gerbang (look, animatic, video), kamu yang memutuskan, dan kamu sendiri yang mengklik tombol persetujuan di halaman review (`VG_APPROVAL_MODE=page`). Jangan klik Approve kalau kamu belum benar-benar melihat hasilnya.
+1. Buka WorkBuddy di folder kelas (folder yang disebut di akhir setup), pilih Expert **AI Videographer** dan model **glm-5.3-flash**, lalu klik quick prompt **Buat video baru** (lihat [Panduan WorkBuddy](../5_WorkBuddy/Panduan_WorkBuddy_v1.1.md)).
+2. Expert menanyakan lima hal dalam satu pesan: brand, apa yang dijual beserta lokasi dan harga mulainya, tiga alasan, ajakan di akhir video, dan foto asli. Jawab dari brief di bawah garis ini, misalnya:
+
+   > 1. Griya Cerah, agen properti.
+   > 2. Rumah Melati, rumah satu lantai di Kota Lestari, mulai 780 juta-an, dengan catatan S&K berlaku, dapat berubah.
+   > 3. Dekat ke mana-mana (stasiun, sekolah, taman); halaman belakang dan dapur terbuka, jadi anak main dan orang tua tetap bisa melihat; harganya mulai 780 juta-an.
+   > 4. DM Griya Cerah.
+   > 5. Tidak ada foto. Ini latihan fiktif, jadi semua gambar dibuat AI.
+   >
+   > Fakta lengkap, aturan klien, dan suasananya ada di 6_Kelas/3_Latihan/Brief_Latihan_v1.2.md. Ikuti semuanya. Aku pilih versi dasar, tanpa presenter.
+
+   Memakai Claude Code? Buka Claude Code di folder repo, lalu ketik: "Buat reel dari brief latihan di 6_Kelas/3_Latihan/Brief_Latihan_v1.2.md."
+3. Agent membuat folder proyek di `5_Projects/` dan menyimpan brief-nya di folder `0_Source` proyek itu. Setelah itu isi `0_Source` tidak boleh diubah.
+4. Ikuti [Checklist per Tahap](Checklist_Per_Tahap_v1.2.md). Centang semua sebelum pindah tahap. Bingung sedang di tahap mana? Tanya agent, misalnya "kita di tahap mana?", atau jalankan sendiri `vg next` (Pelajaran 05), yang mencetak satu langkah berikutnya.
+5. Di tiga gerbang (look, animatic, video), kamu yang memutuskan, dan kamu sendiri yang mengklik tombol persetujuan di halaman review (`VG_APPROVAL_MODE=page`). Setelah setiap klik, kembali ke WorkBuddy dan bilang "sudah". Jangan klik Approve kalau kamu belum benar-benar melihat hasilnya.
 6. Untuk video, mulai dari **satu klip pilot**. Tonton dulu, baru putuskan sisanya.
 
 Semua yang ada di bawah garis ini adalah brief dari klien. Baca seperti kamu menerimanya dari klien sungguhan.

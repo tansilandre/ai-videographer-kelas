@@ -35,6 +35,10 @@ Requirements: macOS (the caption and graphics renderer is Swift), Xcode Command 
 (`xcode-select --install`), Python 3.9+, FFmpeg, a kie.ai API key, and an OpenRouter API key for narration
 and music.
 
+The quickest route is one command, `bash setup.sh`: it checks the tools, installs FFmpeg with Homebrew,
+links the skills, installs the WorkBuddy expert when WorkBuddy is there, and opens a local page for your
+keys (`vg setup`). WorkBuddy's own AI can run it for you. By hand:
+
 ```bash
 git clone <this repo> My_Videos && cd My_Videos
 bash install.sh                 # creates .env, links skills for Claude Code / Codex / WorkBuddy

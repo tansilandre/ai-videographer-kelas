@@ -23,7 +23,7 @@ https://github.com/tansilandre/ai-videographer-kelas
 
 Kamu menyalin repo itu ke komputermu. Foldernya berisi alatnya sekaligus kelasnya.
 
-Kamu tidak perlu menjalankan semua perintah sendiri. Kamu bicara ke *agent* (AI yang bisa membaca file dan menjalankan alat untukmu) dengan bahasa biasa. Di workshop kita memakai WorkBuddy, aplikasi agent di komputermu, dengan *Expert* (agent dengan uraian tugas khusus) bernama AI Videographer. Claude Code juga bisa dipakai, dengan cara yang sama. Misalnya: "Buat reel dari brief di 5_Projects/.../0_Source". Agent membaca *skill* (file instruksi cara kerja kita) di folder `1_Skills/`, lalu menjalankan alat bernama vg.
+Kamu tidak perlu menjalankan semua perintah sendiri. Kamu bicara ke *agent* (AI yang bisa membaca file dan menjalankan alat untukmu) dengan bahasa biasa. Di workshop kita memakai WorkBuddy, aplikasi agent di komputermu, dengan *Expert* (agent dengan uraian tugas khusus) bernama AI Videographer. Claude Code juga bisa dipakai, dengan cara yang sama. Misalnya: "Buat reel dari brief di 5_Projects/.../0_Source". Di WorkBuddy cukup klik **Buat video baru**, lalu Expert menanyakan lima hal tentang produkmu. Agent membaca *skill* (file instruksi cara kerja kita) di folder `1_Skills/`, lalu menjalankan alat bernama vg.
 
 Kelas ini punya dua bagian:
 
@@ -61,9 +61,9 @@ Mau lihat hasilnya? Tonton [animatic reel contoh](../2_Studi_Kasus/Tebak_Harga/C
 |---|---|
 | `6_Kelas/1_Pelajaran/` | Pelajaran 00–13, termasuk yang sedang kamu baca |
 | `6_Kelas/2_Studi_Kasus/Tebak_Harga/` | gambar, audio, rencana edit (`Edit_Spec.json`), naskah narasi (`Narasi.txt`) dan animatic reel contoh |
-| `6_Kelas/3_Latihan/` | [brief latihan](../3_Latihan/Brief_Latihan_v1.1.md) dan [checklist per tahap](../3_Latihan/Checklist_Per_Tahap_v1.1.md) |
+| `6_Kelas/3_Latihan/` | [brief latihan](../3_Latihan/Brief_Latihan_v1.2.md) dan [checklist per tahap](../3_Latihan/Checklist_Per_Tahap_v1.2.md) |
 | `6_Kelas/4_Deck/` | slide kelas (.pptx dan .pdf), urutannya sama dengan pelajaran |
-| `6_Kelas/5_WorkBuddy/` | [panduan WorkBuddy](../5_WorkBuddy/Panduan_WorkBuddy_v1.0.md) untuk memasang dan memakai agent workshop, dan run-sheet untuk fasilitator |
+| `6_Kelas/5_WorkBuddy/` | [panduan WorkBuddy](../5_WorkBuddy/Panduan_WorkBuddy_v1.1.md) untuk memasang dan memakai agent workshop, dan run-sheet untuk fasilitator |
 
 ## Cara memakai pelajaran
 
@@ -80,7 +80,7 @@ python3 2_Tools/vg/vg.py doctor
 
 Perintah `doctor` memeriksa apakah semua alat dan kunci sudah siap. Di pelajaran berikutnya kami kadang menulisnya singkat: `vg doctor`. Itu hanya singkatan untuk `python3 2_Tools/vg/vg.py doctor`. Tidak ada perintah bernama `vg` di komputermu, jadi yang kamu ketik selalu versi lengkapnya.
 
-Instalasi dijelaskan langkah demi langkah di Pelajaran 04. Kalau nanti macet, jalankan perintah di atas dan baca baris yang bertanda FAIL.
+Instalasi dijelaskan langkah demi langkah di Pelajaran 04. Dengan WorkBuddy, AI-nya yang memasang: kamu cukup mengklik, lalu menempel kunci di halaman setup. Kalau nanti macet, jalankan perintah di atas dan baca baris yang bertanda FAIL.
 
 ## Aturan emas: gambar itu murah, video itu mahal
 
@@ -103,7 +103,7 @@ Jadi seluruh reel disetujui sebagai gambar dulu. Baru setelah itu gambarnya dibu
 
 ## Enam aturan keselamatan
 
-1. **Hanya kamu yang mengubah file `.env`.** File ini menyimpan *API key* (kunci rahasia yang membuat alat bisa memakai akun kie.ai dan OpenRouter-mu).
+1. **Hanya kamu yang mengubah file `.env`.** File ini menyimpan *API key* (kunci rahasia yang membuat alat bisa memakai akun kie.ai dan OpenRouter-mu). Kamu mengisinya lewat halaman setup di komputermu sendiri (Pelajaran 04).
 2. **Jangan pernah menempel API key ke chat**, termasuk ke agent.
 3. **Tidak ada video tanpa "ya" yang jelas darimu.**
 4. **Mulai dari satu klip *pilot*** (klip percobaan pertama). Tonton dulu, baru putuskan sisanya.
@@ -128,7 +128,7 @@ Animatic, efek suara dan edit dibuat di komputermu sendiri, jadi gratis.
 
 Kamu butuh dua akun: [kie.ai](https://kie.ai) untuk gambar dan video (dibayar dengan kredit), dan [OpenRouter](https://openrouter.ai) untuk suara dan musik. Saran kami: buat API key kie.ai khusus untuk kelas ini di https://kie.ai/api-key, lalu beri batas kredit total. Batas itu pagar terakhir kalau ada yang salah.
 
-Biaya otak agent juga tidak termasuk dalam tabel ini. Di workshop, WorkBuddy memakai model glm-5.3-flash lewat SumoPod (https://ai.sumopod.com), dibayar per pemakaian dalam rupiah. Kalau kamu memakai Claude Code, ia butuh langganan Claude berbayar (misalnya paket Pro atau Max) atau kredit API Anthropic. Harga keduanya bisa berubah, jadi cek halaman harga resminya sebelum mulai.
+Biaya otak agent juga tidak termasuk dalam tabel ini. Di workshop, WorkBuddy memakai model glm-5.3-flash yang sudah ada di dalamnya, dan memakai kredit WorkBuddy-mu. Tidak perlu akun lain. Kalau kreditnya habis, ada cadangan yang tidak wajib: gateway milikmu sendiri seperti SumoPod (Pelajaran 04). Kalau kamu memakai Claude Code, ia butuh langganan Claude berbayar (misalnya paket Pro atau Max) atau kredit API Anthropic. Harga keduanya bisa berubah, jadi cek halaman harga resminya sebelum mulai.
 
 ## Berapa lama
 

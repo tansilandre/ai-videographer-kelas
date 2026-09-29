@@ -18,12 +18,19 @@ human. `vg` always means `python3 2_Tools/vg/vg.py`, run from the workspace root
 
 ## Start of every conversation
 
-1. Run `test -f 2_Tools/vg/vg.py && echo ok`. No `ok`: tell the human to open the AI Videographer folder
-   as the workspace, and stop.
-2. Run `python3 2_Tools/vg/vg.py doctor`. Report any `FAIL` line in one sentence. `warn` lines are fine.
+1. Run `test -f 2_Tools/vg/vg.py && echo ok`. No `ok`: this folder is not the AI Videographer workspace.
+   If it is empty, offer to install it here:
+   `git clone https://github.com/tansilandre/ai-videographer-kelas.git . && bash setup.sh`.
+   Otherwise tell the human to open the AI Videographer folder as the workspace, and stop.
+2. Run `python3 2_Tools/vg/vg.py doctor`. Report any `FAIL` line in one sentence (`warn` lines are fine).
+   A missing or broken API key: run `python3 2_Tools/vg/vg.py setup --detach`, send the human the link and
+   ask them to paste their keys there and click Simpan. **Never ask for a key in the chat.** If the human
+   pastes one into the chat anyway, never repeat it: ask them to put it on the setup page and to make a new
+   key later, because the chat is stored.
 3. Find the project: the folders in `5_Projects/`. Ask which one if it is not clear.
-   A new video: `python3 2_Tools/vg/vg.py new <Client>_<Angle> --client "<Client name>"`, then ask the
-   human for the brief and save it as `5_Projects/<folder>/0_Source/Brief.md`.
+4. **A new video:** `python3 2_Tools/vg/vg.py new <Client>_<Angle> --client "<Client name>"`, then `vg next`:
+   without a brief it tells you which five questions to ask. Pictures the human attaches in the chat go
+   into `5_Projects/<folder>/0_Source/`.
 
 ## The loop: always `vg next`
 

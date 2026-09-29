@@ -28,6 +28,8 @@ Agent lalu membaca `1_Skills/vg-director/SKILL.md`, file instruksi yang menyebut
 
 Agent pintar, tapi bisa salah. Alat vg tidak pintar, tapi tegas: langkah mahal yang belum kamu setujui ditolak, dengan pesan berawalan `REFUSED:`.
 
+Di WorkBuddy kamu tidak perlu menyiapkan brief dulu. Klik quick prompt (tombol pesan siap pakai) **Buat video baru**. Expert menanyakan lima hal dalam satu pesan: nama brand, apa yang dijual beserta lokasi dan harga mulainya, tiga alasan yang membuatnya layak, ajakan di akhir video, dan foto asli yang bisa kamu lampirkan. Setelah kamu jawab, ia bekerja sendiri dan hanya berhenti di tiga gerbang. Dua quick prompt lainnya: **Lanjutkan video saya** dan **Cek setup**.
+
 ### Satu langkah sekali: `vg next`
 
 Expert AI Videographer di WorkBuddy punya satu kebiasaan: sebelum setiap langkah, ia bertanya ke alat.
@@ -83,7 +85,7 @@ Di kelas ini kita memakai `VG_APPROVAL_MODE=page` di `.env` (Pelajaran 04). Arti
 
 Di mode ini perintah `vg approve` dari terminal selalu ditolak. Jadi agent tidak bisa menyetujui apa pun untukmu. Halaman review hanya milikmu: agent dilarang mengklik tombolnya.
 
-Di WorkBuddy, agent membuka halaman ini dengan `vg review --detach`: halamannya tetap terbuka, tapi agent tidak ikut tertahan. Ia mengirimimu tautannya di chat. Kamu mengklik, lalu bilang di chat bahwa kamu sudah selesai. Agent membaca klik dan catatanmu dengan `vg next`.
+Di WorkBuddy, agent membuka halaman ini dengan `vg review --detach`: halamannya tetap terbuka, tapi agent tidak ikut tertahan. Ia mengirimimu tautannya di chat. Kamu mengklik, lalu kembali ke WorkBuddy dan bilang **"sudah"**. Agent membaca klik dan catatanmu dengan `vg next`.
 
 Cara lain: mode `terminal`. Di sana halaman review menampilkan perintah persetujuan. Kamu menjalankannya di Terminal-mu sendiri, dan alat memintamu mengetik kode acak 4 digit. Ada juga mode `chat`, yang paling lemah: agent sendiri yang mencatat persetujuan setelah kamu bilang ya di chat.
 
@@ -152,8 +154,8 @@ Berturut-turut: saldo kie.ai; setiap gambar dan klip dengan versi, kredit terpak
 
 Yang wajib kamu jalankan sendiri sedikit saja:
 
-1. `bash install.sh`, dan untuk WorkBuddy `bash 2_Tools/workbuddy/install_workbuddy.sh --add-models`: sekali, saat persiapan.
-2. `vg doctor`: saat persiapan, dan kapan pun ada yang terasa aneh.
+1. `vg setup`: halaman tempat kamu menempel kunci, saat persiapan dan kapan pun kunci perlu diganti. Di WorkBuddy, AI-nya yang menjalankan `bash setup.sh` untukmu, dan skrip itu membuka halaman ini. Tanpa WorkBuddy, jalankan `bash install.sh` dulu, sekali.
+2. `vg doctor`: saat persiapan, dan kapan pun ada yang terasa aneh. Di WorkBuddy cukup klik **Cek setup**.
 3. `vg review -p NAMA_PROYEK`: halaman review. Biasanya agent yang membukanya, tapi tombol dan catatannya hanya milikmu. Di mode `page`, di sinilah kamu menyetujui ketiga gerbang.
 4. `vg next -p NAMA_PROYEK`: kapan saja, untuk melihat langkah berikutnya. Hanya membaca, tanpa biaya.
 5. Hanya di mode `terminal`: perintah persetujuan (`vg approve look`, `vg approve visuals`, `vg approve video`), saat halaman review atau agent memberikannya, dan hanya kalau kamu memang setuju. Kamu yang mengetik kodenya.
@@ -201,6 +203,7 @@ Buka folder `3_Templates/Project/` di folder kelas dan cocokkan isinya dengan ta
 - Tujuh tahap, tiga gerbang: look, seluruh reel sebagai gambar, lalu biaya video. Di mode `page`, setiap gerbang adalah klikmu di halaman review. Video selalu paling akhir.
 - Setiap proyek punya folder yang sama, dari `0_Source` sampai `99_Output`. Alat memberi versi `_v1`; dokumen dan hasil akhir `_v1.0`.
 - Batas biaya ada di `.env`, catatan biaya di `project.json`. Hanya kamu yang mengubah `.env`, hanya alat yang menulis `project.json`.
+- Di WorkBuddy: klik **Buat video baru**, jawab lima pertanyaan, klik di tiga gerbang, dan bilang "sudah" setelah setiap klik.
 - Perintah yang kamu jalankan sendiri sedikit. Sisanya, bicara ke agent.
 
 Berikutnya: [Pelajaran 06 · Dari Brief ke Shot List](Pelajaran_06_Brief_Ke_Shot_List_v1.1.md)

@@ -153,4 +153,4 @@ Buka tiga gambar di folder `6_Kelas/2_Studi_Kasus/Tebak_Harga/1_Gambar/`: `Rani_
 - Rumah yang dijual adalah foto asli klien, dan hanya kameranya yang bergerak. Di reel contoh rumahnya AI karena proyeknya fiktif.
 - Cek kesinambungan sebelum lanjut: wajah, pakaian, cahaya, jam, tempat, rumah.
 
-Berikutnya: [Pelajaran 09 · Audio Dulu](Pelajaran_09_Audio_Dulu_v1.1.md)
+Berikutnya: [Pelajaran 09 · Audio Dulu](Pelajaran_09_Audio_Dulu_v1.2.md)

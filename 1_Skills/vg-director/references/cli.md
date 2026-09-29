@@ -24,6 +24,7 @@ whenever you are unsure.
 | Command | Does |
 |---|---|
 | `vg doctor` | checks Python, ffmpeg (+libass), swiftc, `.env`, the API keys, the balance, the approval mode, and the skills folders Claude Code and WorkBuddy read |
+| `vg setup [--detach]` | opens a local page (127.0.0.1, one-time token) where the human pastes their kie.ai and OpenRouter keys and picks the approval mode (page or terminal); it writes `.env` (mode 600), checks the kie.ai key and ends after one save. Keys never pass through the chat or the agent. `bash setup.sh` runs it when the key is missing |
 | `vg credits` | prints the kie.ai credit balance |
 | `vg models` | lists models in the registry, their kind and test status |
 | `vg new <Slug> [--client "Name"]` | creates `5_Projects/<YYYY-MM-DD>_<Slug>/` from the template |

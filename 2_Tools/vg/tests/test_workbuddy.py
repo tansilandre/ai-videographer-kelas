@@ -282,6 +282,18 @@ class NextStepTests(PageHelpers, Base):
         self.assertIn("approve video -p %s --shots S01 --confirm" % self.project.name, step["ASK"])
         self.assertIn("own terminal", step["ASK"])
 
+    def test_a_new_project_without_a_brief_starts_with_five_questions(self):
+        data = shotlist()
+        data["shots"], data["look"] = [], {}
+        self.write(data)
+        step, lines = self.next()
+        self.assertIn("brief", step["STAGE"])
+        self.assertIn("one message", step["ASK"])
+        self.assertIn("Brief.md", step["THEN"])
+        (self.project.path / "0_Source").mkdir(exist_ok=True)
+        (self.project.path / "0_Source" / "Brief.md").write_text("Rumah Kita Realty ...", encoding="utf-8")
+        self.assertNotIn("one message", self.next()[0].get("ASK", ""))
+
     def test_the_command_prints_one_step(self):
         out = io.StringIO()
         with contextlib.redirect_stdout(out):
@@ -333,3 +345,99 @@ class AgentShellTests(PageHelpers, Base):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class SetupPageTests(unittest.TestCase):
+    """`vg setup`: the human pastes API keys into a local page, never into the chat. The page writes .env
+    and checks the kie.ai key; nothing it prints or returns contains a key."""
+
+    KEY = "kie-SECRET-1234567890"
+
+    def setUp(self):
+        from vglib import setup_page
+        self.setup_page = setup_page
+        self.tmp = Path(__import__("tempfile").mkdtemp())
+        self.env = self.tmp / ".env"
+        self.env.write_text("# keys\nKIE_API_KEY=\nOPENROUTER_API_KEY=\n\n# Who approves video spend\n"
+                            "VG_APPROVAL_MODE=terminal\nVG_BUDGET_PROJECT=800\nVG_VIDEO_MODEL=veo-3-1-lite\n",
+                            encoding="utf-8")
+        self.saved = (config.ENV_FILE, config._env_cache, setup_page._balance)
+        config.ENV_FILE, config._env_cache = self.env, None
+        setup_page._balance = lambda: 812.5
+
+    def tearDown(self):
+        config.ENV_FILE, config._env_cache, self.setup_page._balance = self.saved
+        __import__("shutil").rmtree(str(self.tmp))
+
+    def test_saving_writes_the_keys_and_keeps_every_other_line(self):
+        out = io.StringIO()
+        with contextlib.redirect_stdout(out):
+            result = self.setup_page.save({"kie": " %s " % self.KEY, "openrouter": "", "mode": "page"})
+        text = self.env.read_text(encoding="utf-8")
+        self.assertIn("KIE_API_KEY=%s\n" % self.KEY, text)
+        self.assertIn("VG_APPROVAL_MODE=page\n", text)
+        self.assertIn("# Who approves video spend\n", text)
+        self.assertIn("VG_VIDEO_MODEL=veo-3-1-lite\n", text)
+        self.assertIn("OPENROUTER_API_KEY=\n", text, "an empty field leaves the key as it was")
+        self.assertEqual(self.env.stat().st_mode & 0o777, 0o600)
+        self.assertEqual(result["kie_balance"], 812.5)
+        self.assertNotIn(self.KEY, json.dumps(result) + out.getvalue())
+        self.assertEqual(config.setting("VG_APPROVAL_MODE"), "page", "later reads see the new .env")
+
+    def test_the_state_says_which_keys_are_set_but_never_shows_them(self):
+        self.setup_page.save({"kie": self.KEY, "mode": "page"})
+        state = self.setup_page.state()
+        self.assertTrue(state["keys"]["KIE_API_KEY"])
+        self.assertFalse(state["keys"]["OPENROUTER_API_KEY"])
+        self.assertNotIn(self.KEY, json.dumps(state))
+
+    def test_a_kie_key_is_needed_and_a_key_must_look_like_one(self):
+        from vglib.errors import UsageError
+        with self.assertRaises(UsageError):
+            self.setup_page.save({"kie": "", "mode": "page"})
+        for bad in ("two words", "abc\nVG_APPROVAL_MODE=chat", "key#comment", "x" * 3):
+            with self.assertRaises(UsageError, msg=bad):
+                self.setup_page.save({"kie": bad, "mode": "page"})
+        with self.assertRaises(UsageError):
+            self.setup_page.save({"kie": self.KEY, "mode": "chat"})
+        self.assertIn("VG_APPROVAL_MODE=terminal\n", self.env.read_text(encoding="utf-8"))
+
+    def test_a_missing_line_is_added(self):
+        self.env.write_text("KIE_API_KEY=\n", encoding="utf-8")
+        self.setup_page.save({"kie": self.KEY, "openrouter": "sk-or-abcdef123456", "mode": "page"})
+        values = config._parse_env_file(self.env)
+        self.assertEqual(values["OPENROUTER_API_KEY"], "sk-or-abcdef123456")
+        self.assertEqual(values["VG_APPROVAL_MODE"], "page")
+
+    def test_the_page_needs_its_token_and_ends_after_saving(self):
+        server = self.setup_page.SetupServer()
+        __import__("threading").Thread(target=server.serve_forever, daemon=True).start()
+        self.addCleanup(server.server_close)
+        self.addCleanup(server.shutdown)
+        base = "http://127.0.0.1:%d" % server.server_address[1]
+        with self.assertRaises(urllib.error.HTTPError):
+            urllib.request.urlopen(base + "/api/state", timeout=10)
+        req = urllib.request.Request(base + "/api/save", method="POST",
+                                     data=json.dumps({"kie": self.KEY, "mode": "page"}).encode(),
+                                     headers={"X-VG-Token": server.token, "Content-Type": "application/json"})
+        body = json.loads(urllib.request.urlopen(req, timeout=10).read().decode())
+        self.assertTrue(body["ok"])
+        self.assertNotIn(self.KEY, json.dumps(body))
+        self.assertTrue(server.finished.wait(5))
+
+    def test_detach_returns_the_link_at_once_and_stop_ends_it(self):
+        out = io.StringIO()
+        with contextlib.redirect_stdout(out):
+            self.assertEqual(cli.main(["setup", "--detach", "--no-open"]), 0)
+        def stop():
+            with contextlib.redirect_stdout(io.StringIO()):
+                self.setup_page.stop_detached()
+        self.addCleanup(stop)
+        url = re.search(r"Setup page: (http\S+)", out.getvalue()).group(1)
+        base, token = url.split("/?t=")
+        with urllib.request.urlopen(base + "/api/state?t=" + token, timeout=10) as resp:
+            self.assertIn("keys", json.loads(resp.read().decode()))
+        with contextlib.redirect_stdout(io.StringIO()):
+            cli.main(["setup", "--stop"])
+        with self.assertRaises((urllib.error.URLError, ConnectionError, OSError)):
+            urllib.request.urlopen(base + "/api/state?t=" + token, timeout=3)

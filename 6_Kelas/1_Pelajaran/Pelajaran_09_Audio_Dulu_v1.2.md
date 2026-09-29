@@ -63,7 +63,7 @@ Hasilnya masuk ke `6_Edit/1_Audio/`, misalnya `Narration_Take_Callirrhoe_v1.wav`
 
 Lalu dengarkan semua take, satu per satu. Pilih yang terdengar seperti orang sungguhan. **Pilih dengan telinga, bukan dengan skor.** Di reel contoh, pilihannya Callirrhoe. Dengarkan di `6_Kelas/2_Studi_Kasus/Tebak_Harga/2_Audio/Narration_Take_Callirrhoe_v1.mp3`.
 
-Perintah ini memakai kunci OpenRouter di file `.env`. Kalau agent bilang kuncinya belum ada, **kamu sendiri** yang membuka `.env` dan mengisinya. Kunci dibuat di <https://openrouter.ai/keys>. Jangan pernah menempelkan kunci API ke chat.
+Perintah ini memakai kunci OpenRouter. Kalau agent bilang kuncinya belum ada, minta ia membuka **halaman setup** (`vg setup`), lalu tempel kuncinya di sana dan klik Simpan. Kunci dibuat di <https://openrouter.ai/keys>. Jangan pernah menempelkan kunci API ke chat.
 
 ## 4. Musik dengan struktur
 
