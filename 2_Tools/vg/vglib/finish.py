@@ -13,7 +13,9 @@ Edit_Spec.json (agent-written; see 1_Skills/vg-edit/references/edit-spec.md):
               clip only: "text" (the words captioned for this part of the clip, instead of the shot's
                 dialogue), "cover": {"image", "blur", "dim", "zoom", "pan", "pan_x"} (show that
                 image while the clip's sound plays: a cutaway), and "audio": "file:<voice track in
-                clip time>" with "clip_volume": 0.15 (replace the clip's voice, keep some ambience)
+                clip time>" with "clip_volume": 0.15 (replace the clip's voice, keep some ambience);
+                "clip_volume" alone scales the clip's own sound (0 mutes a sound the model invented);
+                "dim": 0.3 darkens the clip under white graphics
               images ("still", background/cover "image") can be "file:0_Source/<photo>"; "pan_x":
                 [from, to] slides across a wide photo instead of zooming
               optional "transition_in": "flash" (fades up from white) | "whip" (motion blur across
@@ -414,8 +416,10 @@ def final(project, draft=False, animatic=False):
                 seg, fallback_shot = _animatic_segment(sl, seg)
             elif seg.get("clip") and not project.selected("clip:" + seg["clip"], state) and seg.get("fallback"):
                 fallback_shot = seg["clip"]
-                seg = dict(seg, still=seg["clip"], duration=seg.get("fallback_duration", 4), clip=None)
-                say("note   %-8s clip:%s not generated yet; using its storyboard panel" % (sid, seg["still"]))
+                shot = sl.shots.get(seg["clip"]) or {}
+                still = review.still_target(dict(shot, id=seg["clip"]))  # first frame, else panel (as the animatic)
+                seg = dict(seg, still=still, duration=seg.get("fallback_duration", 4), clip=None)
+                say("note   %-8s clip:%s not generated yet; using %s" % (sid, fallback_shot, still))
             piece = tmp / ("%03d.mp4" % index)
             vo = seg.get("vo")
             vo_file, vo_len = None, 0.0
@@ -440,23 +444,36 @@ def final(project, draft=False, animatic=False):
                     pad = float(out.split("+", 1)[1]) if "+" in out else 0.3
                     out = min(_duration(clip), (span[1] if span else _duration(clip)) + pad)
                 out = float(out)
-                dur = out - cin
+                # a whole number of frames: a 24 fps clip cut at an odd time would otherwise come out a frame
+                # short, and the gaps at the joins add up (Tebak Harga draft: 788 of 791 frames)
+                nframes = max(1, int(round((out - cin) * FPS)))
+                dur = nframes / float(FPS)
                 cmd = ["ffmpeg", "-v", "error", "-y", "-ss", "%.3f" % cin, "-to", "%.3f" % out, "-i", str(clip)]
                 if track:
                     keep = float(seg.get("clip_volume", 0)) if _has_audio(clip) else 0.0
                     cmd += ["-ss", "%.3f" % cin, "-to", "%.3f" % out, "-i", str(track), "-filter_complex",
                             "[1:a]aformat=sample_rates=48000:channel_layouts=stereo,apad[t];"
-                            + ("[0:a]volume=%.3f[c];[t][c]amix=inputs=2:normalize=0:duration=first[a]" % keep
-                               if keep else "[t]anull[a]"),
-                            "-map", "0:v:0", "-map", "[a]", "-t", "%.3f" % dur]
+                            + ("[0:a]volume=%.3f[c];[t][c]amix=inputs=2:normalize=0:duration=first,atrim=end=%.4f[a]"
+                               % (keep, dur) if keep else "[t]atrim=end=%.4f[a]" % dur),
+                            "-map", "0:v:0", "-map", "[a]"]
                 elif _has_audio(clip):
                     cmd += ["-map", "0:v:0", "-map", "0:a:0"]
+                    audio_chain = ["apad", "atrim=end=%.4f" % dur]
+                    if seg.get("clip_volume") is not None:  # e.g. 0: mute a sound the model invented
+                        audio_chain.insert(0, "volume=%.3f" % float(seg["clip_volume"]))
+                    cmd += ["-af", ",".join(audio_chain)]
                 else:
                     cmd += ["-f", "lavfi", "-t", "%.3f" % dur, "-i", "anullsrc=r=48000:cl=stereo",
                             "-map", "0:v:0", "-map", "1:a:0"]
                 cover = seg.get("cover")
                 cut = tmp / ("%03d_clip.mp4" % index) if cover else piece
-                cmd += ["-vf", vf, "-c:v", "libx264", "-preset", "veryfast", "-crf", "18",
+                dim = float(seg.get("dim", 0))  # darker, so white graphics on a bright shot stay readable
+                # video counted in frames (a time cut dropped the last one when the first frame starts after 0),
+                # audio trimmed to the same length above
+                cmd += ["-vf", "setpts=PTS-STARTPTS," + vf
+                        + (",eq=brightness=%.3f:saturation=0.9" % (-dim * 0.5) if dim else "")
+                        + ",tpad=stop_mode=clone:stop_duration=1", "-frames:v", str(nframes),
+                        "-c:v", "libx264", "-preset", "veryfast", "-crf", "18",
                         "-c:a", "aac", "-ar", "48000", "-ac", "2", str(cut)]
                 _run(cmd)
                 if cover:  # cutaway: the clip's sound under a picture (a map, a photo), e.g. a J-cut
@@ -466,8 +483,9 @@ def final(project, draft=False, animatic=False):
                     _image_piece(image, dur, still, zoom, pan, cover.get("blur", 0), cover.get("dim", 0), pan_x)
                     _run(["ffmpeg", "-v", "error", "-y", "-i", str(still), "-i", str(cut), "-map", "0:v:0",
                           "-map", "1:a:0", "-c", "copy", "-t", "%.3f" % dur, str(piece)])
-                speech += [(clock + max(a, cin) - cin, clock + min(b, out) - cin) for a, b in spoken
-                           if min(b, out) > max(a, cin)]
+                if track or float(seg.get("clip_volume", 1)) > 0:  # a muted clip's sound is not speech
+                    speech += [(clock + max(a, cin) - cin, clock + min(b, out) - cin) for a, b in spoken
+                               if min(b, out) > max(a, cin)]
                 shot = sl.shots.get(seg["clip"]) or {}
                 line = seg.get("text") or shot.get("dialogue")  # `text`: this segment's words, as captioned
                 if line and span and seg.get("captions", True):
@@ -478,8 +496,8 @@ def final(project, draft=False, animatic=False):
             elif seg.get("still"):
                 image = _image(project, state, seg["still"], sid)
                 dur = float(seg.get("duration", 3))
-                _image_piece(image, dur, piece, seg.get("zoom", [1.0, 1.14]), seg.get("pan", -0.05), 0, 0,
-                             seg.get("pan_x"))
+                _image_piece(image, dur, piece, seg.get("zoom", [1.0, 1.14]), seg.get("pan", -0.05), 0,
+                             seg.get("dim", 0), seg.get("pan_x"))
                 shot = sl.shots.get(fallback_shot or "") or {}
                 line = seg.get("text") or shot.get("dialogue")
                 if line and seg.get("captions", True):

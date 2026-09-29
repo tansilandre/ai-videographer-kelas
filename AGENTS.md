@@ -6,11 +6,12 @@ names the other skills in pipeline order.
 
 ## Non-negotiable
 
-1. **No video spend without the human's explicit yes in chat.** Show the review board and the
+1. **No video spend without the human's explicit yes.** Show the review board and the
    per-shot cost (`vg estimate -p P --stage video`) first. Never run `vg approve` on your own
-   initiative. Even with a yes, `vg approve video` (default `VG_APPROVAL_MODE=terminal` in `.env`)
-   asks a human to type a random code on a real terminal — an agent's shell has none, so it is
-   refused and must hand the human the exact command to run themselves. Each approval pays for
+   initiative. `VG_APPROVAL_MODE` in `.env` decides how the human says yes: `page` (they click
+   Approve on the review page, with the cost shown; the command line always refuses), `terminal`
+   (they type a random code in their own terminal; an agent's shell is refused and must hand them
+   the exact command), or `chat` (you run `vg approve` after their explicit yes). Each approval pays for
    exactly one take; a failed clip used up its approval too, so a retry needs a fresh yes and a
    fresh `vg approve`.
 2. **Never run `vg approve` through script, expect, a pty, tmux or any terminal you control; only
@@ -20,8 +21,8 @@ names the other skills in pipeline order.
 3. Images may be generated without asking. Look at every image before using it downstream.
    **But the human approves the visuals before video:** no storyboard or frame image before the
    human approves the look (`vg approve look`), and no video before they approve the whole reel as
-   images (`vg edit animatic` + board, then `vg approve visuals`). Run these only after their
-   explicit "approved" in chat; the tool refuses otherwise.
+   images (`vg edit animatic` + board, then `vg approve visuals`). In page mode the human clicks
+   these approvals; otherwise run them only after their explicit "approved" in chat.
 4. Never edit `5_Projects/*/project.json` (the spend ledger). Write only `1_Script/Shotlist.json`.
 5. Never print, echo, log or commit `KIE_API_KEY` or anything from `.env`.
 6. **Only the human edits `.env`.** The agent only checks it with `vg doctor`; never change
@@ -33,15 +34,17 @@ names the other skills in pipeline order.
    dashboard: task exists there → `vg adopt -p P --target <kind:id> --task-id <id>`; nothing was
    created (or a `pending` row that can never finish) → `vg release -p P --target <kind:id>`.
    Released rows become `abandoned` and still count toward the budget at their estimate.
-9. **The review page is the human's.** Run `vg review -p P` (in the background) for the look and the
-   reel reviews and wait for its summary; never click its buttons, call its API or approve on the
-   human's behalf. Act on every `NOTE` line before asking again.
+9. **The review page is the human's.** Open it with `vg review -p P --detach` (returns at once; the page
+   runs until the human clicks Done) and wait for the human to say they are done; `vg next -p P` or
+   `vg review -p P --summary` then shows their clicks and notes. Never click its buttons, call its API
+   or approve on the human's behalf. Act on every `NOTE` line before asking again.
 
 ## Tool
 
 `vg` below and in every skill means `python3 2_Tools/vg/vg.py` — there is no `vg` on PATH, so the
 full path is run every time. Most commands take `-p P` for the project folder, e.g.
-`python3 2_Tools/vg/vg.py estimate -p P --stage video`. Reference:
+`python3 2_Tools/vg/vg.py estimate -p P --stage video`. **`vg next -p P` prints the one next step**
+(the command to run, the file to write, or what to ask the human): follow it when unsure. Reference:
 `1_Skills/vg-director/references/cli.md`. Run `vg doctor` if anything looks wrong.
 
 ## Workspace convention

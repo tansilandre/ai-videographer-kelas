@@ -1,5 +1,6 @@
 """Model registry: loads models/*.json, validates parameters, prices requests."""
 import json
+import math
 
 from vglib import config
 from vglib.errors import UsageError
@@ -86,7 +87,10 @@ def price(spec, params):
         node = node[value]
     price = float(node)
     if pricing.get("per_second"):
-        price *= float(params.get("duration") or 0)
+        seconds = float(params.get("duration") or 0)
+        if pricing.get("round_up"):  # billed per started second
+            seconds = math.ceil(seconds - 1e-9)
+        price *= seconds
     return round(price, 2)
 
 

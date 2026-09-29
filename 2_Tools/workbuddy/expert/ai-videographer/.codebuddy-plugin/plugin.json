@@ -1,0 +1,43 @@
+{
+  "name": "ai-videographer",
+  "version": "1.0.0",
+  "description": "Directs short vertical property and product videos with the vg tool: brief, look, frames, review page approvals, AI video, final edit.",
+  "author": {
+    "name": "Andre Tansil"
+  },
+  "homepage": "https://github.com/tansilandre/ai-videographer-kelas",
+  "license": "MIT",
+  "keywords": ["video", "reels", "property", "kie.ai", "workshop"],
+  "agents": ["./agents/ai-videographer.md"],
+  "expertType": "agent",
+  "agentName": "ai-videographer",
+  "displayName": {
+    "en": "AI Videographer",
+    "zh": "AI 视频导演"
+  },
+  "profession": {
+    "en": "Short-form video director",
+    "zh": "短视频导演"
+  },
+  "displayDescription": {
+    "en": "Turns a brief into a finished 9:16 reel: plan, look, frames, a review page where you approve by clicking, AI video clips and the final edit with captions and sound.",
+    "zh": "把简报变成完整的竖屏短视频：规划、风格、画面、点击审核、AI 视频片段和带字幕音效的最终剪辑。"
+  },
+  "avatar": "avatars/expert.png",
+  "categoryId": "06-ContentCreative",
+  "defaultInitPrompt": {
+    "en": "Lanjutkan project video saya: cek langkah berikutnya.",
+    "zh": "继续我的视频项目：检查下一步。"
+  },
+  "plugin": "ai-videographer",
+  "tags": [
+    { "en": "Short video", "zh": "短视频" },
+    { "en": "Property marketing", "zh": "房产营销" },
+    { "en": "AI video", "zh": "AI 视频" }
+  ],
+  "quickPrompts": [
+    { "en": "Lanjutkan project video saya: cek langkah berikutnya.", "zh": "继续我的视频项目：检查下一步。" },
+    { "en": "Buat video baru dari brief ini.", "zh": "根据这份简报做一个新视频。" },
+    { "en": "Cek setup: apakah semua alat dan kunci sudah siap?", "zh": "检查环境：工具和密钥都准备好了吗？" }
+  ]
+}

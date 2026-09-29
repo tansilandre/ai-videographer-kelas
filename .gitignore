@@ -7,6 +7,9 @@
 !5_Projects/README.md
 99_Output/*
 !99_Output/.gitkeep
+# WorkBuddy's per-workspace memory and artifacts
+.workbuddy-ai/
+
 # python
 __pycache__/
 *.pyc

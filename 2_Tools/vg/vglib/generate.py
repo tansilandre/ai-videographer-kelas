@@ -18,6 +18,7 @@ import math
 import os
 import random
 import shlex
+import subprocess
 import sys
 import time
 import uuid
@@ -737,6 +738,10 @@ def build_video_job(project, sl, shot, state, spec, resolution=None):
             ids[mode_spec["voices"]] = voices
         if paths and mode_spec.get("refs"):  # the anchor (planned first frame, else panel) + video_refs
             files[mode_spec["refs"]] = paths
+    elif mode == "lipsync":  # the picture, and the stretch of the narration the presenter says
+        files[mode_spec["image"]] = [paths[0]]
+        files[mode_spec["audio"]] = [_lipsync_cut(project, shot, paths[1])]
+        singles.update((mode_spec["image"], mode_spec["audio"]))
     elif paths and mode_spec.get("refs"):  # text mode: video_refs only
         files[mode_spec["refs"]] = paths
 
@@ -773,8 +778,25 @@ def build_video_job(project, sl, shot, state, spec, resolution=None):
         "kind": "video", "target": "clip:" + sid, "shot": sid, "mode": mode, "provider": spec["provider"],
         "model": spec["model"], "prompt": prompt, "params": params, "files": files, "ids": ids,
         "singles": singles, "set": constants, "key": key, "base_key": key,
+        "omit": tuple(spec.get("payload_omit") or ()),
         "cost": registry.price(spec, params), "ext": ".mp4",
     }
+
+
+def _lipsync_cut(project, shot, source):
+    """The narration window a lipsync shot says, as its own file (6_Edit/1_Audio/Lipsync_<shot>.mp3: MP3 at
+    44.1 kHz stereo, the most widely accepted input; a 48 kHz mono WAV got a 500 from InfiniteTalk)."""
+    window = shot["lipsync"]
+    start, end = float(window["start"]), float(window["end"])
+    dest = project.path / "6_Edit" / "1_Audio" / ("Lipsync_%s.mp3" % shot["id"])
+    dest.parent.mkdir(parents=True, exist_ok=True)
+    result = subprocess.run(["ffmpeg", "-v", "error", "-y", "-i", str(source), "-af",
+                             "atrim=start=%.3f:end=%.3f,asetpts=N/SR/TB" % (start, end), "-ar", "44100", "-ac", "2",
+                             "-b:a", "192k", str(dest)], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    if result.returncode != 0 or not dest.is_file():
+        raise UsageError("%s: could not cut the narration %.2f-%.2fs: %s"
+                         % (shot["id"], start, end, result.stderr.decode("utf-8", "replace")[-200:]))
+    return dest
 
 
 def _select_shots(sl, shot_ids, all_shots):
@@ -814,17 +836,43 @@ def _open_tty():
     return io.TextIOWrapper(io.FileIO(fd, "r+"), line_buffering=True, write_through=True)
 
 
-def _human_confirm(total, count, command):
-    _human_confirm_text("Approve %g credits for %d video shot(s)?" % (total, count), command)
+AGENT_SHELL_VARS = ("CODEBUDDY_TOOL_CALL_ID",)  # set in every command WorkBuddy's agent runs
 
 
-def _human_confirm_text(question, command):
-    """In terminal mode a human must type a random code. This is friction against accidental or casual
-    approval, not a wall: an agent that drives a terminal itself could type it. The hard limit is a
-    dedicated kie.ai key with a total credit cap."""
-    mode = (config.setting("VG_APPROVAL_MODE") or "terminal").lower()
+def approval_mode():
+    """terminal: the human types a code in their own terminal. page: the human clicks on the review page
+    (`vg review`); the command line never approves. chat: the agent approves after the human's yes."""
+    return (config.setting("VG_APPROVAL_MODE") or "terminal").lower()
+
+
+def _human_confirm(total, count, command, via_page=False):
+    _human_confirm_text("Approve %g credits for %d video shot(s)?" % (total, count), command, via_page)
+
+
+def _human_confirm_text(question, command, via_page=False):
+    """In terminal mode a human must type a random code; in page mode only a click on the review page
+    (via_page) approves. Both are friction against accidental or casual approval, not a wall: an agent
+    that drives a terminal or the page itself could do it. The hard limit is a dedicated kie.ai key with
+    a total credit cap."""
+    mode = approval_mode()
     if mode == "chat":
         return
+    words = shlex.split(command.split("&&")[-1])
+    project = words[words.index("-p") + 1] if "-p" in words[:-1] else "<project>"
+    if mode == "page":
+        if via_page:
+            return
+        raise Refused("VG_APPROVAL_MODE=page: the human approves by clicking on the review page, never on the "
+                      "command line. Open it with `python3 2_Tools/vg/vg.py review -p %s --detach`, send the "
+                      "human the link, and wait until they say they clicked; then run `vg next -p %s`."
+                      % (project, project))
+    if via_page:
+        raise Refused("VG_APPROVAL_MODE=%s: approve in your own terminal, where you type the code it shows:\n  %s"
+                      % (mode, command))
+    if any(os.environ.get(var) for var in AGENT_SHELL_VARS):
+        raise Refused("Approval must be typed by the human in their own terminal; this shell belongs to an "
+                      "agent, so the code would be shown to it. Give the human this command to run in their "
+                      "own terminal app:\n  " + command)
     try:
         tty = _open_tty()
     except OSError as exc:
@@ -848,7 +896,8 @@ def shot_spec(sl, shot, allow_untested=False):
     return registry.get(sl.video_model_id(shot), "video", allow_untested)
 
 
-def approve_video(project, shot_ids, all_shots, confirm, new_take=False, allow_untested=False, resolution=None):
+def approve_video(project, shot_ids, all_shots, confirm, new_take=False, allow_untested=False, resolution=None,
+                  via_page=False):
     sl = load(project)
     state = project.read_state()
     blocked = review.problems(project, sl, state)
@@ -881,7 +930,7 @@ def approve_video(project, shot_ids, all_shots, confirm, new_take=False, allow_u
     if confirm is None or not math.isfinite(float(confirm)) or abs(float(confirm) - total) > 1e-6:
         raise Refused("Not approved. --confirm must equal the total the human agreed to (%g here). "
                       "If the human agreed to a different number, stop and ask again." % total)
-    _human_confirm(total, len(rows), command)
+    _human_confirm(total, len(rows), command, via_page)
     before = {sid: state["approvals"]["video"].get(sid) for sid, _ in rows}
     with project.transaction() as st:
         written = 0
@@ -959,7 +1008,7 @@ def run_video(project, shot_ids, all_shots, dry_run=False, new_take=False, allow
 
             def build(job=job):
                 payload = {"prompt": job["prompt"]}
-                payload.update(job["params"])
+                payload.update({k: v for k, v in job["params"].items() if k not in job.get("omit", ())})
                 payload.update(job["set"])
                 for field, paths in job["files"].items():
                     urls = [session.upload(video_input(project, p)) for p in paths]

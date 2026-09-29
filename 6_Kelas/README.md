@@ -6,7 +6,7 @@
 
 Di kelas ini kamu belajar dua hal. Pertama, dasar AI: apa itu AI, cara ia belajar, dan kenapa ia menebak, bukan tahu. Kedua, praktik: membuat satu reel properti dari brief sampai video, dengan bantuan agent AI.
 
-Kamu tidak perlu hafal perintah. Kamu bicara ke *agent* (AI yang bisa membaca file dan menjalankan alat untukmu), yaitu Claude Code, dengan bahasa biasa. Misalnya: "Buat reel dari brief di 5_Projects/.../0_Source". Agent membaca *skill* (file instruksi cara kerja kita) di `1_Skills/`, lalu menjalankan alat vg. Tugasmu memutuskan dan menyetujui.
+Kamu tidak perlu hafal perintah. Kamu bicara ke *agent* (AI yang bisa membaca file dan menjalankan alat untukmu) dengan bahasa biasa. Di workshop, agent-nya WorkBuddy dengan *Expert* AI Videographer dan model cepat glm-5.3-flash. Claude Code juga bisa dipakai, dengan cara yang sama. Misalnya: "Buat reel dari brief di 5_Projects/.../0_Source". Agent membaca *skill* (file instruksi cara kerja kita) di `1_Skills/`, lalu menjalankan alat vg. Tugasmu memutuskan dan menyetujui.
 
 Semua contoh di kelas ini memakai satu reel: **Tebak Harga**. Kliennya Rumah Kita Realty, agen properti fiktif. Produknya Cluster Aster di Kota Harapan, kota fiktif. Presenternya Rani, orang yang dibuat AI dari nol, bukan orang asli. Semua gambar di kelas ini dibuat AI.
 
@@ -14,7 +14,7 @@ Semua contoh di kelas ini memakai satu reel: **Tebak Harga**. Kliennya Rumah Kit
 
 - Untuk pemula total. Kamu belum pernah memakai *terminal* (jendela tempat mengetik perintah ke komputer) atau *coding agent*? Tidak apa-apa. Kita mulai dari nol.
 - Bagian 1 bisa dibaca tanpa komputer.
-- Untuk Bagian 2 kamu butuh sebuah Mac, internet, dan sedikit saldo di [kie.ai](https://kie.ai) (gambar dan video) dan [OpenRouter](https://openrouter.ai) (suara dan musik). Mac dibutuhkan karena caption dan grafis digambar dengan Swift, bahasa pemrograman buatan Apple.
+- Untuk Bagian 2 kamu butuh sebuah Mac, internet, dan sedikit saldo di [kie.ai](https://kie.ai) (gambar dan video) dan [OpenRouter](https://openrouter.ai) (suara dan musik). Untuk otak agent di WorkBuddy, kamu juga butuh sedikit saldo di gateway seperti [SumoPod](https://ai.sumopod.com), yang dibayar dalam rupiah. Mac dibutuhkan karena caption dan grafis digambar dengan Swift, bahasa pemrograman buatan Apple.
 
 ## Yang akan kamu buat
 
@@ -34,9 +34,9 @@ Di reel contoh, rumahnya gambar AI karena klien dan proyeknya fiktif. Di proyek 
 
 | Bagian | Waktu baca |
 |---|---|
-| Pelajaran 00 | sekitar 10 menit |
+| Pelajaran 00 | sekitar 11 menit |
 | Bagian 1, teori (Pelajaran 01–03) | sekitar 30 menit |
-| Bagian 2, praktik (Pelajaran 04–13) | sekitar 1 jam 30 menit |
+| Bagian 2, praktik (Pelajaran 04–13) | sekitar 1 jam 40 menit |
 | Studi kasus, brief latihan, dan checklist | sekitar 30 menit |
 
 Waktu baca dihitung dari jumlah kata, dengan kecepatan baca santai sekitar 150 kata per menit. Latihan kecil di setiap pelajaran, instalasi di Pelajaran 04, dan brief latihan butuh waktu tambahan. Waktu itu belum kami ukur, karena tergantung komputermu, internetmu, dan berapa kali kamu mengulang di gerbang.
@@ -52,14 +52,14 @@ Satu saran: jangan buru-buru di gerbang. Persetujuan yang tergesa-gesa adalah ca
 | Tahap | Pelajaran | Gerbang |
 |---|---|---|
 | 1 · Brief dan shot list | 06 | |
-| 2 · Look | 07 | **Gerbang 1** · `vg approve look` |
+| 2 · Look | 07 | **Gerbang 1** · klik *Approve look* di halaman review |
 | 3 · Karakter dan frame | 08 | |
 | 4 · Audio | 09 | |
-| 5 · Animatic | 10 | **Gerbang 2** · `vg approve visuals` |
-| 6 · Video | 11 | **Gerbang 3** · `vg approve video` + kode 4 digit |
+| 5 · Animatic | 10 | **Gerbang 2** · klik *Approve reel* di halaman review |
+| 6 · Video | 11 | **Gerbang 3** · klik *Approve · N credits* per klip di bagian Video, lalu konfirmasi |
 | 7 · Edit final | 12 | |
 
-Di setiap gerbang alat berhenti sampai kamu setuju. Kode persetujuan diketik manusia di terminalnya sendiri. Agent tidak bisa mengetiknya.
+Di setiap gerbang alat berhenti sampai kamu setuju. Di kelas ini kita memakai `VG_APPROVAL_MODE=page`: ketiga gerbang adalah klikmu di halaman review (`vg review`). Perintah `vg approve` selalu ditolak di mode ini, jadi agent tidak bisa menyetujui untukmu. Cara lain, mode `terminal`: kamu mengetik kode acak 4 digit di terminalmu sendiri.
 
 ## Semua pelajaran
 
@@ -67,24 +67,24 @@ Kerjakan berurutan. Setiap pelajaran memakai yang sebelumnya.
 
 | No | Pelajaran | Yang kamu pelajari | Waktu baca |
 |---|---|---|---|
-| 00 | [Mulai di Sini](1_Pelajaran/Pelajaran_00_Mulai_Di_Sini_v1.0.md) | isi kelas dan peta bahan, aturan emas, enam aturan keselamatan, biaya satu reel | ±10 menit |
-| 01 | [Apa Itu AI dan Cara Ia Belajar](1_Pelajaran/Pelajaran_01_Apa_Itu_AI_v1.0.md) | beda program biasa dan AI, empat langkah AI belajar, halusinasi, fakta yang wajib dicek manusia | ±8 menit |
-| 02 | [Model Gambar, Video, Suara, dan Agent](1_Pelajaran/Pelajaran_02_Model_Dan_Agent_v1.0.md) | lima model dan tugasnya, kenapa teks dan jari sering salah, kenapa klip pendek, apa itu agent | ±10 menit |
-| 03 | [Cara Berpikir dengan AI: Prompt, Batas, dan Etika](1_Pelajaran/Pelajaran_03_Cara_Berpikir_Dengan_AI_v1.0.md) | enam prinsip kerja, prompt lima bagian, batas AI dan cara mengakalinya, lima aturan etika | ±10 menit |
-| 04 | [Persiapan Alat](1_Pelajaran/Pelajaran_04_Persiapan_Alat_v1.0.md) | memakai Terminal, memasang alat, menyimpan kunci API di `.env`, `vg doctor` sampai nol FAIL | ±10 menit, plus instalasi |
-| 05 | [Cara Kerja AI Videographer](1_Pelajaran/Pelajaran_05_Cara_Kerja_Harness_v1.0.md) | tiga pemain, tujuh tahap dan tiga gerbang, folder proyek dan nama file, kredit dan batas biaya | ±10 menit |
-| 06 | [Dari Brief ke Shot List](1_Pelajaran/Pelajaran_06_Brief_Ke_Shot_List_v1.0.md) | membaca brief, beat dulu baru shot, janji hook (`promise` dan `pays_off`), `vg validate` | ±10 menit |
-| 07 | [Look: Satu Dunia Visual, dan Halaman Review](1_Pelajaran/Pelajaran_07_Look_Dan_Review_v1.0.md) | satu look untuk seluruh reel, style frame, halaman review, Gerbang 1 | ±9 menit |
-| 08 | [Karakter, Storyboard, dan Frame](1_Pelajaran/Pelajaran_08_Karakter_Storyboard_Frame_v1.0.md) | lembar referensi Rani, panel di awal aksi, frame pertama dan terakhir, cek kesinambungan | ±9 menit |
-| 09 | [Audio Dulu](1_Pelajaran/Pelajaran_09_Audio_Dulu_v1.0.md) | narasi voice-over, memilih suara dengan telinga, musik dan `music.at`, efek suara | ±10 menit |
-| 10 | [Rencana Edit dan Animatic](1_Pelajaran/Pelajaran_10_Edit_Plan_Dan_Animatic_v1.0.md) | `Edit_Spec.json`, transisi yang punya alasan, menonton animatic, Gerbang 2 | ±9 menit |
-| 11 | [Prompt Video dan Gerbang Biaya](1_Pelajaran/Pelajaran_11_Video_Dan_Gerbang_Biaya_v1.0.md) | prompt yang hanya menjelaskan gerak, estimasi biaya, Gerbang 3, klip pilot, `vg resume` | ±10 menit |
-| 12 | [Edit Final dan Kirim](1_Pelajaran/Pelajaran_12_Edit_Final_Dan_Kirim_v1.0.md) | draft dan versi final, daftar cek sebelum kirim, versi tanpa menimpa | ±7 menit |
-| 13 | [Kesalahan yang Kami Buat](1_Pelajaran/Pelajaran_13_Kesalahan_Yang_Kami_Buat_v1.0.md) | kenapa versi pertama gagal, aturan yang lahir darinya, tiga bug yang ditemukan dengan memeriksa | ±7 menit |
+| 00 | [Mulai di Sini](1_Pelajaran/Pelajaran_00_Mulai_Di_Sini_v1.1.md) | isi kelas dan peta bahan, aturan emas, enam aturan keselamatan, biaya satu reel | ±11 menit |
+| 01 | [Apa Itu AI dan Cara Ia Belajar](1_Pelajaran/Pelajaran_01_Apa_Itu_AI_v1.1.md) | beda program biasa dan AI, empat langkah AI belajar, halusinasi, fakta yang wajib dicek manusia | ±8 menit |
+| 02 | [Model Gambar, Video, Suara, dan Agent](1_Pelajaran/Pelajaran_02_Model_Dan_Agent_v1.1.md) | lima model dan tugasnya, kenapa teks dan jari sering salah, kenapa klip pendek, apa itu agent | ±11 menit |
+| 03 | [Cara Berpikir dengan AI: Prompt, Batas, dan Etika](1_Pelajaran/Pelajaran_03_Cara_Berpikir_Dengan_AI_v1.1.md) | enam prinsip kerja, prompt lima bagian, batas AI dan cara mengakalinya, lima aturan etika | ±10 menit |
+| 04 | [Persiapan Alat](1_Pelajaran/Pelajaran_04_Persiapan_Alat_v1.1.md) | memakai Terminal, memasang alat, WorkBuddy dan Expert AI Videographer, menyimpan kunci API dan `VG_APPROVAL_MODE=page` di `.env`, `vg doctor` sampai nol FAIL | ±13 menit, plus instalasi |
+| 05 | [Cara Kerja AI Videographer](1_Pelajaran/Pelajaran_05_Cara_Kerja_Harness_v1.1.md) | tiga pemain, `vg next`, tujuh tahap dan tiga gerbang, folder proyek dan nama file, kredit dan batas biaya | ±13 menit |
+| 06 | [Dari Brief ke Shot List](1_Pelajaran/Pelajaran_06_Brief_Ke_Shot_List_v1.1.md) | membaca brief, beat dulu baru shot, janji hook (`promise` dan `pays_off`), `vg validate` | ±10 menit |
+| 07 | [Look: Satu Dunia Visual, dan Halaman Review](1_Pelajaran/Pelajaran_07_Look_Dan_Review_v1.1.md) | satu look untuk seluruh reel, style frame, halaman review, Gerbang 1 dengan satu klik | ±10 menit |
+| 08 | [Karakter, Storyboard, dan Frame](1_Pelajaran/Pelajaran_08_Karakter_Storyboard_Frame_v1.1.md) | lembar referensi Rani, panel di awal aksi, frame pertama dan terakhir, cek kesinambungan | ±9 menit |
+| 09 | [Audio Dulu](1_Pelajaran/Pelajaran_09_Audio_Dulu_v1.1.md) | narasi voice-over, memilih suara dengan telinga, musik dan `music.at`, efek suara | ±10 menit |
+| 10 | [Rencana Edit dan Animatic](1_Pelajaran/Pelajaran_10_Edit_Plan_Dan_Animatic_v1.1.md) | `Edit_Spec.json`, transisi yang punya alasan, menonton animatic, Gerbang 2 | ±9 menit |
+| 11 | [Prompt Video dan Gerbang Biaya](1_Pelajaran/Pelajaran_11_Video_Dan_Gerbang_Biaya_v1.1.md) | prompt yang hanya menjelaskan gerak, estimasi biaya, bagian Video dan Gerbang 3, klip pilot, `vg resume` | ±11 menit |
+| 12 | [Edit Final dan Kirim](1_Pelajaran/Pelajaran_12_Edit_Final_Dan_Kirim_v1.1.md) | draft dan versi final, daftar cek sebelum kirim, versi tanpa menimpa | ±7 menit |
+| 13 | [Kesalahan yang Kami Buat](1_Pelajaran/Pelajaran_13_Kesalahan_Yang_Kami_Buat_v1.1.md) | kenapa versi pertama gagal, aturan yang lahir darinya, tiga bug yang ditemukan dengan memeriksa | ±7 menit |
 
 Setiap pelajaran punya bentuk yang sama: Tujuan, Kenapa ini penting, isi, Latihan kecil, Cek pemahaman, dan Ringkasan. Jawab Cek pemahaman dulu, baru buka jawabannya.
 
-Ketemu istilah yang belum kamu pahami? Cari di [Glosarium](Glosarium_v1.0.md).
+Ketemu istilah yang belum kamu pahami? Cari di [Glosarium](Glosarium_v1.1.md).
 
 ## Studi kasus: Tebak Harga
 
@@ -101,18 +101,25 @@ Biaya nyata reel ini: gambar sekitar 70 kredit, video 7 klip × 35 = 245 kredit 
 
 Setelah Pelajaran 13, buat reelmu sendiri:
 
-- **[Brief Latihan · Rumah Melati, 3 Alasan](3_Latihan/Brief_Latihan_v1.0.md)**: brief fiktif untuk latihan pertamamu dari awal sampai akhir.
-- **[Checklist per Tahap](3_Latihan/Checklist_Per_Tahap_v1.0.md)**: centang semua kotak sebelum pindah tahap.
+- **[Brief Latihan · Rumah Melati, 3 Alasan](3_Latihan/Brief_Latihan_v1.1.md)**: brief fiktif untuk latihan pertamamu dari awal sampai akhir.
+- **[Checklist per Tahap](3_Latihan/Checklist_Per_Tahap_v1.1.md)**: centang semua kotak sebelum pindah tahap.
+
+## Workshop dengan WorkBuddy
+
+Di workshop, agent-nya WorkBuddy, aplikasi agent desktop dari Tencent. Expert AI Videographer selalu bertanya ke alat dulu dengan `vg next`, lalu mengerjakan satu langkah itu saja. Karena itu model yang cepat dan murah, glm-5.3-flash, cukup untuk menjadi otaknya.
+
+- **[Panduan WorkBuddy](5_WorkBuddy/Panduan_WorkBuddy_v1.0.md)**: memasang WorkBuddy, Expert AI Videographer, dan model glm-5.3-flash, lalu membuat satu reel dengannya.
+- **[Runsheet Workshop](5_WorkBuddy/Runsheet_Workshop_v1.0.md)**: susunan acara untuk fasilitator.
 
 ## Deck
 
 Slide kelas, urutan dan isinya sama dengan pelajaran:
 
-- [Kelas_AI_Videographer_Deck_v1.1.pptx](4_Deck/Kelas_AI_Videographer_Deck_v1.1.pptx) (PowerPoint)
-- [Kelas_AI_Videographer_Deck_v1.1.pdf](4_Deck/Kelas_AI_Videographer_Deck_v1.1.pdf) (PDF)
+- [Kelas_AI_Videographer_Deck_v1.2.pptx](4_Deck/Kelas_AI_Videographer_Deck_v1.2.pptx) (PowerPoint)
+- [Kelas_AI_Videographer_Deck_v1.2.pdf](4_Deck/Kelas_AI_Videographer_Deck_v1.2.pdf) (PDF)
 
 ## Satu hal untuk diingat
 
 Gambar dulu. Suara dulu. Gerak terakhir.
 
-Berikutnya: [Pelajaran 00 · Mulai di Sini](1_Pelajaran/Pelajaran_00_Mulai_Di_Sini_v1.0.md)
+Berikutnya: [Pelajaran 00 · Mulai di Sini](1_Pelajaran/Pelajaran_00_Mulai_Di_Sini_v1.1.md)

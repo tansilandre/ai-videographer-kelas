@@ -154,4 +154,4 @@ Pilih satu rumah, kos, atau toko yang kamu kenal. Tanpa alat apa pun, tulis tabe
 - Janji hook dicatat dengan `promise` dan `pays_off`.
 - Agent menulis `1_Script/Shotlist.json` dan mengeceknya dengan `vg validate`. Kamu memeriksa isinya.
 
-Berikutnya: [Pelajaran 07 · Look: Satu Dunia Visual, dan Halaman Review](Pelajaran_07_Look_Dan_Review_v1.0.md)
+Berikutnya: [Pelajaran 07 · Look: Satu Dunia Visual, dan Halaman Review](Pelajaran_07_Look_Dan_Review_v1.1.md)

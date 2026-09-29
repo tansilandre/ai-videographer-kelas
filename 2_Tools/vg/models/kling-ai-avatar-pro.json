@@ -1,0 +1,23 @@
+{
+  "id": "kling-ai-avatar-pro",
+  "kind": "video",
+  "provider": "kie",
+  "status": "live-tested",
+  "notes": "Kling AI Avatar Pro on kie.ai (jobs/createTask, model kling/ai-avatar-pro): one picture plus an audio file in, a talking presenter with lips matched to that audio out, 1080p. Used in lipsync mode so the presenter says the reel's own narration on camera. Fields per docs.kie.ai/market/kling/ai-avatar-pro (2026-09-29): image_url (jpeg/png, max 10 MB), audio_url (mp3/wav/aac/mp4/ogg, max 100 MB, max 5 min), prompt (max 5000); no resolution or seed field. Price from kie.ai/pricing (2026-09-29): 16 credits per second (Pro, 1080p, listed as 'up to 15 seconds', so lipsync windows are capped at 15 s); the estimate counts started seconds. Chosen over InfiniteTalk after that model's gaze drifted and its kie.ai queue timed out at 20 minutes. Live-tested 2026-09-29 (Tebak Harga, 4 clips, each ~2.5 min, no failures): fields accepted as above; output 1072x1920 30 fps with the sent audio unshifted; charged 32 for 2.0 s and also 32 for a 2.74 s cut, so kie appears to bill whole seconds rounded down; the estimate keeps rounding up, which errs high.",
+  "model": "kling/ai-avatar-pro",
+  "prompt_max": 5000,
+  "params": {
+    "duration": { "type": "number" }
+  },
+  "modes": {
+    "lipsync": { "image": "image_url", "audio": "audio_url" }
+  },
+  "payload_omit": ["duration", "aspect_ratio", "resolution", "seed"],
+  "lipsync": { "max_seconds": 15 },
+  "pricing": {
+    "keys": [],
+    "table": 16,
+    "per_second": true,
+    "round_up": true
+  }
+}

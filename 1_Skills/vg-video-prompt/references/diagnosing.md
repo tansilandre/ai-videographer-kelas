@@ -18,6 +18,10 @@ speech checks, see `1_Skills/vg-video/references/troubleshooting.md`.
 
 | Symptom | Likely cause | Fix |
 |---|---|---|
+| A sign, logo or tree appears that is not in the real photo (Tebak Harga S02: a purple fake-brand sign; S08: a frangipani tree) | the prompt asked for foreground parallax ("the tree and the sign in front slide past") and the model invented objects to supply it | on a real-photo first frame never ask for foreground elements; write "nothing new enters the frame" and lock signs, trees and people; use the clean stretch of the clip in the edit meanwhile |
+| A push-in comes back as a sideways glide (Tebak Harga S05) | Veo Lite read the composition (door off-centre) as a truck | name the end frame ("until the door fills the centre third"); or keep the glide if it reads as real footage |
+| The provider fails with "unable to generate audio for this request" (Tebak Harga S09) | the audio line was only negations ("Nobody speaks. No music, no subtitles.") | give an audio line to generate: "AUDIO: soft outdoor ambience, a light breeze, distant birds"; keep "mouth closed" under PERFORMANCE; mute clips in the edit when the reel's sound is made first |
+| A loud invented sound (a glass crash under a selfie, Tebak Harga S01) | the model fills the audio track with whatever it guesses | listen to every clip; `"clip_volume": 0` in the edit when the reel has its own narration and music |
 | Looks like a staged AI ad | glossy still; ad words; no micro-life | film-photography still (`vg-image-prompt`); real camera situation in the prompt; micro-events; delete slop words |
 | Plastic, airbrushed skin | the still was beautified or edited twice | regenerate the still with "matte skin, visible pores, no retouching"; never re-edit a face twice |
 | Clips don't look like one film | different light and grade per shot | same style prefix; stills chosen by light; one grade pass in the edit |

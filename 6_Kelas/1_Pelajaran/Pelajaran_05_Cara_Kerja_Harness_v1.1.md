@@ -3,7 +3,8 @@
 ## Tujuan
 
 - Menjelaskan peran tiga pemain: kamu, agent, dan alat vg.
-- Menyebut tujuh tahap dan tiga gerbang, dan apa yang kamu periksa di setiap gerbang.
+- Membaca hasil `vg next`, satu langkah berikutnya proyekmu.
+- Menyebut tujuh tahap dan tiga gerbang, apa yang kamu periksa di setiap gerbang, dan cara menyetujuinya.
 - Menemukan file apa pun di folder proyek, dan membaca arti namanya.
 - Memahami kredit, batas biaya, dan buku catatan biaya (*ledger*).
 
@@ -16,7 +17,7 @@ Kamu tidak perlu hafal perintah. Tapi kamu perlu tahu posisimu: tahap berapa, ap
 | Pemain | Tugasnya |
 |---|---|
 | Kamu | Menulis brief, memilih hasil terbaik, dan menyetujui. |
-| Agent AI (Claude Code) | Membaca skill, menulis rencana dan prompt, menjalankan alat, lalu memeriksa hasilnya. |
+| Agent AI (WorkBuddy dengan Expert AI Videographer, atau Claude Code) | Membaca skill, menulis rencana dan prompt, menjalankan alat, lalu memeriksa hasilnya. |
 | Alat vg | Memanggil model, mencatat biaya, dan menolak video yang belum kamu setujui. |
 
 Kamu bicara ke agent dengan bahasa biasa. Misalnya, setelah brief klien ada di folder proyek:
@@ -27,6 +28,29 @@ Agent lalu membaca `1_Skills/vg-director/SKILL.md`, file instruksi yang menyebut
 
 Agent pintar, tapi bisa salah. Alat vg tidak pintar, tapi tegas: langkah mahal yang belum kamu setujui ditolak, dengan pesan berawalan `REFUSED:`.
 
+### Satu langkah sekali: `vg next`
+
+Expert AI Videographer di WorkBuddy punya satu kebiasaan: sebelum setiap langkah, ia bertanya ke alat.
+
+```bash
+python3 2_Tools/vg/vg.py next -p NAMA_PROYEK
+```
+
+Ganti `NAMA_PROYEK` dengan nama folder proyekmu di `5_Projects/`. `vg next` membaca rencana, buku catatan biaya, dan file di folder proyek, lalu mencetak satu langkah berikutnya. Ia tidak menjalankan atau membayar apa pun. Setiap baris diawali satu tanda:
+
+| Tanda | Artinya |
+|---|---|
+| `STAGE` | posisi proyek sekarang, dan alasannya |
+| `RUN` | satu perintah yang dijalankan sekarang |
+| `WRITE` | file yang harus ditulis atau diperbaiki, dan skill yang dibaca dulu |
+| `ASK` | berhenti: beri tahu atau tanya kamu, lalu tunggu jawabanmu |
+| `THEN` | yang dilakukan sesudahnya, biasanya menjalankan `vg next` lagi |
+| `DONE` | reel selesai |
+
+Kadang muncul juga baris `NOTE`, berisi catatanmu dari halaman review yang harus dikerjakan agent.
+
+Karena alat yang mengingat alurnya, model yang cepat dan murah seperti glm-5.3-flash cukup menjadi otak agent. Kamu juga boleh menjalankan `vg next` sendiri kapan saja, misalnya saat bertanya-tanya "sekarang kita di mana?".
+
 ## Tujuh tahap, tiga gerbang
 
 Aturan emasnya: **gambar itu murah, video itu mahal.** Satu gambar 10 kredit. Satu klip video 8 detik 35 kredit. Jadi seluruh reel disetujui sebagai gambar dulu, baru dibuat bergerak.
@@ -34,11 +58,11 @@ Aturan emasnya: **gambar itu murah, video itu mahal.** Satu gambar 10 kredit. Sa
 | # | Tahap | Yang terjadi | Gerbang |
 |---|---|---|---|
 | 1 | Brief dan shot list | brief dipecah menjadi bagian cerita (*beat*), satu shot per beat | |
-| 2 | Look | 2–3 *style frame* (gambar contoh gaya): satu dunia, satu cahaya, satu *grade* (olahan warna) | **1** · `vg approve look` |
+| 2 | Look | 2–3 *style frame* (gambar contoh gaya): satu dunia, satu cahaya, satu *grade* (olahan warna) | **1** · klik *Approve look* |
 | 3 | Karakter dan frame | lembar referensi Rani, panel *storyboard*, frame pertama tiap shot | |
 | 4 | Audio | narasi, musik, efek suara | |
-| 5 | Animatic | seluruh reel sebagai gambar diam, dengan caption dan suara | **2** · `vg approve visuals` |
-| 6 | Video | gambar yang disetujui dibuat bergerak, mulai dari satu klip pilot | **3** · `vg approve video` + kode |
+| 5 | Animatic | seluruh reel sebagai gambar diam, dengan caption dan suara | **2** · klik *Approve reel* |
+| 6 | Video | gambar yang disetujui dibuat bergerak, mulai dari satu klip pilot | **3** · klik *Approve* per klip, lalu konfirmasi |
 | 7 | Edit final | klip, suara, caption, dan grafis disatukan | |
 
 Di setiap gerbang alat berhenti sampai kamu bilang setuju. Sebelum look disetujui, tidak ada storyboard atau frame. Sebelum reel disetujui sebagai gambar, tidak ada video.
@@ -51,12 +75,22 @@ Di setiap gerbang alat berhenti sampai kamu bilang setuju. Sebelum look disetuju
 
 Di Gerbang 1 dan 2 kamu memeriksa di **halaman review**, halaman web di komputermu sendiri. Di sana kamu melihat look, lembar referensi, dan setiap beat. Kamu bisa mengganti *take* (versi hasil) dan menulis catatan di samping gambar. Klik **Done, back to the agent** kalau selesai. Agent membaca catatanmu, memperbaiki, lalu membuka halamannya lagi.
 
-Dengan pengaturan bawaan (`VG_APPROVAL_MODE=terminal` di `.env`), halaman itu menampilkan perintah persetujuan. Kamu menjalankannya di Terminal-mu sendiri, dan alat memintamu mengetik kode acak 4 digit. Agent tidak bisa mengetik kode itu. Itu disengaja.
+Di kelas ini kita memakai `VG_APPROVAL_MODE=page` di `.env` (Pelajaran 04). Artinya ketiga gerbang adalah klik di halaman itu:
 
-Gerbang 3 paling ketat. Sebelum video, agent wajib menunjukkan board dan biaya per klip, lalu menunggu "ya" yang jelas darimu di chat. Aturannya:
+- **Gerbang 1:** tombol **Approve look** di bawah style frame.
+- **Gerbang 2:** tombol **Approve reel** di bawah animatic.
+- **Gerbang 3:** di bagian **Video**, setiap klip menunjukkan biayanya, dengan tombol seperti **Approve · 35 credits**. Setelah diklik, halaman bertanya sekali lagi sebelum menyetujui.
+
+Di mode ini perintah `vg approve` dari terminal selalu ditolak. Jadi agent tidak bisa menyetujui apa pun untukmu. Halaman review hanya milikmu: agent dilarang mengklik tombolnya.
+
+Di WorkBuddy, agent membuka halaman ini dengan `vg review --detach`: halamannya tetap terbuka, tapi agent tidak ikut tertahan. Ia mengirimimu tautannya di chat. Kamu mengklik, lalu bilang di chat bahwa kamu sudah selesai. Agent membaca klik dan catatanmu dengan `vg next`.
+
+Cara lain: mode `terminal`. Di sana halaman review menampilkan perintah persetujuan. Kamu menjalankannya di Terminal-mu sendiri, dan alat memintamu mengetik kode acak 4 digit. Ada juga mode `chat`, yang paling lemah: agent sendiri yang mencatat persetujuan setelah kamu bilang ya di chat.
+
+Gerbang 3 paling ketat, karena di situ uang keluar. Aturannya:
 
 - Mulai dari **satu klip pilot**. Tonton dulu, baru lanjut.
-- **Setiap persetujuan membayar tepat satu take.** Klip gagal atau diulang butuh "ya" baru dan persetujuan baru.
+- **Setiap persetujuan membayar tepat satu take.** Klip gagal atau diulang butuh persetujuan baru: klik baru di halaman review.
 
 ## Folder proyek dan nama file
 
@@ -118,10 +152,11 @@ Berturut-turut: saldo kie.ai; setiap gambar dan klip dengan versi, kredit terpak
 
 Yang wajib kamu jalankan sendiri sedikit saja:
 
-1. `bash install.sh`: sekali, saat persiapan.
+1. `bash install.sh`, dan untuk WorkBuddy `bash 2_Tools/workbuddy/install_workbuddy.sh --add-models`: sekali, saat persiapan.
 2. `vg doctor`: saat persiapan, dan kapan pun ada yang terasa aneh.
-3. `vg review -p NAMA_PROYEK`: halaman review. Biasanya agent yang membukanya, tapi tombol dan catatannya hanya milikmu.
-4. Perintah persetujuan (`vg approve look`, `vg approve visuals`, `vg approve video`): hanya saat halaman review atau agent memberikannya, dan hanya kalau kamu memang setuju. Kamu yang mengetik kodenya.
+3. `vg review -p NAMA_PROYEK`: halaman review. Biasanya agent yang membukanya, tapi tombol dan catatannya hanya milikmu. Di mode `page`, di sinilah kamu menyetujui ketiga gerbang.
+4. `vg next -p NAMA_PROYEK`: kapan saja, untuk melihat langkah berikutnya. Hanya membaca, tanpa biaya.
+5. Hanya di mode `terminal`: perintah persetujuan (`vg approve look`, `vg approve visuals`, `vg approve video`), saat halaman review atau agent memberikannya, dan hanya kalau kamu memang setuju. Kamu yang mengetik kodenya.
 
 Selebihnya, kamu bicara ke agent.
 
@@ -154,7 +189,7 @@ Buka folder `3_Templates/Project/` di folder kelas dan cocokkan isinya dengan ta
 <summary>Lihat jawaban</summary>
 
 1. Alat menolak (`REFUSED:`), karena Gerbang 2 belum dibuka. Agent seharusnya menunjukkan animatic dulu dan menunggu persetujuanmu.
-2. Tidak. Setiap persetujuan membayar tepat satu take, dan klip yang gagal sudah memakainya. Perlu "ya" baru darimu dan persetujuan baru.
+2. Tidak. Setiap persetujuan membayar tepat satu take, dan klip yang gagal sudah memakainya. Perlu persetujuan baru darimu: klik baru di halaman review.
 3. `project.json` hanya ditulis alat. `Shotlist.json` ditulis agent.
 
 </details>
@@ -162,9 +197,10 @@ Buka folder `3_Templates/Project/` di folder kelas dan cocokkan isinya dengan ta
 ## Ringkasan
 
 - Tiga pemain: kamu memutuskan, agent bekerja, alat vg menjaga uangmu.
-- Tujuh tahap, tiga gerbang: look, seluruh reel sebagai gambar, lalu biaya video. Video selalu paling akhir.
+- `vg next` mencetak satu langkah berikutnya. Expert AI Videographer selalu menjalankannya, dan kamu juga boleh.
+- Tujuh tahap, tiga gerbang: look, seluruh reel sebagai gambar, lalu biaya video. Di mode `page`, setiap gerbang adalah klikmu di halaman review. Video selalu paling akhir.
 - Setiap proyek punya folder yang sama, dari `0_Source` sampai `99_Output`. Alat memberi versi `_v1`; dokumen dan hasil akhir `_v1.0`.
 - Batas biaya ada di `.env`, catatan biaya di `project.json`. Hanya kamu yang mengubah `.env`, hanya alat yang menulis `project.json`.
 - Perintah yang kamu jalankan sendiri sedikit. Sisanya, bicara ke agent.
 
-Berikutnya: [Pelajaran 06 · Dari Brief ke Shot List](Pelajaran_06_Brief_Ke_Shot_List_v1.0.md)
+Berikutnya: [Pelajaran 06 · Dari Brief ke Shot List](Pelajaran_06_Brief_Ke_Shot_List_v1.1.md)

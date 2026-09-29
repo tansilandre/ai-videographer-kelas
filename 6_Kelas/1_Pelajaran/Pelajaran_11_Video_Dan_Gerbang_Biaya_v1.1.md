@@ -6,7 +6,7 @@ Setelah pelajaran ini kamu bisa:
 
 - membaca prompt video dan menilai apakah ia hanya menjelaskan gerakan;
 - menjelaskan kenapa tidak ada orang yang bicara di klip;
-- membaca estimasi biaya video dan melewati Gerbang 3 dengan aman;
+- membaca biaya per klip di bagian Video halaman review dan melewati Gerbang 3 dengan aman;
 - memulai dari satu klip pilot, lalu memeriksa setiap klip yang jadi.
 
 ## Kenapa ini penting
@@ -65,42 +65,37 @@ Ganti `NAMA_PROYEK` dengan nama folder proyekmu di `5_Projects/`. Untuk reel con
 | 6 klip berikutnya | 210 |
 | Total | 245 |
 
-Satu klip 8 detik bisa dipotong menjadi dua atau tiga potongan pendek di edit.
+Satu klip 8 detik bisa dipotong menjadi dua atau tiga potongan pendek di edit. Angka yang sama tampil di bagian **Video** halaman review, satu baris per klip.
 
 ## Gerbang 3, langkah demi langkah
 
-1. **Agent menunjukkan dan berhenti.** Kamu mendapat lokasi file *board* (papan review berisi semua gambar), tabel biaya per shot, saldo kredit, dan pertanyaan seperti: "Setujui pilot S01 seharga 35 kredit, atau semua 245?"
-2. **Kamu menjawab jelas di chat.** Misalnya: "Ya, pilot S01, 35 kredit." Diam, atau "bagus", bukan persetujuan.
-3. **Alat menolak agent.** Agent menjalankan perintah approve, tapi alat meminta kode yang harus diketik di terminal sungguhan. Agent tidak punya terminal seperti itu, jadi alat menjawab `REFUSED: Approval must be typed by the human in a terminal ...` beserta perintah persis untukmu.
-4. **Kamu menjalankannya di terminalmu sendiri.** Perintah dari agent diawali `cd` ke folder kelasmu. Bentuknya kira-kira begini; salin persis yang diberikan agent:
+Di kelas ini Gerbang 3 adalah klikmu di halaman review (`VG_APPROVAL_MODE=page`, Pelajaran 04).
 
-```bash
-python3 2_Tools/vg/vg.py approve video -p NAMA_PROYEK --shots S01 --confirm 35
-```
-
-Alat menampilkan tabel, lalu meminta kode acak 4 digit: `Type 4821 and press Enter to approve:`. Angkanya berbeda setiap kali. Ketik kodenya, tekan Enter. Kalau salah ketik, alat menjawab `Code did not match. Nothing was approved.`
-
-5. **Agent membuat klipnya**, hanya untuk shot yang baru disetujui:
+1. **Agent membuka halaman review dan berhenti.** Ia mengirim tautannya di chat, dengan pesan seperti: "Video butuh kredit, jadi kamu yang memutuskan. Setujui klip pilot S01 (35 kredit) di bagian Video."
+2. **Kamu membuka bagian Video.** Bagian ini baru terbuka setelah look dan reel disetujui. Di atasnya tertulis kredit yang sudah terpakai dari batas proyekmu (`VG_BUDGET_PROJECT`). Di bawahnya ada tabel: satu baris per klip, dengan nama shot, isinya, durasinya, dan biayanya dalam kredit.
+3. **Kamu klik Approve di satu klip saja: klip pilot.** Tombolnya menyebut biayanya, misalnya **Approve · 35 credits**. Browser lalu bertanya sekali lagi: *Spend 35 credits on S01? This pays for one take of each clip.* (Pakai 35 kredit untuk S01? Ini membayar satu take untuk setiap klip.) Klik OK kalau kamu yakin, atau Cancel kalau ragu.
+4. **Status klip berubah** menjadi *approved: the agent can make it now*. Klik **Done, back to the agent**, lalu bilang di chat bahwa kamu sudah menyetujui.
+5. **Agent membuat klipnya**, hanya untuk shot yang baru disetujui. `vg next` memberinya perintah persis ini:
 
 ```bash
 python3 2_Tools/vg/vg.py video -p NAMA_PROYEK --shots S01
 ```
 
-Angka `--confirm` harus sama dengan total yang baru kamu setujui, untuk shot itu saja. Kalau alat mencetak angka lain, agent berhenti dan bertanya lagi.
+Satu klik membayar satu take satu klip. Di mode `page`, perintah `vg approve video` dari agent selalu ditolak, jadi klikmu satu-satunya jalan. Klik dan konfirmasinya adalah rem terhadap persetujuan tanpa sengaja. Batas kerasnya tetap kunci kie.ai dengan batas kredit. Kalau alat menolak karena batas anggaran di `.env`, agent harus bertanya ke kamu. Hanya kamu yang boleh mengubah `.env`.
 
-Kode ini adalah rem terhadap persetujuan tanpa sengaja. Jangan pernah meminta agent mengetik kode itu lewat alat lain. Batas kerasnya tetap kunci kie.ai dengan batas kredit. Kalau alat menolak karena batas anggaran di `.env`, agent harus bertanya ke kamu. Hanya kamu yang boleh mengubah `.env`.
+**Cara lain: mode terminal.** Agent memberimu perintah lengkap yang diawali `cd` ke folder kelasmu, kira-kira `python3 2_Tools/vg/vg.py approve video -p NAMA_PROYEK --shots S01 --confirm 35`. Kamu menjalankannya di Terminal-mu sendiri. Alat menampilkan tabel, lalu meminta kode acak 4 digit, misalnya `Type 4821 and press Enter to approve:`. Angka `--confirm` harus sama dengan total yang kamu setujui.
 
 ## Pilot dulu, lalu sisanya
 
 Tonton klip pilot sebelum menyetujui yang lain. Apakah kamera bergerak seperti yang ditulis? Cahayanya cocok? Rumahnya tetap sama? Ada mulut yang bergerak?
 
-Kalau pilotnya bagus, agent bertanya lagi untuk sisanya: 6 klip, 210 kredit. Puas dengan pilot bukan berarti setuju untuk sisanya. Setelah kamu bilang ya dan mengetik kode baru, agent menjalankan `video` dengan `--all`.
+Kalau pilotnya bagus, agent membuka halaman review lagi untuk sisanya: 6 klip, 210 kredit. Puas dengan pilot bukan berarti setuju untuk sisanya. Kamu menyetujui sisanya dengan klik baru: satu per satu, atau dengan tombol **Approve all not made · 210 credits**, yang juga meminta konfirmasi. Jangan klik tombol itu sebelum pilot ditonton. Setelah itu agent membuat klip yang sudah disetujui.
 
 ## Satu persetujuan, satu take
 
 - Setiap persetujuan membayar tepat satu *take* (satu kali pembuatan) untuk satu shot.
-- Klip yang gagal di *provider* (layanan yang menjalankan model, di sini kie.ai) tetap memakai persetujuannya. Mencoba lagi butuh "ya" baru dan approve baru.
-- Membuat ulang klip yang sudah jadi juga butuh "ya" baru, dengan `--new-take` di approve dan di video.
+- Klip yang gagal di *provider* (layanan yang menjalankan model, di sini kie.ai) tetap memakai persetujuannya. Tombol Approve muncul lagi di barisnya, dan mencoba lagi butuh klik baru.
+- Membuat ulang klip yang sudah jadi memakai tombol **New take · 35** di barisnya. Tombol ini juga meminta konfirmasi, dan agent lalu menjalankan `video` dengan `--new-take`.
 - Kalau frame, prompt atau durasi berubah setelah disetujui, persetujuannya batal. Minta lagi.
 - Dua kegagalan yang sama berarti prompt atau gambarnya yang salah. Perbaiki itu. Jangan coba ketiga kali dengan cara yang sama.
 
@@ -132,15 +127,15 @@ Buka `6_Kelas/2_Studi_Kasus/Tebak_Harga/1_Gambar/Look_Rumah_Deret.jpg`. Tulis pr
 ## Cek pemahaman
 
 1. Kenapa prompt video tidak menggambarkan ulang wajah Rani atau rumahnya?
-2. Kamu sudah bilang "ya" di chat. Kenapa agent masih memberimu perintah untuk dijalankan sendiri?
+2. Kamu sudah bilang "ya" di chat. Kenapa agent masih memintamu mengklik di halaman review?
 3. Klip pilot gagal di provider. Bolehkah agent langsung mencoba lagi?
 
 <details>
 <summary>Lihat jawaban</summary>
 
 1. Frame pertama sudah membawa look. Dua deskripsi yang bersaing membuat model melenceng. Prompt hanya menjelaskan apa yang berubah: gerak, cahaya, suara, dan yang harus tetap.
-2. Persetujuan video butuh kode acak 4 digit yang diketik manusia di terminalnya sendiri. Agent tidak punya terminal itu, dan memang tidak boleh mengetik kodenya.
-3. Tidak. Klip yang gagal sudah memakai persetujuannya. Agent harus menunjukkan biayanya lagi, menunggu "ya" baru, lalu kamu mengetik kode baru.
+2. Di mode `page`, hanya klik di halaman review yang menyetujui biaya video. Perintah `vg approve video` dari agent selalu ditolak. Di halaman itu kamu melihat biaya per klip dan mengonfirmasi sekali lagi, jadi uang tidak keluar tanpa sengaja.
+3. Tidak. Klip yang gagal sudah memakai persetujuannya. Agent membuka halaman review lagi, dan kamu yang memutuskan: klik baru, dengan konfirmasi baru.
 
 Hitungan di latihan kecil: 3 × 35 = 105 kredit di 1080p, 3 × 30 = 90 kredit di 720p.
 
@@ -150,8 +145,8 @@ Hitungan di latihan kecil: 3 × 35 = 105 kredit di 1080p, 3 × 30 = 90 kredit di
 
 - Prompt video hanya menjelaskan gerakan: satu gerakan kamera, cahaya, suara sekitar, dan apa yang tidak boleh berubah.
 - Tidak ada yang bicara di klip. Suaranya dari narasi voice-over.
-- Gerbang 3: agent menunjukkan biaya, kamu bilang ya di chat, lalu kamu mengetik kode 4 digit di terminalmu sendiri.
-- Mulai dari satu klip pilot. Setiap persetujuan membayar tepat satu take; klip gagal butuh "ya" baru.
+- Gerbang 3: di bagian Video halaman review, setiap klip menunjukkan biayanya. Kamu klik Approve, lalu konfirmasi sekali lagi. Agent tidak bisa menyetujui untukmu.
+- Mulai dari satu klip pilot. Satu klik membayar tepat satu take; klip gagal atau diulang butuh klik baru.
 - Waktu habis? `vg resume`, jangan kirim ulang. Lalu tonton setiap klip.
 
-Berikutnya: [Pelajaran 12 · Edit Final dan Kirim](Pelajaran_12_Edit_Final_Dan_Kirim_v1.0.md)
+Berikutnya: [Pelajaran 12 · Edit Final dan Kirim](Pelajaran_12_Edit_Final_Dan_Kirim_v1.1.md)

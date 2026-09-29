@@ -1,0 +1,25 @@
+{
+  "id": "infinitalk-from-audio",
+  "kind": "video",
+  "provider": "kie",
+  "status": "untested",
+  "notes": "MeiGen InfiniteTalk on kie.ai (jobs/createTask, model infinitalk/from-audio): one image plus an audio file in, a talking video with lips matched to that audio out. Used in lipsync mode so a presenter says the reel's own narration on camera (one voice for the whole reel). Fields per docs.kie.ai/market/infinitalk/from-audio (2026-09-29): image_url, audio_url (max 15 s), prompt (max 5000), resolution 480p|720p, seed 10000-1000000. Price from kie.ai's live price list (2026-09-24 survey): 3 credits/s at 480p, 12 credits/s at 720p; the estimate counts started seconds. Untested until a paid pilot confirms fields and the charged price.",
+  "model": "infinitalk/from-audio",
+  "prompt_max": 5000,
+  "params": {
+    "resolution": { "type": "string", "enum": ["480p", "720p"], "default": "720p" },
+    "duration": { "type": "number" },
+    "seed": { "type": "integer", "min": 10000, "max": 1000000 }
+  },
+  "modes": {
+    "lipsync": { "image": "image_url", "audio": "audio_url" }
+  },
+  "payload_omit": ["duration", "aspect_ratio"],
+  "lipsync": { "max_seconds": 15 },
+  "pricing": {
+    "keys": ["resolution"],
+    "table": { "480p": 3, "720p": 12 },
+    "per_second": true,
+    "round_up": true
+  }
+}

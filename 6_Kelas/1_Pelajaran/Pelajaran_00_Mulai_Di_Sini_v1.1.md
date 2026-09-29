@@ -23,7 +23,7 @@ https://github.com/tansilandre/ai-videographer-kelas
 
 Kamu menyalin repo itu ke komputermu. Foldernya berisi alatnya sekaligus kelasnya.
 
-Kamu tidak perlu menjalankan semua perintah sendiri. Kamu bicara ke *agent* (AI yang bisa membaca file dan menjalankan alat untukmu), yaitu Claude Code, dengan bahasa biasa. Misalnya: "Buat reel dari brief di 5_Projects/.../0_Source". Agent membaca *skill* (file instruksi cara kerja kita) di folder `1_Skills/`, lalu menjalankan alat bernama vg.
+Kamu tidak perlu menjalankan semua perintah sendiri. Kamu bicara ke *agent* (AI yang bisa membaca file dan menjalankan alat untukmu) dengan bahasa biasa. Di workshop kita memakai WorkBuddy, aplikasi agent di komputermu, dengan *Expert* (agent dengan uraian tugas khusus) bernama AI Videographer. Claude Code juga bisa dipakai, dengan cara yang sama. Misalnya: "Buat reel dari brief di 5_Projects/.../0_Source". Agent membaca *skill* (file instruksi cara kerja kita) di folder `1_Skills/`, lalu menjalankan alat bernama vg.
 
 Kelas ini punya dua bagian:
 
@@ -61,8 +61,9 @@ Mau lihat hasilnya? Tonton [animatic reel contoh](../2_Studi_Kasus/Tebak_Harga/C
 |---|---|
 | `6_Kelas/1_Pelajaran/` | Pelajaran 00–13, termasuk yang sedang kamu baca |
 | `6_Kelas/2_Studi_Kasus/Tebak_Harga/` | gambar, audio, rencana edit (`Edit_Spec.json`), naskah narasi (`Narasi.txt`) dan animatic reel contoh |
-| `6_Kelas/3_Latihan/` | [brief latihan](../3_Latihan/Brief_Latihan_v1.0.md) dan [checklist per tahap](../3_Latihan/Checklist_Per_Tahap_v1.0.md) |
+| `6_Kelas/3_Latihan/` | [brief latihan](../3_Latihan/Brief_Latihan_v1.1.md) dan [checklist per tahap](../3_Latihan/Checklist_Per_Tahap_v1.1.md) |
 | `6_Kelas/4_Deck/` | slide kelas (.pptx dan .pdf), urutannya sama dengan pelajaran |
+| `6_Kelas/5_WorkBuddy/` | [panduan WorkBuddy](../5_WorkBuddy/Panduan_WorkBuddy_v1.0.md) untuk memasang dan memakai agent workshop, dan run-sheet untuk fasilitator |
 
 ## Cara memakai pelajaran
 
@@ -98,7 +99,7 @@ Jadi seluruh reel disetujui sebagai gambar dulu. Baru setelah itu gambarnya dibu
 6. Video (**Gerbang 3**)
 7. Edit final
 
-*Gerbang* adalah titik tempat alat berhenti sampai kamu setuju. Tanpa persetujuanmu, langkah berikutnya ditolak. Untuk menyetujui, kamu mengetik kode acak 4 digit di terminalmu sendiri. Dengan pengaturan bawaan, ketiga gerbang meminta kode ini, dan yang paling ketat adalah gerbang video, karena di situ uang keluar. Agent tidak bisa mengetik kode itu untukmu.
+*Gerbang* adalah titik tempat alat berhenti sampai kamu setuju. Tanpa persetujuanmu, langkah berikutnya ditolak. Di kelas ini, untuk menyetujui, kamu mengklik tombol di *halaman review*, halaman web yang berjalan di komputermu sendiri. Yang paling ketat adalah gerbang video, karena di situ uang keluar: setiap klip menunjukkan biayanya, dan halaman bertanya sekali lagi sebelum menyetujui. Agent tidak bisa menyetujui untukmu, karena perintah persetujuan dari terminal selalu ditolak. Ada juga cara lain: mengetik kode acak 4 digit di terminalmu sendiri. Pelajaran 04 dan 05 menjelaskan keduanya.
 
 ## Enam aturan keselamatan
 
@@ -127,7 +128,7 @@ Animatic, efek suara dan edit dibuat di komputermu sendiri, jadi gratis.
 
 Kamu butuh dua akun: [kie.ai](https://kie.ai) untuk gambar dan video (dibayar dengan kredit), dan [OpenRouter](https://openrouter.ai) untuk suara dan musik. Saran kami: buat API key kie.ai khusus untuk kelas ini di https://kie.ai/api-key, lalu beri batas kredit total. Batas itu pagar terakhir kalau ada yang salah.
 
-Biaya Claude Code tidak termasuk dalam tabel ini. Claude Code butuh langganan Claude berbayar (misalnya paket Pro atau Max) atau kredit API Anthropic. Harganya bisa berubah, jadi cek halaman harga resmi Anthropic sebelum mulai.
+Biaya otak agent juga tidak termasuk dalam tabel ini. Di workshop, WorkBuddy memakai model glm-5.3-flash lewat SumoPod (https://ai.sumopod.com), dibayar per pemakaian dalam rupiah. Kalau kamu memakai Claude Code, ia butuh langganan Claude berbayar (misalnya paket Pro atau Max) atau kredit API Anthropic. Harga keduanya bisa berubah, jadi cek halaman harga resminya sebelum mulai.
 
 ## Berapa lama
 
@@ -152,14 +153,14 @@ Simpan catatanmu. Kamu akan memakainya lagi di Bagian 2.
 ## Cek pemahaman
 
 1. Kenapa seluruh reel disetujui sebagai gambar dulu sebelum dibuat video?
-2. Siapa yang mengetik kode persetujuan video, dan kenapa bukan agent?
+2. Siapa yang menyetujui biaya video, dan kenapa bukan agent?
 3. Di reel contoh rumahnya gambar AI. Bagaimana seharusnya di proyek nyata?
 
 <details>
 <summary>Lihat jawaban</summary>
 
 1. Gambar murah (10 kredit) dan tidak perlu persetujuan, sedangkan satu klip video 35 kredit. Memperbaiki gambar itu murah dan cepat. Memperbaiki video itu mahal dan lambat. Jadi semua kesalahan dicari dan diperbaiki saat masih berupa gambar.
-2. Kamu, di terminalmu sendiri. Kode acak 4 digit itu rem supaya uang tidak keluar tanpa sengaja. Agent tidak bisa mengetiknya untukmu.
+2. Kamu, dengan klik di halaman review, lalu konfirmasi sekali lagi. Klik itu rem supaya uang tidak keluar tanpa sengaja. Perintah persetujuan dari terminal selalu ditolak, jadi agent tidak bisa menyetujui untukmu. (Dengan cara lain, kamu mengetik kode acak 4 digit di terminalmu sendiri.)
 3. Rumah yang dijual harus foto asli dari klien, dan hanya kameranya yang bergerak. Di contoh ini rumahnya AI hanya karena klien dan proyeknya fiktif.
 
 </details>
@@ -167,9 +168,9 @@ Simpan catatanmu. Kamu akan memakainya lagi di Bagian 2.
 ## Ringkasan
 
 - Kelas ini dimulai dengan teori (Pelajaran 01–03), lalu praktik (Pelajaran 04–13), dengan contoh reel Tebak Harga.
-- Kamu membuat reel properti 9:16 sekitar 28 detik dengan bicara ke agent memakai bahasa biasa.
+- Kamu membuat reel properti 9:16 sekitar 28 detik dengan bicara ke agent (di workshop: WorkBuddy) memakai bahasa biasa.
 - Gambar murah (10 kredit). Video mahal (35 kredit per klip 8 detik) dan butuh "ya" darimu.
-- Tujuh tahap, tiga gerbang. Video selalu dimulai dari satu klip pilot.
+- Tujuh tahap, tiga gerbang. Di setiap gerbang, kamu yang mengklik setuju. Video selalu dimulai dari satu klip pilot.
 - Reel contoh: gambar sekitar 70 kredit, video 245 kredit, suara dan musik di bawah US$0,50.
 
-Berikutnya: [Pelajaran 01 · Apa Itu AI dan Cara Ia Belajar](Pelajaran_01_Apa_Itu_AI_v1.0.md)
+Berikutnya: [Pelajaran 01 · Apa Itu AI dan Cara Ia Belajar](Pelajaran_01_Apa_Itu_AI_v1.1.md)

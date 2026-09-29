@@ -1,6 +1,6 @@
 ---
 name: vg-video-prompt
-description: "Use when writing or reviewing a shot's `video_prompt` field in Shotlist.json — the motion prompt that drives image-to-video generation on Veo 3.1 Lite, Seedance 1.5 Pro or Gemini Omni Flash — including camera moves, performance and micro-motion, dialogue and lip-sync for talking shots, audio, b-roll/aerial/property/transition motion, and the dialogue fit check that sets `duration`. Trigger phrases: \"generate the video prompt\", \"write the video prompt\", \"make it move\", \"camera move\", \"dialogue fit\", \"the motion looks stiff\", \"lip-sync is off\"."
+description: "Use when writing or reviewing a shot's `video_prompt` field in Shotlist.json — the motion prompt that drives image-to-video generation on Veo 3.1 Lite, Seedance 1.5 Pro or Gemini Omni Flash, or a Kling AI Avatar Pro lipsync shot that says the reel's own narration — including camera moves, performance and micro-motion, dialogue and lip-sync for talking shots, audio, b-roll/aerial/property/transition motion, and the dialogue fit check that sets `duration`. Trigger phrases: \"generate the video prompt\", \"write the video prompt\", \"make it move\", \"camera move\", \"dialogue fit\", \"the motion looks stiff\", \"lip-sync is off\"."
 ---
 
 # vg-video-prompt
@@ -28,6 +28,7 @@ The shot's model is `shot.model` or `models.video` (`vg models`). Write for that
 |---|---|---|
 | **Veo 3.1 Lite** (`veo-3-1-lite`, our default) | first frame, optional last frame; speech and sound generated from the prompt | Order: subject action → camera → composition/lens → light/ambience → audio. Dialogue in quotes with a delivery tag. One speaker per clip. No voice lock: repeat the same voice descriptor verbatim in every clip. With first + last frame, use 8 s unless a 4/6 s pilot proved otherwise. |
 | **Seedance 1.5 Pro** (`seedance-1-5-pro-audio`, silent variant `seedance-1-5-pro`) | first (+ last) frame; 4/8/12 s | Its vendor lists Indonesian lip-sync: the candidate for talking heads (pilot first). State the dialogue, the language, the sound effects and the music mood (or "No music"). 50–80 words. |
+| **Kling AI Avatar Pro** (`kling-ai-avatar-pro`, lipsync mode) | first frame + a cut of the reel's approved narration; 1080p, 16 credits per second | Talking lines in an audio-first reel. The audio drives the lips, so the prompt only directs gaze, expression and small movement (see "Lipsync mode" below). Live-tested 2026-09-29: 4/4 first-try, ~2.5 min each. |
 | **Gemini Omni Flash** (`gemini-omni-flash-1-1`) | `frames` mode (hard first frame, silent anchor) or `character` mode (character + voice ids) | Character mode failed 9/9 for us; prefer frames. No documented prompting dialect; use the general rules below. |
 
 `style_lock.video` from `Shotlist.json` is appended by the tool to every prompt (unless the shot sets
@@ -100,6 +101,25 @@ rest, jaw closed. <Room acoustic / ambience>. No music, no subtitles.
   voice-over track in the edit, not speech generated inside clips.
 - Never replace a clip's lip-synced voice with a different TTS voice afterwards: the mouth was
   animated for the original audio, and the result reads as a bad dub.
+
+### Lipsync mode: the reel's own narration on camera
+
+When the narration is recorded first (audio-first edit), a talking shot says that exact audio instead
+of generating its own voice: `"mode": "lipsync"`, `"model": "kling-ai-avatar-pro"` and a `lipsync`
+window on the narration file (`shotlist-schema.md`). One voice for the whole reel, no dubbing.
+
+- **Window:** start 0.2–0.4 s before the first word (the mouth opens on the breath) and end in the
+  pause after the line. The edit then trims the clip (`in`/`out`) to its segment.
+- **Eye contact is made in the first frame, not the prompt.** A first frame where she looks away
+  gives a clip where she talks to herself. Make an eye-contact selfie frame: phone at arm's length,
+  eyes fully on the lens, lips slightly parted as if starting to talk.
+- **The prompt directs gaze and manner only** (the audio drives the words): "She talks directly to the
+  viewer through the phone camera: her eyes stay on the lens the whole time and never look down or
+  away, like talking to a friend on a video call; an open friendly expression, small natural nods,
+  quick natural blinks. Her face, hair, outfit, the background and the light stay exactly as in the
+  picture." A walking selfie works too: she can walk while she talks.
+- **Check the clip against its sound**: loudness every 0.1 s next to a mouth close-up at the same
+  moments. Lips close on m/b/p, round on u/w, open on the breath before a line; eyes mostly on the lens.
 
 ## Audio
 

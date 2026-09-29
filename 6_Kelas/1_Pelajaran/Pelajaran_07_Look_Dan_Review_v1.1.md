@@ -73,12 +73,15 @@ Halaman review adalah halaman web yang berjalan di komputermu sendiri, bukan di 
 python3 2_Tools/vg/vg.py review -p NAMA_PROYEK
 ```
 
-Browser terbuka. Tulisan di halaman itu berbahasa Inggris. Isinya dari atas ke bawah:
+Di WorkBuddy, agent memakai `--detach` di belakang perintah itu. Halamannya tetap terbuka tanpa menahan agent, dan agent mengirimimu tautannya di chat, misalnya `http://127.0.0.1:52011/?t=...`. Tautan itu hanya jalan di komputermu sendiri.
+
+Halaman itu terbuka di browser. Tulisannya berbahasa Inggris. Isinya dari atas ke bawah:
 
 1. Status dua gerbang (look dan reel) dan *approval mode* (cara persetujuan).
-2. **Look**: teks world, light, grade, dan graphics, lalu satu kartu per style frame.
+2. **Look**: teks world, light, grade, dan graphics, lalu satu kartu per style frame, dan tombol **Approve look**.
 3. **Reference sheets**: lembar referensi karakter dan tempat (Pelajaran 08).
-4. **Reel**: setiap beat, dan nanti animatic-nya (Pelajaran 10).
+4. **Reel**: setiap beat, dan nanti animatic-nya dengan tombol **Approve reel** (Pelajaran 10).
+5. **Video**: biaya dan tombol persetujuan setiap klip. Bagian ini baru terbuka setelah look dan reel disetujui (Pelajaran 11).
 
 Di setiap kartu ada dua alat:
 
@@ -90,21 +93,19 @@ Tulis catatan yang spesifik, satu perubahan per catatan (ingat prinsip "satu per
 - Lemah: "kurang bagus".
 - Kuat: "Bayangan jatuh ke kiri, jadi matahari dari kanan. Harus dari kiri, seperti Look_Rumah_Deret."
 
-Setelah selesai, klik **Done, back to the agent**. Agent menerima ringkasan: baris `GATE` (status gerbang), `NOTE` (catatanmu), dan `NEXT` (langkah berikutnya). Ia memperbaiki hanya yang kamu catat, lalu membuka halaman lagi. Ulangi sampai kamu puas.
+Setelah selesai, klik **Done, back to the agent**, lalu bilang di chat bahwa kamu sudah selesai. Agent membaca klik dan catatanmu dengan `vg next` (atau `vg review --summary`), dalam baris `GATE` (status gerbang), `NOTE` (catatanmu), dan `NEXT` (langkah berikutnya). Ia memperbaiki hanya yang kamu catat, lalu membuka halaman lagi. Ulangi sampai kamu puas.
 
 Halaman ini milikmu. Agent tidak boleh mengklik tombolnya atau menyetujui atas namamu.
 
 ## Gerbang 1: menyetujui look
 
-Kalau kamu setuju, bilang ke agent di chat: "approved". Dengan pengaturan bawaan, halaman review tidak menampilkan tombol setuju. Di tempatnya ada tulisan *Approval mode is terminal* dan perintah lengkap untuk disalin. Intinya:
+Kalau kamu setuju, klik **Approve look** di bawah style frame. Tulisan *approved* muncul di sampingnya. Lalu klik **Done, back to the agent**, dan bilang ke agent di chat bahwa kamu sudah selesai.
 
-```bash
-python3 2_Tools/vg/vg.py approve look -p NAMA_PROYEK
-```
+Tombol itu ada karena kita memakai mode `page` (`VG_APPROVAL_MODE=page`, Pelajaran 04). Di mode ini perintah `vg approve look` dari terminal selalu ditolak, jadi agent tidak bisa menyetujui untukmu. Halaman ini milikmu: agent tidak boleh mengklik tombolnya, dan jangan pernah memintanya.
 
-Jalankan perintah itu di Terminal-mu sendiri, persis seperti yang ditampilkan halaman. Alat menampilkan style frame yang akan disetujui, lalu memintamu mengetik kode acak 4 digit. Ketik kodenya, tekan Enter, lalu klik *Refresh* di halaman review.
+Persetujuanmu hanya berlaku untuk style frame yang tampil saat kamu mengklik. Kalau ada yang berubah sejak halaman dimuat, alat menolak. Klik *Refresh*, lihat lagi, lalu klik lagi kalau memang setuju.
 
-Kenapa tidak cukup satu klik? Klik bisa dilakukan siapa saja, termasuk agent. Kode di terminalmu membuktikan manusia yang menyetujui. Agent tidak bisa mengetik kode ini, dan jangan pernah memintanya.
+**Cara lain: mode terminal.** Di mode `terminal`, halaman review tidak menampilkan tombol setuju, tapi tulisan *Approval mode is terminal* dan sebuah perintah, `python3 2_Tools/vg/vg.py approve look -p NAMA_PROYEK`. Kamu menjalankannya di Terminal-mu sendiri, mengetik kode acak 4 digit yang diminta, lalu klik *Refresh*.
 
 ## Yang ditolak sebelum look disetujui
 
@@ -129,14 +130,14 @@ Bayangkan reel tentang tempat yang kamu kenal, misalnya rumah keluargamu atau to
 ## Cek pemahaman
 
 1. Kenapa reel pertama kami gagal, padahal setiap gambar lolos pemeriksaan?
-2. Kamu mencari tombol setuju di halaman review, tapi yang ada hanya sebuah perintah. Kenapa, dan apa yang kamu lakukan?
+2. Agent menulis di chat: "Look-nya bagus, aku setujui sekarang ya." Apa yang terjadi di mode `page`?
 3. Look sudah disetujui. Lalu kamu memilih take `v2` untuk salah satu style frame. Apa yang terjadi?
 
 <details>
 <summary>Jawaban</summary>
 
 1. Gambar dicek satu per satu, tanpa look bersama. Reelnya bercampur enam waktu yang berbeda dalam sehari, masing-masing dengan olahan warnanya sendiri. Masalah itu baru terlihat saat reel ditonton utuh.
-2. Pengaturan bawaannya mode terminal: sebuah klik tidak membuktikan bahwa manusia yang menyetujui. Jalankan perintah itu di Terminal-mu sendiri, ketik kode 4 digit, tekan Enter, lalu klik Refresh.
+2. Tidak ada yang disetujui. Di mode `page`, perintah `vg approve look` dari agent selalu ditolak. Hanya klikmu di tombol Approve look yang menyetujui. Agent seharusnya mengirim tautan halaman review dan menunggu kamu.
 3. Persetujuan look batal, dan persetujuan reel ikut batal. Kamu melihat look-nya lagi dan menyetujuinya lagi.
 
 </details>
@@ -146,7 +147,7 @@ Bayangkan reel tentang tempat yang kamu kenal, misalnya rumah keluargamu atau to
 - Satu reel, satu look: satu dunia, satu cahaya, satu grade, satu gaya grafis.
 - 2–3 style frame menunjukkan look itu. Gambar murah, jadi perbaiki sampai benar.
 - Di halaman review kamu memilih take, menulis catatan spesifik, lalu klik Done.
-- Gerbang 1: kamu sendiri yang menjalankan `approve look` dan mengetik kodenya.
+- Gerbang 1: kamu sendiri yang mengklik **Approve look** di halaman review. Agent tidak bisa menyetujui untukmu.
 - Sebelum look disetujui, alat menolak semua panel storyboard dan frame.
 
-Berikutnya: [Pelajaran 08 · Karakter, Storyboard, dan Frame](Pelajaran_08_Karakter_Storyboard_Frame_v1.0.md)
+Berikutnya: [Pelajaran 08 · Karakter, Storyboard, dan Frame](Pelajaran_08_Karakter_Storyboard_Frame_v1.1.md)

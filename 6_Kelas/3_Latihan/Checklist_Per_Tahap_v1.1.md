@@ -4,7 +4,7 @@ Satu checklist untuk setiap tahap. Centang semua kotak sebelum pindah ke tahap b
 
 **Cara membaca perintah di sini.** Alatnya dijalankan dari folder repo dengan `python3 2_Tools/vg/vg.py <perintah>`. Supaya pendek, di bawah ini ditulis `vg <perintah>`. Tidak ada perintah bernama `vg` di komputermu: yang dijalankan selalu versi lengkapnya. Ganti `NAMA_PROYEK` dengan nama folder proyekmu di `5_Projects/`.
 
-Sebagian besar perintah dijalankan oleh agent. Yang kamu jalankan sendiri hanya: `bash install.sh`, perintah doctor, dan perintah persetujuan saat alat memintanya. Halaman review dibuka oleh agent, tapi yang memakainya kamu.
+Sebagian besar perintah dijalankan oleh agent. Yang kamu jalankan sendiri hanya: `bash install.sh`, pemasang Expert WorkBuddy, dan perintah doctor. Halaman review dibuka oleh agent, tapi yang memakainya kamu: dengan `VG_APPROVAL_MODE=page`, ketiga gerbang adalah klikmu di sana. Kapan pun bingung, `vg next -p NAMA_PROYEK` mencetak satu langkah berikutnya.
 
 Alurnya: **1** Brief dan shot list → **2** Look (Gerbang 1) → **3** Karakter dan frame → **4** Audio → **5** Animatic (Gerbang 2) → **6** Video (Gerbang 3) → **7** Edit final.
 
@@ -13,10 +13,11 @@ Alurnya: **1** Brief dan shot list → **2** Look (Gerbang 1) → **3** Karakter
 ## Sebelum mulai · Persiapan
 
 - [ ] `bash install.sh` sudah dijalankan di folder repo.
-- [ ] Kamu sendiri yang mengisi `KIE_API_KEY` dan `OPENROUTER_API_KEY` di file `.env`. Agent tidak pernah mengubah `.env`.
-- [ ] Kamu tidak pernah menempel API key ke chat.
+- [ ] Agent siap: WorkBuddy terpasang, Expert AI Videographer dipasang dengan `bash 2_Tools/workbuddy/install_workbuddy.sh --add-models`, lalu Expert dan model glm-5.3-flash dipilih ([Panduan WorkBuddy](../5_WorkBuddy/Panduan_WorkBuddy_v1.0.md)). Atau: Claude Code terpasang.
+- [ ] Kamu sendiri yang mengisi `KIE_API_KEY` dan `OPENROUTER_API_KEY` di file `.env`, dan mengubah `VG_APPROVAL_MODE` menjadi `page`. Agent tidak pernah mengubah `.env`.
+- [ ] Kamu tidak pernah menempel API key ke chat, termasuk kunci SumoPod.
 - [ ] Disarankan: API key kie.ai khusus untuk kelas ini, dengan batas kredit total (dibuat di https://kie.ai/api-key).
-- [ ] Doctor bersih, tanpa baris FAIL:
+- [ ] Doctor bersih, tanpa baris FAIL, dengan baris `ok approval mode page` dan (untuk WorkBuddy) `ok skills (WorkBuddy)`:
 
 ```bash
 python3 2_Tools/vg/vg.py doctor
@@ -53,13 +54,13 @@ vg validate -p NAMA_PROYEK
 - [ ] Kamu melihat semuanya di halaman review, memilih *take* (versi gambar) terbaik, dan menulis catatan di gambar yang perlu diperbaiki.
 - [ ] Agent hanya memperbaiki yang kamu catat, lalu menunjukkan lagi.
 - [ ] Kamu bisa menjawab "ya" untuk pertanyaan ini: *apakah ini look seluruh reel?*
-- [ ] Kamu bilang "approved" dan menyetujui look. Dengan pengaturan bawaan, halaman review menampilkan perintah `approve look` untuk kamu jalankan di terminalmu sendiri, lalu kamu mengetik kode 4 digit yang diminta.
+- [ ] Kamu mengklik **Approve look** di halaman review, lalu **Done, back to the agent**. (Mode `terminal`: kamu menjalankan perintah `approve look` di terminalmu sendiri dan mengetik kode 4 digit.)
 - [ ] Status menunjukkan look sudah disetujui.
 
 ```bash
 vg image -p NAMA_PROYEK --stage look
-vg review -p NAMA_PROYEK
-vg approve look -p NAMA_PROYEK
+vg review -p NAMA_PROYEK --detach
+vg next -p NAMA_PROYEK
 vg status -p NAMA_PROYEK
 ```
 
@@ -117,14 +118,14 @@ Nama file dan label di atas diambil dari reel Tebak Harga. Di proyekmu, pakai fi
 - [ ] Transisi punya alasan: potong keras hampir di semua tempat, whip hanya saat pindah tempat, flash hanya sekali di jawaban.
 - [ ] Label wajib ada, misalnya "ILUSTRASI RENCANA" dan "S&K berlaku".
 - [ ] Setiap perbaikan menghasilkan animatic baru. Persetujuan ditolak kalau animatic terakhir tidak menunjukkan gambar dan rencana edit yang terbaru.
-- [ ] Kamu bilang "approved" dan menyetujui visual. Sama seperti Gerbang 1: kamu menjalankan perintah `approve visuals` di terminalmu sendiri dan mengetik kodenya.
+- [ ] Kamu mengklik **Approve reel** di bawah animatic, lalu **Done, back to the agent**. (Mode `terminal`: kamu menjalankan perintah `approve visuals` di terminalmu sendiri dan mengetik kodenya.)
 - [ ] Status menunjukkan visuals sudah disetujui.
 
 ```bash
 vg edit animatic -p NAMA_PROYEK
 vg board -p NAMA_PROYEK
-vg review -p NAMA_PROYEK
-vg approve visuals -p NAMA_PROYEK
+vg review -p NAMA_PROYEK --detach
+vg next -p NAMA_PROYEK
 vg status -p NAMA_PROYEK
 ```
 
@@ -137,12 +138,12 @@ Ingat: mengubah frame, teks, atau waktu di rencana edit membatalkan persetujuan 
 - [ ] Prompt video hanya menjelaskan yang berubah: satu gerakan kamera dengan titik akhir dan jeda diam, cahaya, suara sekitar, dan apa yang tidak boleh berubah. Isi frame tidak dideskripsikan ulang.
 - [ ] Orang di klip tidak bicara. Suaranya dari narasi.
 - [ ] Validate bersih.
-- [ ] Kamu sudah melihat board, biaya per shot, dan saldo kreditmu.
-- [ ] Kamu bilang "ya" dengan jelas di chat, untuk **satu klip pilot** dengan angkanya (contoh: 35 kredit untuk satu klip 8 detik 1080p).
-- [ ] Agent menjalankan `approve video`, alat menolaknya, lalu memberimu perintah lengkap. **Kamu** menjalankannya di terminalmu sendiri dan mengetik kode 4 digit. Agent tidak boleh mengetik kode itu.
+- [ ] Kamu sudah melihat bagian **Video** di halaman review: biaya per klip, dan kredit yang sudah terpakai dari batas proyekmu.
+- [ ] Kamu mengklik **Approve** di **satu klip pilot** saja (contoh: *Approve · 35 credits* untuk satu klip 8 detik 1080p), membaca angka di kotak konfirmasi, lalu klik OK.
+- [ ] Agent tidak pernah menyetujui sendiri: di mode `page`, `vg approve video` selalu ditolak. (Mode `terminal`: **kamu** menjalankan perintah dari agent di terminalmu sendiri dan mengetik kode 4 digit.)
 - [ ] Klip pilot dibuat dan ditonton: cahaya cocok dengan tetangganya, kamera berakhir sesuai prompt, tidak ada yang bicara, tidak ada teks karangan.
-- [ ] Untuk sisa klip: "ya" baru dan persetujuan baru, dengan total sisanya.
-- [ ] Satu persetujuan = satu take. Klip yang gagal atau diulang butuh "ya" baru dan persetujuan baru.
+- [ ] Untuk sisa klip: klik baru (per klip, atau *Approve all not made*), dengan total sisanya.
+- [ ] Satu persetujuan = satu take. Klip yang gagal atau diulang butuh klik baru (*New take* untuk klip yang sudah jadi).
 - [ ] Kalau waktu tunggu habis (*timeout*): `vg resume`, tidak pernah kirim ulang.
 - [ ] Kalau alat menampilkan baris CHECK tentang target yang macet, **kamu** memeriksa dashboard kie.ai dulu sebelum ada yang dilepas atau diambil alih.
 - [ ] Kalau alat menolak karena batas anggaran, kamu yang memutuskan. Agent tidak mengubah `.env`.
@@ -152,7 +153,8 @@ vg validate -p NAMA_PROYEK
 vg board -p NAMA_PROYEK
 vg estimate -p NAMA_PROYEK --stage video
 vg credits
-vg approve video -p NAMA_PROYEK --shots S01 --confirm 35
+vg review -p NAMA_PROYEK --detach
+vg next -p NAMA_PROYEK
 vg video -p NAMA_PROYEK --shots S01
 vg resume -p NAMA_PROYEK
 ```

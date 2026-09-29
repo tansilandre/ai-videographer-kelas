@@ -99,4 +99,4 @@ Tulis satu hal yang ingin kamu perbaiki, dan di tahap mana perbaikan itu paling 
 - Tiga bug ditemukan dengan memeriksa: caption mendahului harga, animatic membeku 2,5 detik, titik drop musik salah.
 - Nilai hasilnya dengan menonton, mendengarkan, dan mengecek file. Jangan hanya percaya skor atau kata "selesai".
 
-Berikutnya: [Brief Latihan](../3_Latihan/Brief_Latihan_v1.0.md)
+Berikutnya: [Brief Latihan](../3_Latihan/Brief_Latihan_v1.1.md)

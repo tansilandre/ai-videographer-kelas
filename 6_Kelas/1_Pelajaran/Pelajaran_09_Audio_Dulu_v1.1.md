@@ -182,4 +182,4 @@ Catatan: di contoh kelas ini rumahnya gambar AI, karena klien dan proyeknya fikt
 - Musik punya bentuk: tenang, *build*, hening setengah ketukan, drop. `music.at` = waktu jawaban − waktu drop.
 - Whoosh untuk whip, tap untuk judul, tick untuk counter, ding hanya sekali untuk jawaban.
 
-Berikutnya: [Pelajaran 10 · Rencana Edit dan Animatic](Pelajaran_10_Edit_Plan_Dan_Animatic_v1.0.md)
+Berikutnya: [Pelajaran 10 · Rencana Edit dan Animatic](Pelajaran_10_Edit_Plan_Dan_Animatic_v1.1.md)

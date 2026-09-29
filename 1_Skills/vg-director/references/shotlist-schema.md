@@ -179,9 +179,10 @@ a shot or an asset turns that off (e.g. a flat map graphic).
 | `source` | yes | `ai` (we generate) · `real` (client footage) · `mg` (motion graphic in the edit) |
 | `summary` | yes | one line of what the viewer sees |
 | `vo` / `on_screen_text` | no | voice-over line and on-screen text for the edit |
-| `mode` | ai only | `frames` · `character` · `text` (see below) |
+| `mode` | ai only | `frames` · `character` · `text` · `lipsync` (see below) |
 | `duration` | ai only | `"auto"` or a value the video model allows (`"4"`, `"6"`, `"8"`, `"10"` on Omni) |
 | `characters` | character mode | names from `characters[]`; the video model allows **at most 3** per shot (`character_ids` limit) |
+| `lipsync` | lipsync mode | `{"audio": "file:6_Edit/1_Audio/Narration.wav", "start": 18.6, "end": 20.6}`: the window of the reel's approved narration this shot says on camera, in seconds of that file. The tool cuts it to an MP3 (44.1 kHz stereo) and sends it with the first frame; the clip's length is `end − start`, capped by the model (15 s on Kling AI Avatar Pro). Moving the window voids the visuals approval |
 | `dialogue` | no | exact words spoken **on camera**; must appear word for word inside `video_prompt` (`vg validate` errors otherwise), and is checked against the fit rule. Normally on a `character`-mode shot with a locked voice; `frames`-mode shots can carry it too but the voice is unlocked (`vg validate` warns) |
 | `storyboard` | ai only | `{prompt, refs}` — the panel |
 | `first_frame` | frames mode | **Real photo:** `{"file": "0_Source/photo.jpg", "crop_x": 0.5}` — imported by `vg image --stage frames`, cropped to the reel's aspect (full height, window centred at `crop_x`, 0 = left, 1 = right), recorded as a frame at 0 credits, never sent to the image model (a property's first frame). Otherwise: `{prompt, refs}` or `{"from": "storyboard"}` (reuse the panel, costs nothing). For a real place, `refs` can point at a real photo (`["file:0_Source/photo.jpg"]`) so the frame is image-to-image from it rather than invented; otherwise give the beat `"source": "real"` or `"mg"` instead of `"ai"` |
@@ -215,6 +216,7 @@ A ref to something not generated yet is an ordering error: generate the dependen
 | `frames` | first frame (+ last frame) as hard frames | b-roll, location, product, transitions. Composition must match the frames exactly. Can still carry `dialogue`, but the voice is unlocked (`vg validate` warns) — use `character` mode when the voice must stay consistent |
 | `character` | character id + voice id + the first frame (or panel) as a soft reference | a recurring person speaks or acts on camera. Same face and voice across shots |
 | `text` | prompt only, plus `video_refs` as optional soft `image_urls` | cheap exploration, abstract shots |
+| `lipsync` | the first frame (or panel) + a cut of the approved narration (`lipsync` window) to an audio-driven model (`kling-ai-avatar-pro`) | a presenter says the reel's own narration on camera: one voice for the whole reel, lips driven by that exact audio. The clip's own audio is muted in the edit (`clip_volume: 0`); the narration track plays |
 
 On Gemini Omni Flash a hard first frame cannot be combined with character, voice or reference
 images. The tool enforces this; the modes exist so you never have to think about it per payload.

@@ -71,9 +71,16 @@ def cmd_doctor(args):
             line(True, "%s model" % kind, "%s (%s)" % (model_id, spec.get("status")))
         except UsageError as exc:
             line(False, "%s model" % kind, str(exc))
-    skills = config.ROOT / ".claude" / "skills"
-    linked = (skills / "vg-director" / "SKILL.md").is_file()
-    line(True if linked else None, "skills linked", str(skills) if linked else "run install.sh")
+    mode = (config.setting("VG_APPROVAL_MODE") or "terminal").lower()
+    line(True if mode in ("page", "terminal") else (None if mode == "chat" else False), "approval mode",
+         {"page": "page (the human clicks Approve on the review page)",
+          "terminal": "terminal (the human types a code in their own terminal)",
+          "chat": "chat: an agent may run `vg approve` itself; for agent apps and small models set "
+                  "VG_APPROVAL_MODE=page in .env"}.get(mode, "%r is not terminal, page or chat" % mode))
+    for agent, folder in (("Claude Code", ".claude/skills"), ("WorkBuddy", ".codebuddy/skills")):
+        skills = config.ROOT / folder
+        linked = (skills / "vg-director" / "SKILL.md").is_file()
+        line(True if linked else None, "skills (%s)" % agent, str(skills) if linked else "run install.sh")
     if config.ENV_FILE.is_file() and config.ENV_FILE.stat().st_mode & 0o077:
         line(None, ".env permissions", "readable by other users: chmod 600 .env")
     return 0 if ok else 1
@@ -140,6 +147,12 @@ def cmd_estimate(args):
     return 0
 
 
+def cmd_next(args):
+    from vglib import next_step
+    next_step.show(resolve(args.project))
+    return 0
+
+
 def cmd_board(args):
     from vglib import board
     path = board.build(resolve(args.project))
@@ -150,6 +163,16 @@ def cmd_board(args):
 def cmd_review(args):
     from vglib import review_page
     project = resolve(args.project)
+    if args.summary:
+        for line in review_page.summary(project):
+            say(line)
+        return 0
+    if args.stop:
+        review_page.stop_detached(project)
+        return 0
+    if args.detach:
+        review_page.detach(project, port=args.port, open_browser=not args.no_open)
+        return 0
     try:
         review_page.serve(project, port=args.port, open_browser=not args.no_open)
     except KeyboardInterrupt:
@@ -307,6 +330,8 @@ def build_parser():
     p.add_argument("slug", help="e.g. Acme_Launch")
     p.add_argument("--client")
     add("validate", cmd_validate, "check Shotlist.json")
+    add("next", cmd_next, "the one next step for this project: the command to run, the file to write, or "
+        "what to ask the human (start here)")
     add("status", cmd_status, "show every target, version and spend")
     p = add("estimate", cmd_estimate, "credit cost of what is still missing")
     p.add_argument("--stage", choices=["images", "video", "all"], default="all")
@@ -315,6 +340,11 @@ def build_parser():
             "reel, switches takes, writes change notes and approves by clicking (blocks until they click Done)")
     p.add_argument("--port", type=int, default=0, help="default: any free port")
     p.add_argument("--no-open", action="store_true", help="print the URL instead of opening the browser")
+    p.add_argument("--detach", action="store_true", help="start the page in its own process and return at once "
+                   "(agent apps whose commands must end); it runs until the human clicks Done")
+    p.add_argument("--summary", action="store_true", help="print the gates, the human's notes and the next "
+                   "step without opening the page")
+    p.add_argument("--stop", action="store_true", help="stop a page started with --detach")
     p = add("upload", cmd_upload, "upload a file and print its URL")
     p.add_argument("file")
 

@@ -22,7 +22,7 @@ start of their segment**, so trimming one clip never breaks the graphics of anot
 
 | Kind | Fields | Notes |
 |---|---|---|
-| clip | `clip: "S01"`, `in` (s), `out` (s or `"speech+0.4"`), `fallback: "still"`, `fallback_duration` | uses the selected clip version; `speech+N` ends N s after the last detected speech |
+| clip | `clip: "S01"`, `in` (s), `out` (s or `"speech+0.4"`), `fallback: "still"`, `fallback_duration`, `clip_volume` | uses the selected clip version; `speech+N` ends N s after the last detected speech; `"clip_volume": 0` mutes the clip's own sound (listen to every clip: a video model can invent a crash, music or words), and a muted clip's sound no longer ducks the music; `"dim": 0.3` darkens the shot under white graphics (a counter on a bright facade) |
 | card | `background` (see below) or `card: "#0E1A2B"`, `duration` (s or `"vo+0.7"`) | a background for graphics; `vo+N` = VO start + VO length + N |
 | placeholder | `placeholder: "FOOTAGE ASLI\n..."`, `background`, `duration` | marks footage the client still has to supply, as a corner tag |
 | still | `still: "S02"` or a target (`"asset:Loc_X"`), `duration`, `zoom: [1.0, 1.14]`, `pan` | an image with a visible push |

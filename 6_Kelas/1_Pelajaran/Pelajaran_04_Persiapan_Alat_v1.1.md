@@ -3,15 +3,15 @@
 ## Tujuan
 
 - Membuka *Terminal* dan menjalankan perintah sederhana tanpa takut.
-- Memasang semua alat: Xcode Command Line Tools, Homebrew, FFmpeg, Git, Python, dan Claude Code.
-- Membuat kunci API di kie.ai dan OpenRouter, lalu menyimpannya dengan aman di file `.env`.
+- Memasang semua alat: Xcode Command Line Tools, Homebrew, FFmpeg, Git, Python, dan agent-nya: WorkBuddy dengan Expert AI Videographer (atau Claude Code).
+- Membuat kunci API di kie.ai dan OpenRouter, lalu menyimpannya dengan aman di file `.env`, bersama cara persetujuan `VG_APPROVAL_MODE=page`.
 - Menjalankan `vg doctor` dan membaca hasilnya: `ok`, `warn`, `FAIL`.
 
 ## Kenapa ini penting
 
 Semua pelajaran praktik berjalan di atas persiapan ini. Kalau satu alat hilang, pekerjaan macet di tengah jalan, sering di tahap edit, saat kamu sudah capek. Lebih baik semuanya beres sekarang. `vg doctor` yang memastikannya.
 
-Yang kamu butuhkan: sebuah Mac, internet, dan sedikit saldo di kie.ai dan OpenRouter. Kenapa Mac? *Renderer* (program penggambar) caption dan grafis di alat ini memakai Swift, bahasa pemrograman buatan Apple.
+Yang kamu butuhkan: sebuah Mac, internet, dan sedikit saldo di kie.ai dan OpenRouter, ditambah SumoPod kalau kamu memakai WorkBuddy. Kenapa Mac? *Renderer* (program penggambar) caption dan grafis di alat ini memakai Swift, bahasa pemrograman buatan Apple.
 
 ## Langkah 1 · Kenalan dengan Terminal
 
@@ -66,9 +66,35 @@ python3 --version
 
 Kalau keduanya menampilkan nomor versi, beres. Python harus 3.9 atau lebih baru, misalnya `Python 3.9.6`. Kalau `git` tidak ditemukan, jalankan `brew install git`. Kalau Python lebih lama dari 3.9, jalankan `brew install python`, lalu tutup dan buka lagi Terminal.
 
-## Langkah 5 · Claude Code
+## Langkah 5 · Agent: WorkBuddy dan Expert AI Videographer
 
-Claude Code adalah agent yang nanti kamu ajak bicara. Pasang dengan mengikuti panduan instalasi resmi Claude Code dari Anthropic, termasuk langkah masuk (*login*) ke akunmu dan cara membukanya di sebuah folder. Perintahnya sengaja tidak ditulis di sini, karena bisa berubah.
+Agent adalah AI yang nanti kamu ajak bicara (Pelajaran 02). Di workshop, agent kita punya tiga bagian:
+
+- **WorkBuddy**, aplikasi agent desktop dari Tencent, di https://www.workbuddy.ai. Kamu masuk (*login*) dengan akun Google atau GitHub. Tampilannya tersedia dalam bahasa Indonesia.
+- **Expert AI Videographer**, uraian tugas agent kita. Ia dipasang dari folder kelas.
+- **glm-5.3-flash**, model yang cepat dan murah sebagai otaknya. WorkBuddy memanggilnya lewat *gateway* (pintu masuk ke banyak model) seperti SumoPod, https://ai.sumopod.com, yang dibayar dalam rupiah. Cadangannya MiniMax-M3.1-Flash-Preview.
+
+Langkah lengkapnya ada di [Panduan WorkBuddy](../5_WorkBuddy/Panduan_WorkBuddy_v1.0.md). Garis besarnya dua bagian.
+
+**Sekarang:**
+
+1. Unduh WorkBuddy, pindahkan ke folder Applications, buka, lalu masuk. Tutup lagi. Membuka sekali ini penting, karena WorkBuddy membuat folder pengaturannya saat pertama kali dibuka.
+2. Buat akun di SumoPod, isi saldo, lalu buat API key. Simpan dulu. Kunci ini juga rahasia: jangan pernah ditempel ke chat.
+
+**Setelah Langkah 7** (Expert dipasang dari folder kelas, jadi foldernya harus sudah ada):
+
+1. Di Terminal, dari folder kelas, jalankan:
+
+   ```bash
+   bash 2_Tools/workbuddy/install_workbuddy.sh --add-models
+   ```
+
+   Perintah ini memasang Expert AI Videographer, lalu menambahkan glm-5.3-flash dan MiniMax-M3.1-Flash-Preview ke WorkBuddy. Ia bertanya dua hal: alamat gateway (tekan Enter untuk SumoPod) dan kunci SumoPod-mu. Huruf kunci yang kamu ketik tidak terlihat. Itu normal.
+2. Tutup WorkBuddy sepenuhnya (Cmd + Q), lalu buka lagi.
+3. Buka folder kelas sebagai *workspace* (folder kerja) di WorkBuddy.
+4. Pilih Expert **AI Videographer**, lalu pilih model **glm-5.3-flash**.
+
+**Cara lain: Claude Code.** Claude Code adalah agent buatan Anthropic, dan semua pelajaran di kelas ini berjalan sama dengannya. Pasang dengan mengikuti panduan instalasi resmi Claude Code dari Anthropic, termasuk langkah masuk ke akunmu dan cara membukanya di sebuah folder. Perintahnya sengaja tidak ditulis di sini, karena bisa berubah.
 
 ## Langkah 6 · Akun dan kunci API
 
@@ -100,10 +126,12 @@ bash install.sh
 
 - memeriksa Python, FFmpeg, dan swiftc;
 - membuat file `.env` dari contohnya, `.env.example`, dan mengunci aksesnya supaya hanya akunmu yang bisa membacanya;
-- menghubungkan folder `1_Skills/` supaya Claude Code bisa membaca skill-nya;
+- menghubungkan folder `1_Skills/` supaya agent, WorkBuddy atau Claude Code, bisa membaca skill-nya;
 - terakhir menjalankan `vg doctor`.
 
 Aman dijalankan ulang: `.env` yang sudah ada tidak disentuh.
+
+Memakai WorkBuddy? Sekarang kerjakan bagian "Setelah Langkah 7" di Langkah 5: pasang Expert-nya.
 
 ## Langkah 8 · Isi kunci di .env (hanya kamu)
 
@@ -119,6 +147,14 @@ Cari dua baris ini. Tempel kuncimu tepat setelah tanda `=`, tanpa spasi dan tanp
 KIE_API_KEY=
 OPENROUTER_API_KEY=
 ```
+
+Cari juga baris `VG_APPROVAL_MODE=terminal`, lalu ganti `terminal` dengan `page`:
+
+```text
+VG_APPROVAL_MODE=page
+```
+
+*Approval mode* adalah cara kamu menyetujui di tiga gerbang. Dengan `page`, ketiga gerbang adalah klikmu di halaman review, dan perintah persetujuan dari terminal selalu ditolak. Jadi agent tidak pernah bisa menyetujui untukmu.
 
 Simpan (Cmd + S), lalu tutup. Baris lain biarkan apa adanya. Pelajaran 05 menjelaskan artinya.
 
@@ -160,10 +196,14 @@ FAIL kie.ai                 KIE_API_KEY is empty. Open .env in the workspace roo
 ok   budget                 VG_BUDGET_PROJECT=800  VG_MAX_PER_CALL=250
 ok   image model            gpt-image-2 (live-tested)
 ok   video model            veo-3-1-lite (live-tested)
-ok   skills linked          /Users/kamu/Documents/ai-videographer-kelas/.claude/skills
+ok   approval mode          terminal (the human types a code in their own terminal)
+ok   skills (Claude Code)   /Users/kamu/Documents/ai-videographer-kelas/.claude/skills
+ok   skills (WorkBuddy)     /Users/kamu/Documents/ai-videographer-kelas/.codebuddy/skills
 ```
 
 Setelah kunci diisi, baris FAIL berganti menjadi `ok KIE_API_KEY set (value hidden)`, dan muncul baris `kie.ai balance` berisi saldo kreditmu. Kuncinya sendiri tidak pernah ditampilkan.
+
+Setelah kamu menulis `VG_APPROVAL_MODE=page`, baris approval mode berubah menjadi `ok approval mode page (the human clicks Approve on the review page)`. Dua baris `skills` menunjukkan skill sudah terhubung untuk Claude Code dan untuk WorkBuddy. Untuk workshop, pastikan ada `ok skills (WorkBuddy)`.
 
 Targetnya: nol FAIL. `warn ffmpeg libass` boleh dibiarkan, karena hanya dipakai untuk cara cadangan membuat subtitle.
 
@@ -181,13 +221,15 @@ Baca dulu teks di belakang tandanya. Hampir selalu ia sudah menyebut cara memper
 | `warn swiftc` | Xcode Command Line Tools belum ada | `xcode-select --install` |
 | `warn OPENROUTER_API_KEY` | kunci OpenRouter kosong | isi di `.env` |
 | `warn .env permissions` | `.env` bisa dibaca pengguna lain | `chmod 600 .env` |
-| `warn skills linked` | skill belum terhubung | `bash install.sh` |
+| `warn skills (WorkBuddy)` atau `skills (Claude Code)` | skill belum terhubung | `bash install.sh` |
+| `warn approval mode ... chat` | agent boleh menyetujui sendiri, cara yang paling lemah | ubah menjadi `VG_APPROVAL_MODE=page` di `.env` |
+| `FAIL approval mode` | nilainya salah ketik | tulis persis `VG_APPROVAL_MODE=page` |
 
-Masih macet? Buka Claude Code di folder kelas dan tulis, misalnya: "vg doctor menunjukkan FAIL di baris kie.ai, bantu aku." Agent boleh menjalankan `vg doctor` sendiri dan menjelaskan hasilnya. Tapi yang mengubah isi `.env` tetap kamu, dan kuncinya tidak pernah masuk ke chat.
+Masih macet? Tanya agent-mu di folder kelas (Expert AI Videographer di WorkBuddy, atau Claude Code), misalnya: "vg doctor menunjukkan FAIL di baris kie.ai, bantu aku." Agent boleh menjalankan `vg doctor` sendiri dan menjelaskan hasilnya. Tapi yang mengubah isi `.env` tetap kamu, dan kuncinya tidak pernah masuk ke chat.
 
 ## Latihan kecil
 
-Jalankan `vg doctor` sampai tidak ada FAIL. Salin hasilnya ke catatanmu (aman, kunci tidak pernah tampil). Di samping setiap baris `warn`, tulis dengan kata-katamu sendiri: perlu diperbaiki sekarang, atau boleh dibiarkan?
+Jalankan `vg doctor` sampai tidak ada FAIL, dan sampai ada baris `ok approval mode page` dan `ok skills (WorkBuddy)`. Salin hasilnya ke catatanmu (aman, kunci tidak pernah tampil). Di samping setiap baris `warn`, tulis dengan kata-katamu sendiri: perlu diperbaiki sekarang, atau boleh dibiarkan?
 
 ## Cek pemahaman
 
@@ -207,9 +249,10 @@ Jalankan `vg doctor` sampai tidak ada FAIL. Salin hasilnya ke catatanmu (aman, k
 ## Ringkasan
 
 - Di Terminal: ketik perintah, tekan Enter, baca hasilnya.
-- Alat yang dipasang: Xcode Command Line Tools, Homebrew, FFmpeg, Git, Python 3.9+, dan Claude Code.
-- Kunci kie.ai dan OpenRouter hanya tinggal di `.env`. Hanya kamu yang mengeditnya, dan kunci tidak pernah masuk ke chat.
+- Alat yang dipasang: Xcode Command Line Tools, Homebrew, FFmpeg, Git, Python 3.9+, dan agent-nya: WorkBuddy dengan Expert AI Videographer dan model glm-5.3-flash (atau Claude Code).
+- Kunci kie.ai dan OpenRouter hanya tinggal di `.env`. Hanya kamu yang mengeditnya, dan kunci tidak pernah masuk ke chat. Kunci SumoPod juga tidak.
+- `VG_APPROVAL_MODE=page` di `.env`: ketiga gerbang menjadi klikmu di halaman review.
 - `vg doctor` adalah singkatan dari `python3 2_Tools/vg/vg.py doctor`. Targetnya nol FAIL.
 - Kalau ada FAIL: baca teksnya, perbaiki satu hal, jalankan lagi.
 
-Berikutnya: [Pelajaran 05 · Cara Kerja AI Videographer](Pelajaran_05_Cara_Kerja_Harness_v1.0.md)
+Berikutnya: [Pelajaran 05 · Cara Kerja AI Videographer](Pelajaran_05_Cara_Kerja_Harness_v1.1.md)

@@ -14,9 +14,9 @@ promise, too little product time, and three cuts in a row with the same size and
 
 | Category | Job in the reel | Model / mode | Frame | Camera | Length | Sound | Watch out |
 |---|---|---|---|---|---|---|---|
-| `hook_talking` | stop the scroll with a line | Veo 3.1 Lite (or Seedance 1.5 Pro for Indonesian lip-sync, after a pilot) · frames | selfie or friend-held, MCU | handheld texture, static framing | 6–8 s; first word before ~0.8 s | her line only | line fit and floor; one face |
+| `hook_talking` | stop the scroll with a line | Kling AI Avatar Pro · lipsync (the reel's own narration, eye-contact first frame); or Veo 3.1 Lite · frames when the clip makes its own voice | selfie or friend-held, MCU | handheld texture, static framing | 6–8 s; first word before ~0.8 s | her line only | line fit and floor; one face |
 | `hook_visual` | stop the scroll with an image | Veo 3.1 Lite · frames | the reveal's start | door opens / window approach / pull-out from a detail | 4–6 s (cut to 1.5–3 s) | one sound (door, footsteps) | the payoff must be visible in 2 s |
-| `talking_cta` | the offer and the call to action | Veo 3.1 Lite · frames | MCU, steady | static or very slow push-in | 6–8 s | her line only | settle to a steady frame at the end |
+| `talking_cta` | the offer and the call to action | Kling AI Avatar Pro · lipsync, or Veo 3.1 Lite · frames | MCU, steady | static or very slow push-in | 6–8 s | her line only | settle to a steady frame at the end |
 | `walk_talk` | move through the place while talking | Veo 3.1 Lite · frames | chest-up, friend-follow | friend-follow at walking pace | 8 s | her line + footsteps | gait physics; same pace in every clip |
 | `lifestyle_broll` | the life the place offers, under voice-over | Veo 3.1 Lite · frames | presenter in the world | slow glide or static | 4–8 s (cut to 2–3 s) | ambience, mouth closed | no lips moving |
 | `room_reveal` | show a real room | Veo 3.1 Lite · frames, **first frame = real photo** (`"first_frame": {"file": …, "crop_x": …}`) | the real photo | push-in / glide / arc (room → move map) | 6 s (cut to 2–3 s) | room tone, one sound | prompt names only camera and light |

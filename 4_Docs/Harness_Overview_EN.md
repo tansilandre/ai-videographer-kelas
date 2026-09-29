@@ -89,9 +89,12 @@ Enforced in code, so a weaker model that skips instructions still cannot spend b
    raise it yourself.
 5. **Video gate**: `vg video` refuses any shot without a matching, unused approval. `--confirm`
    must equal the total the human just agreed to in chat — if `vg approve video` prints a different
-   number, stop and ask again, never resend the command with the tool's number. By default
-   (`VG_APPROVAL_MODE=terminal`) `approve` then asks a human to type a random code on a real
-   terminal; an agent has none, so it is refused and must hand the human the exact command to run
+   number, stop and ask again, never resend the command with the tool's number. With
+   `VG_APPROVAL_MODE=page` the human approves every gate by clicking on the review page
+   (`vg review`), which shows each clip's cost and asks once more; the command line never approves.
+   By default (`VG_APPROVAL_MODE=terminal`) `approve` asks a human to type a random code on a real
+   terminal; an agent has none (WorkBuddy's agent shell is recognised and refused too), so it must
+   hand the human the exact command to run
    (it now starts `cd '<workspace>' && python3 2_Tools/vg/vg.py approve video -p <project> ...`,
    keeping `--new-take`/`--resolution`/`--allow-untested`). **Never run `vg approve` through
    script, expect, a pty, tmux or any terminal you control; only the human types the code.** An
@@ -123,8 +126,15 @@ and `.codebuddy/skills` for this project. `bash install.sh --global` additionall
 
 - **Claude Code**: reads `CLAUDE.md` → `AGENTS.md`; skills from `.claude/skills`.
 - **Codex / Cursor / Gemini CLI**: `AGENTS.md`; skills from `.agents/skills`.
-- **WorkBuddy / CodeBuddy**: project skills from `.workbuddy/skills` / `.codebuddy/skills`. Keep
-  the key in the workspace `.env` (WorkBuddy's sandbox does not read your shell profile).
+- **WorkBuddy**: reads `AGENTS.md`; skills from `.codebuddy/skills`. Install the **AI Videographer
+  expert** with `bash 2_Tools/workbuddy/install_workbuddy.sh` (`--add-models` also adds
+  GLM-5.3-Flash and MiniMax-M3.1-Flash-Preview as custom models). Its playbook drives the
+  pipeline with `vg next`, one step at a time, so a fast, cheap model can run it. Set
+  `VG_APPROVAL_MODE=page` so every approval is a click on the review page, and keep the keys in the
+  workspace `.env` (WorkBuddy's sandbox does not read your shell profile).
+
+For any agent app: `vg next -p P` prints the one next step (command, file to write, or what to ask
+the human), and `vg review -p P --detach` opens the review page without blocking the agent.
 
 ## Adding a model
 

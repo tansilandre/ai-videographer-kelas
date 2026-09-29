@@ -7,7 +7,7 @@ Setelah pelajaran ini, kamu bisa:
 - menyebut lima model yang kita pakai dan tugas masing-masing;
 - menjelaskan kenapa model gambar sering salah di teks, logo, dan jari;
 - menjelaskan kenapa klip video kita pendek, dengan satu gerakan kamera;
-- menjelaskan apa itu agent, dan kenapa persetujuan tetap di tanganmu.
+- menjelaskan apa itu agent (otak, badan, dan uraian tugasnya), dan kenapa persetujuan tetap di tanganmu.
 
 ## Kenapa ini penting
 
@@ -19,7 +19,7 @@ Kita tidak memakai satu AI, tapi lima *model*: program AI yang masing-masing dil
 
 | Jenis | Model | Tugas di reel | Biaya |
 |---|---|---|---|
-| Teks | Claude | merencanakan, menulis prompt, memeriksa hasil | tidak dihitung dalam kredit kie.ai |
+| Teks | glm-5.3-flash (di workshop) atau Claude | merencanakan, menulis prompt, memeriksa hasil | dibayar terpisah, bukan dengan kredit kie.ai |
 | Gambar | gpt-image-2 | style frame, lembar referensi, storyboard, frame pertama | 10 kredit per gambar 2K |
 | Video | Veo 3.1 Lite | membuat gambar yang sudah disetujui bergerak | 35 kredit per klip 8 detik di 1080p (30 kredit di 720p) |
 | Suara | Gemini TTS | narasi dari naskah | sekitar US$0,003 per take 20 detik |
@@ -103,19 +103,29 @@ Soal bibir, kami belajar dengan cara yang sulit. Di versi pertama reel ini, suar
 3. **Periksa**: lihat hasilnya.
 4. **Perbaiki**: ulangi yang kurang.
 
-Agent kita adalah Claude Code. Ia menjalankan alat bernama vg, program Python di folder `2_Tools/vg/`, yang memanggil model, mencatat biaya, dan menolak membuat video yang belum kamu setujui.
+Sebuah agent punya tiga bagian:
 
-Claude Code membaca *skill*, yaitu file instruksi di folder `1_Skills/`. Skill menjelaskan cara kerja kita tahap demi tahap, seperti SOP (prosedur standar) di kantor. Titik mulainya `1_Skills/vg-director/SKILL.md`.
+| Bagian | Ibaratnya | Di workshop |
+|---|---|---|
+| Model bahasa | otak: berpikir dan memutuskan langkah | glm-5.3-flash, model yang cepat dan murah |
+| Aplikasi agent | badan: membuka file, menjalankan perintah, dan mengobrol denganmu | WorkBuddy, aplikasi desktop dari Tencent |
+| *Expert* | uraian tugas (*job description*): pekerjaan apa yang dikerjakan, dan aturan apa yang tidak boleh dilanggar | Expert AI Videographer |
+
+Claude Code juga bisa dipakai. Di sana otaknya model Claude, badannya aplikasi Claude Code, dan uraian tugasnya dibaca dari file `AGENTS.md` di folder kelas.
+
+Agent mana pun yang kamu pakai, ia menjalankan alat yang sama: vg, program Python di folder `2_Tools/vg/`, yang memanggil model, mencatat biaya, dan menolak membuat video yang belum kamu setujui. Ia juga membaca *skill* yang sama, yaitu file instruksi di folder `1_Skills/`. Skill menjelaskan cara kerja kita tahap demi tahap, seperti SOP (prosedur standar) di kantor. Titik mulainya `1_Skills/vg-director/SKILL.md`.
+
+Kenapa model kecil seperti glm-5.3-flash cukup? Karena Expert-nya tidak perlu mengingat seluruh alur. Sebelum setiap langkah, ia bertanya ke alat dengan `vg next`, dan alat menjawab dengan satu langkah berikutnya (Pelajaran 05).
 
 Contoh satu putaran di tahap Look: agent menjalankan perintah gambar (`python3 2_Tools/vg/vg.py image`) untuk membuat style frame, lalu melihat setiap gambar. Ada tulisan aneh di dinding, atau matahari dari arah yang salah? Ia membuat take baru. Setelah itu ia menunjukkan hasilnya di halaman review, dan menunggu kamu bilang setuju.
 
 Kamu cukup bicara ke agent dengan bahasa biasa, misalnya: "Buat reel dari brief di 5_Projects/.../0_Source".
 
-Tapi agent juga model bahasa. Ia bisa salah, bahkan salah dengan yakin. Karena itu tiga gerbang persetujuan tetap di tanganmu. Dengan pengaturan bawaan, di setiap gerbang kamu sendiri yang mengetik kode acak empat digit di *terminal*-mu (layar tempat mengetik perintah). Agent tidak bisa melakukannya.
+Tapi agent juga model bahasa. Ia bisa salah, bahkan salah dengan yakin. Karena itu tiga gerbang persetujuan tetap di tanganmu. Di kelas ini, di setiap gerbang kamu sendiri yang mengklik tombol setuju di halaman review. Perintah persetujuan dari *terminal* (layar tempat mengetik perintah) selalu ditolak, jadi agent tidak bisa menyetujui untukmu.
 
 ## Latihan kecil
 
-Pasangkan setiap tugas dengan modelnya: Claude, gpt-image-2, Veo 3.1 Lite, Gemini TTS, atau Lyria.
+Pasangkan setiap tugas dengan modelnya: model teks (glm-5.3-flash atau Claude), gpt-image-2, Veo 3.1 Lite, Gemini TTS, atau Lyria.
 
 1. Membuat potret referensi Rani.
 2. Membaca "Tebak harga rumah ini." dengan suara Callirrhoe.
@@ -129,7 +139,7 @@ Lalu jawab: tugas mana yang paling mahal, dan kenapa ia dikerjakan paling akhir?
 <details>
 <summary>Jawaban latihan</summary>
 
-1 gpt-image-2 · 2 Gemini TTS · 3 Claude · 4 Veo 3.1 Lite · 5 Lyria · 6 Claude sebagai agent, lalu kamu ikut mengecek.
+1 gpt-image-2 · 2 Gemini TTS · 3 model teks · 4 Veo 3.1 Lite · 5 Lyria · 6 model teks sebagai otak agent, lalu kamu ikut mengecek.
 
 Yang paling mahal nomor 4, video: 35 kredit per klip. Ia paling akhir karena memperbaiki gambar jauh lebih murah daripada memperbaiki video.
 
@@ -152,9 +162,10 @@ Yang paling mahal nomor 4, video: 35 kredit per klip. Ia paling akhir karena mem
 
 ## Ringkasan
 
-- Tim kita: Claude (teks), gpt-image-2 (gambar), Veo 3.1 Lite (video), Gemini TTS (suara), dan Lyria (musik). Video paling mahal, jadi dibuat paling akhir.
+- Tim kita: glm-5.3-flash atau Claude (teks), gpt-image-2 (gambar), Veo 3.1 Lite (video), Gemini TTS (suara), dan Lyria (musik). Video paling mahal, jadi dibuat paling akhir.
 - Model gambar menggambar yang masuk akal, bukan yang benar. Teks, logo, dan jari selalu dicek; tulisan ditambahkan saat edit.
 - Model video harus menjaga ratusan frame tetap konsisten. Maka: klip pendek, satu gerakan kamera, frame pertama yang sudah disetujui.
-- Agent adalah model bahasa dengan alat, bekerja dalam putaran. Ia bisa salah, jadi gerbang tetap di tanganmu.
+- Agent adalah model bahasa dengan alat, bekerja dalam putaran. Otaknya model (di workshop: glm-5.3-flash), badannya aplikasi agent (WorkBuddy atau Claude Code), dan uraian tugasnya Expert AI Videographer.
+- Agent bisa salah, jadi gerbang tetap di tanganmu: kamu yang mengklik setuju di halaman review.
 
-Berikutnya: [Pelajaran 03 · Cara Berpikir dengan AI: Prompt, Batas, dan Etika](Pelajaran_03_Cara_Berpikir_Dengan_AI_v1.0.md)
+Berikutnya: [Pelajaran 03 · Cara Berpikir dengan AI: Prompt, Batas, dan Etika](Pelajaran_03_Cara_Berpikir_Dengan_AI_v1.1.md)

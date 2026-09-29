@@ -6,17 +6,23 @@ records the human's notes and take choices through the tool. It never generates 
 """
 import json
 import mimetypes
+import os
+import re
 import secrets
+import signal
+import subprocess
+import sys
 import threading
+import time
 import urllib.parse
 import webbrowser
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 
-from vglib import config, review
+from vglib import config, generate, review
 from vglib.errors import Refused, UsageError, VgError
 from vglib.generate import load, say
-from vglib.project import now_iso
+from vglib.project import Project, now_iso
 
 NOTES = "review_notes"
 TAKE_KINDS = ("look", "asset", "storyboard", "first", "last")
@@ -26,7 +32,40 @@ DRAIN_LIMIT = 1024 * 1024  # an oversized body is read and dropped up to this, s
 
 
 def approval_mode():
-    return (config.setting("VG_APPROVAL_MODE") or "terminal").lower()
+    return generate.approval_mode()
+
+
+CLICK_MODES = ("chat", "page")  # modes in which a click on this page approves
+
+
+def video_data(project, sl, state, gates_ok):
+    """The video section: every AI shot with its clip's state and the cost of one take, in the same terms
+    `vg estimate` and `vg approve video` use."""
+    rows = []
+    approvals = state["approvals"]["video"]
+    for shot in sl.ai_shots():
+        row = {"shot": shot["id"], "mode": shot.get("mode"), "summary": shot.get("summary", ""), "cost": None,
+               "duration": None, "status": "not made", "error": None}
+        entry = project.selected_entry("clip:" + shot["id"], state)
+        try:
+            spec = generate.shot_spec(sl, shot)
+            job = generate.build_video_job(project, sl, shot, state, spec)
+            row["cost"], row["duration"] = job["cost"], job["params"]["duration"]
+            made = generate._done(project, state, job["key"], job["target"])
+        except VgError as exc:
+            row["error"], made = str(exc), None
+        approval = approvals.get(shot["id"])
+        if generate._in_flight(state, "clip:" + shot["id"]):
+            row["status"] = "in flight"
+        elif approval and not approval.get("used") and not generate._gate_problem(
+                project, approval, job["key"] if row["cost"] is not None else None, row["cost"] or 0,
+                approval.get("new_take")):
+            row["status"] = "approved"
+        elif made or entry:
+            row["status"] = "made v%d" % entry["v"] if entry else "made"
+        rows.append(row)
+    return {"ready": gates_ok, "rows": rows,
+            "budget": {"committed": Project.spent(state), "cap": config.number("VG_BUDGET_PROJECT")}}
 
 
 def _rel(project, path):
@@ -79,11 +118,12 @@ def page_data(project, gates=True):
     if latest and (project.path / latest["path"]).is_file():
         animatic = {"path": _rel(project, latest["path"]), "at": latest["at"],
                     "current": visuals_seen is not None and latest.get("snapshot") == visuals_seen}
+    gate_rows = review.gate_status(project, sl, state) if gates else []
     return {
         "project": project.name,
         "mode": approval_mode(),
-        "gates": [{"name": n, "ok": ok, "text": t} for n, ok, t in review.gate_status(project, sl, state)]
-                 if gates else [],
+        "gates": [{"name": n, "ok": ok, "text": t} for n, ok, t in gate_rows],
+        "video": video_data(project, sl, state, all(ok for _, ok, _ in gate_rows)) if gates else None,
         "look": {"text": {k: look.get(k, "") for k in review.LOOK_TEXT}, "frames": frames},
         "refs": refs,
         "reel": reel,
@@ -127,7 +167,7 @@ def set_note(project, item, note):
     with project.transaction() as st:
         notes = st.setdefault(NOTES, {})
         if note:
-            notes[item] = {"note": note, "at": now_iso()}
+            notes[item] = {"note": note, "at": now_iso(), "ts": time.time()}
         else:
             notes.pop(item, None)
 
@@ -149,25 +189,41 @@ def select_take(project, target, version):
 
 
 def approve(project, stage, seen):
-    """The human clicked Approve on what the page showed (`seen`, from page_data). Chat mode records it
-    through the gate, which refuses if anything changed since; terminal mode refuses with the command
+    """The human clicked Approve on what the page showed (`seen`, from page_data). Chat and page mode record
+    it through the gate, which refuses if anything changed since; terminal mode refuses with the command
     to run in their own terminal, because a click cannot prove a human typed the code."""
     if stage not in ("look", "visuals"):
         raise UsageError("stage must be look or visuals")
     if not isinstance(seen, dict) or not isinstance(seen.get(stage), str):
         raise UsageError("Approve needs what the page showed; refresh the page and try again")
-    if approval_mode() != "chat":
+    if approval_mode() not in CLICK_MODES:
         raise Refused("VG_APPROVAL_MODE=%s: approve in your own terminal, where you type the code it shows:\n  %s"
                       % (approval_mode(), review._command(project, stage)))
     if stage == "look":
-        review.approve_look(project, expected=seen["look"])
+        review.approve_look(project, expected=seen["look"], via_page=True)
     else:
-        review.approve_visuals(project, expected=seen["visuals"], expected_animatic=seen.get("animatic"))
+        review.approve_visuals(project, expected=seen["visuals"], expected_animatic=seen.get("animatic"),
+                               via_page=True)
     covered = ("look:",) if stage == "look" else ("beat:", "asset:")
     with project.transaction() as st:
         notes = st.setdefault(NOTES, {})
         for key in [k for k in notes if k.startswith(covered)]:
             del notes[key]
+
+
+def approve_video(project, shots, confirm, new_take=False):
+    """The human clicked Approve for these clips at the total the page showed (`confirm`). The same checks as
+    `vg approve video`: the visual gates, one take per approval, and a total that must match."""
+    if approval_mode() not in CLICK_MODES:
+        raise Refused("VG_APPROVAL_MODE=%s: approve video in your own terminal with `vg approve video`"
+                      % approval_mode())
+    if not isinstance(shots, list) or not shots or not all(isinstance(s, str) for s in shots):
+        raise UsageError("shots must be a list of shot ids")
+    try:
+        confirm = float(confirm)
+    except (TypeError, ValueError):
+        raise UsageError("confirm must be the total shown on the page")
+    generate.approve_video(project, ",".join(shots), False, confirm, new_take=bool(new_take), via_page=True)
 
 
 def summary(project):
@@ -176,8 +232,14 @@ def summary(project):
     lines = ["GATE  %s: %s" % (g["name"], g["text"]) for g in data["gates"]]
     for item, entry in sorted(data["notes"].items()):
         lines.append("NOTE  %s  %s" % (item, " / ".join(entry["note"].splitlines())))
+    for row in data["video"]["rows"]:
+        if row["status"] == "approved":
+            lines.append("APPROVED  video %s (%g credits): run vg video -p %s --shots %s%s"
+                         % (row["shot"], row["cost"], project.name, row["shot"],
+                            " --new-take" if (project.read_state()["approvals"]["video"][row["shot"]]
+                                              .get("new_take")) else ""))
     look_ok, visuals_ok = [g["ok"] for g in data["gates"]]
-    terminal = data["mode"] != "chat"
+    terminal = data["mode"] == "terminal"
     animatic_current = bool(data["animatic"] and data["animatic"]["current"])
     if data["notes"]:
         # the animatic belongs to the reel review; at the look stage there is none to re-render yet
@@ -315,6 +377,8 @@ class _Handler(BaseHTTPRequestHandler):
                 select_take(project, body.get("target"), body.get("version"))
             elif path == "/api/approve":
                 approve(project, body.get("stage"), body.get("seen"))
+            elif path == "/api/approve_video":
+                approve_video(project, body.get("shots"), body.get("confirm"), body.get("new_take"))
             elif path == "/api/done":
                 notes = body.get("notes") or {}
                 if not isinstance(notes, dict):
@@ -359,6 +423,99 @@ def serve(project, port=0, open_browser=True, ready=None):
     return lines
 
 
+# ---------------------------------------------------------------------- detached page (agent apps)
+
+DETACHED = ".vg_review.json"  # pid and URL of a page started with --detach
+DETACHED_LOG = ".vg_review.log"
+VG = Path(__file__).resolve().parents[1] / "vg.py"
+
+
+def _alive(pid):
+    try:
+        os.kill(int(pid), 0)
+    except (ProcessLookupError, TypeError, ValueError):
+        return False
+    except PermissionError:
+        return True
+    return True
+
+
+def detached(project):
+    """The page started with --detach, if its process still runs (it ends when the human clicks Done)."""
+    path = project.path / DETACHED
+    try:
+        info = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        return None
+    if isinstance(info, dict) and _alive(info.get("pid")):
+        return info
+    try:
+        path.unlink()
+    except OSError:
+        pass
+    return None
+
+
+def _after_detach(project):
+    say("It stays open until the human clicks 'Done, back to the agent'. Send them the link. When they say "
+        "they are done, run: python3 2_Tools/vg/vg.py next -p %s" % project.name)
+
+
+def detach(project, port=0, open_browser=True, timeout=20):
+    """Start the page in its own process and return at once, for agent apps whose shell calls must end.
+    The human's clicks and notes land in project.json; `vg review --summary` or `vg next` reads them."""
+    info = detached(project)
+    if info:
+        say("Review page already open: %s" % info["url"])
+        _after_detach(project)
+        return info["url"]
+    if not allowed_files(page_data(project)):
+        say("Nothing to review yet: generate the style frames first (vg image -p %s --stage look)." % project.name)
+        return None
+    log = project.path / DETACHED_LOG
+    cmd = [sys.executable, str(VG), "review", "-p", str(project.path), "--port", str(port)]
+    if not open_browser:
+        cmd.append("--no-open")
+    with open(str(log), "w", encoding="utf-8") as out:
+        proc = subprocess.Popen(cmd, stdout=out, stderr=subprocess.STDOUT, stdin=subprocess.DEVNULL,
+                                cwd=str(config.ROOT), start_new_session=True)
+    deadline, url = time.time() + timeout, None
+    while time.time() < deadline:
+        found = re.search(r"Review page: (http\S+)", log.read_text(encoding="utf-8", errors="replace"))
+        if found:
+            url = found.group(1)
+            break
+        if proc.poll() is not None:
+            break
+        time.sleep(0.1)
+    if not url:
+        if proc.poll() is None:
+            proc.kill()
+        raise UsageError("The review page did not start:\n" + log.read_text(encoding="utf-8", errors="replace")[-2000:])
+    (project.path / DETACHED).write_text(json.dumps({"pid": proc.pid, "url": url, "at": now_iso()}), encoding="utf-8")
+    say("Review page: %s" % url)
+    _after_detach(project)
+    return url
+
+
+def stop_detached(project):
+    info = detached(project)
+    if not info:
+        say("No review page is open for %s." % project.name)
+        return False
+    os.kill(int(info["pid"]), signal.SIGTERM)
+    for _ in range(50):
+        if not _alive(info["pid"]):
+            break
+        time.sleep(0.1)
+    try:
+        (project.path / DETACHED).unlink()
+    except OSError:
+        pass
+    say("Review page stopped.")
+    return True
+
+
 def page_html():
     """The page shell; everything on it is rendered in the browser from /api/state."""
     return PAGE_HTML
@@ -366,7 +523,7 @@ def page_html():
 
 PAGE_HTML = r"""<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Visual Review</title>
+<title>Review</title>
 <style>
 :root{--bg:#f6f5f2;--card:#fff;--ink:#1d1d1b;--muted:#6b6a66;--line:#e2e0da;--ok:#15803d;--warn:#b45309;
 --bad:#b91c1c;--accent:#1d4ed8;--chip:#f0eee9}
@@ -389,8 +546,12 @@ textarea{width:100%;font:inherit;font-size:13px;border-radius:8px;border:1px sol
 dl{margin:0}dt{font-weight:600;font-size:13px}dd{margin:0 0 6px;color:var(--muted);font-size:13px}
 code{display:block;white-space:pre-wrap;font-size:12px;background:var(--chip);padding:8px;border-radius:8px}
 .bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:12px}
+.vt{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--line);border-radius:12px}
+.vt td,.vt th{padding:8px 10px;border-bottom:1px solid var(--line);text-align:left;font-size:14px;vertical-align:top}
+.vt th{font-size:12px;color:var(--muted);font-weight:600}.num{text-align:right;white-space:nowrap}
+.table-wrap{overflow-x:auto}
 </style></head><body><main>
-<h1 id="title">Visual review</h1><p class="muted" id="mode"></p><div id="gates"></div><div class="err" id="err"></div>
+<h1 id="title">Review</h1><p class="muted" id="mode"></p><div id="gates"></div><div class="err" id="err"></div>
 <div id="app"><p class="muted">Loading…</p></div>
 <div class="bar"><button class="primary" id="done">Done, back to the agent</button><button id="refresh">Refresh</button></div>
 </main>
@@ -433,14 +594,51 @@ function approveBar(stage, label) {
   const gate = state.gates.find(g => g.name === stage);
   if (stage === "visuals" && !(state.animatic && state.animatic.current))
     return $("p", {class: "muted", text: "Approve reel appears once an animatic of exactly these images is here."});
-  if (state.mode === "chat") return $("div", {class: "bar"}, [$("button", {class: "primary", text: label,
+  if (state.mode === "chat" || state.mode === "page") return $("div", {class: "bar"}, [$("button", {class: "primary", text: label,
     on: () => api("/api/approve", {stage: stage, seen: state.seen})}), $("span", {class: "muted", text: gate && gate.ok ? "approved" : ""})]);
   return $("div", {}, [$("p", {class: "muted", text: "Approval mode is terminal: run this in your own terminal and type the code it shows, then Refresh."}),
     $("code", {text: state.commands[stage]})]);
 }
+async function spend(shots, total, newTake) {
+  const what = (newTake ? "a new take of " : "") + shots.join(", ");
+  if (!window.confirm("Spend " + total + " credits on " + what + "?\nThis pays for one take of each clip. The agent then makes it."))
+    return;
+  await api("/api/approve_video", {shots: shots, confirm: total, new_take: newTake});
+}
+function videoSection() {
+  const v = state.video, box = $("div", {});
+  box.appendChild($("h2", {text: "Video"}));
+  if (!v || !v.ready) {
+    box.appendChild($("p", {class: "muted", text: "Opens once the look and the reel are approved."}));
+    return box;
+  }
+  const click = state.mode === "chat" || state.mode === "page";
+  box.appendChild($("p", {class: "muted", text: "Committed so far: " + v.budget.committed + " of " + v.budget.cap +
+    " credits. Each approval pays for one take of one clip." + (click ? "" : " Approval mode is terminal: approve video in your own terminal (vg approve video).")}));
+  const rows = v.rows.map(r => {
+    let action = $("span", {class: "muted", text: r.error ? "not ready: " + r.error : r.status});
+    if (click && !r.error && r.cost !== null) {
+      if (r.status === "not made") action = $("button", {class: "primary", text: "Approve · " + r.cost + " credits", on: () => spend([r.shot], r.cost, false)});
+      else if (r.status.startsWith("made")) action = $("div", {}, [$("span", {class: "muted", text: r.status + " "}),
+        $("button", {text: "New take · " + r.cost, on: () => spend([r.shot], r.cost, true)})]);
+      else if (r.status === "approved") action = $("span", {class: "muted", text: "approved: the agent can make it now"});
+      else if (r.status === "in flight") action = $("span", {class: "muted", text: "being made"});
+    }
+    return $("tr", {}, [$("td", {text: r.shot}), $("td", {text: r.summary || ""}), $("td", {class: "num", text: r.duration ? r.duration + " s" : ""}),
+      $("td", {class: "num", text: r.cost === null ? "" : String(r.cost)}), $("td", {}, [action])]);
+  });
+  box.appendChild($("div", {class: "table-wrap"}, [$("table", {class: "vt"}, [$("tr", {}, ["Clip", "What", "Length", "Credits", ""].map(h => $("th", {text: h})))].concat(rows))]));
+  const open = v.rows.filter(r => r.status === "not made" && !r.error && r.cost !== null);
+  if (click && open.length > 1) {
+    const total = open.reduce((s, r) => s + r.cost, 0);
+    box.appendChild($("div", {class: "bar"}, [$("button", {text: "Approve all not made · " + total + " credits",
+      on: () => spend(open.map(r => r.shot), total, false)})]));
+  }
+  return box;
+}
 function card(c) { return $("div", {class: "card"}, [$("b", {text: c.label}), picture(c), takeButtons(c), noteBox(c.item)]); }
 function render() {
-  document.getElementById("title").textContent = "Visual review: " + state.project;
+  document.getElementById("title").textContent = "Review: " + state.project;
   document.getElementById("mode").textContent = "Approval mode: " + state.mode;
   document.getElementById("gates").replaceChildren(...state.gates.map(g =>
     $("div", {class: "gate" + (g.ok ? " ok" : ""), text: g.name + " review: " + g.text})));
@@ -465,6 +663,7 @@ function render() {
       $("span", {class: a.current ? "muted" : "note-saved", text: a.current ? a.path : "Out of date: it shows older visuals. Ask the agent to render it again."})])
     : $("p", {class: "muted", text: "No animatic yet. The agent renders it with vg edit animatic before the reel review."}));
   app.appendChild(approveBar("visuals", "Approve reel"));
+  app.appendChild(videoSection());
 }
 document.getElementById("refresh").addEventListener("click", () => api("/api/state"));
 document.getElementById("done").addEventListener("click", async () => {

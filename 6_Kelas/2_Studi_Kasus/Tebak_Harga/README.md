@@ -137,9 +137,9 @@ Versi pertama reel ini dinilai jelek. Setiap shot punya cahaya dan grade sendiri
 
 Perbaikannya sekarang menjadi aturan kelas: look disetujui dulu dan seluruh reel ditonton sebagai gambar sebelum video, shot list mencatat `promise` dan `pays_off`, narasi voice-over dengan mulut tertutup, dan audio dibuat dulu. Saat memeriksa, kami juga menemukan tiga bug: caption yang menampilkan harga sebelum diucapkan, animatic yang membeku sekitar 2,5 detik, dan pencarian drop musik yang dua kali memilih momen yang salah.
 
-Cerita lengkapnya: [Pelajaran 13 · Kesalahan yang Kami Buat](../../1_Pelajaran/Pelajaran_13_Kesalahan_Yang_Kami_Buat_v1.0.md)
+Cerita lengkapnya: [Pelajaran 13 · Kesalahan yang Kami Buat](../../1_Pelajaran/Pelajaran_13_Kesalahan_Yang_Kami_Buat_v1.1.md)
 
 ## Bahan lain
 
-- Deck kelas: [Kelas_AI_Videographer_Deck_v1.1.pdf](../../4_Deck/Kelas_AI_Videographer_Deck_v1.1.pdf)
-- Mulai kelas dari awal: [Pelajaran 00 · Mulai di Sini](../../1_Pelajaran/Pelajaran_00_Mulai_Di_Sini_v1.0.md)
+- Deck kelas: [Kelas_AI_Videographer_Deck_v1.2.pdf](../../4_Deck/Kelas_AI_Videographer_Deck_v1.2.pdf)
+- Mulai kelas dari awal: [Pelajaran 00 · Mulai di Sini](../../1_Pelajaran/Pelajaran_00_Mulai_Di_Sini_v1.1.md)

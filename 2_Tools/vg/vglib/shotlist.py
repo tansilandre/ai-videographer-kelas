@@ -6,7 +6,7 @@ from vglib.errors import UsageError
 
 SOURCES = ("ai", "real", "mg")
 SAFE_ID = re.compile(r"^[A-Za-z0-9][A-Za-z0-9_-]*$")  # ids become file names
-MODES = ("frames", "character", "text")
+MODES = ("frames", "character", "text", "lipsync")
 ASSET_KINDS = ("character", "location", "product", "other")
 
 
@@ -158,7 +158,11 @@ class Shotlist:
         return self._with_lock(shot.get("video_prompt") or "", self.style_lock("video"))
 
     def duration(self, shot, spec):
-        """Resolve a shot's duration against the video model (auto = shortest that fits the dialogue)."""
+        """Resolve a shot's duration against the video model (auto = shortest that fits the dialogue). A
+        lipsync shot lasts as long as its narration window."""
+        if shot.get("mode") == "lipsync":
+            window = shot.get("lipsync") or {}
+            return round(float(window.get("end", 0)) - float(window.get("start", 0)), 3)
         raw = str(shot.get("duration") or "auto")
         dialogue = shot.get("dialogue") or ""
         if raw == "auto":
@@ -291,6 +295,8 @@ class Shotlist:
                 errors += self._check_refs(where + ".last_frame.refs", last.get("refs", []))
                 if mode != "frames":
                     warnings.append("%s.last_frame: only frames mode sends a last frame; it will be unused" % where)
+            if mode == "lipsync":
+                errors += self._check_lipsync(where, shot, shot_spec)
             if mode == "character":
                 names = shot.get("characters") or []
                 if not names:
@@ -355,6 +361,33 @@ class Shotlist:
             if aid and aid not in used:
                 warnings.append("assets.%s: no shot or character uses it (it still costs an image)" % aid)
         return errors, warnings
+
+    def _check_lipsync(self, where, shot, spec):
+        """`lipsync`: {"audio": "file:<the reel's narration>", "start": s, "end": s}, the stretch of the
+        narration the presenter says on camera, in the narration's own time."""
+        window = shot.get("lipsync")
+        where = where + ".lipsync"
+        if not isinstance(window, dict):
+            return ["%s: lipsync mode needs {\"audio\": \"file:6_Edit/1_Audio/<narration>\", \"start\": s, "
+                    "\"end\": s}" % where]
+        errors = []
+        audio = window.get("audio")
+        if not (isinstance(audio, str) and audio.startswith("file:")):
+            errors.append("%s.audio: must be \"file:<audio inside the project>\"" % where)
+        elif self.project is not None:
+            from vglib import review
+            if review.resolve_image(self.project, None, audio) is None:
+                errors.append("%s.audio: %s not found inside the project" % (where, audio))
+        try:
+            start, end = float(window.get("start")), float(window.get("end"))
+        except (TypeError, ValueError):
+            return errors + ["%s: start and end must be seconds" % where]
+        limit = float(((spec or {}).get("lipsync") or {}).get("max_seconds", 15))
+        if start < 0 or end <= start:
+            errors.append("%s: end must come after start (both in seconds of the narration)" % where)
+        elif end - start > limit:
+            errors.append("%s: %.2fs is longer than the model's %gs; split the line" % (where, end - start, limit))
+        return errors
 
     def _check_file_frame(self, where, frame):
         """A frame given as a real photo: {"file": "0_Source/x.jpg", "crop_x": 0-1}, alone."""

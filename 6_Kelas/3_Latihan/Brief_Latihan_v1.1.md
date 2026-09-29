@@ -12,11 +12,11 @@ python3 2_Tools/vg/vg.py doctor
 
 Lalu:
 
-1. Buka Claude Code di folder repo.
-2. Ketik: "Buat reel dari brief latihan di 6_Kelas/3_Latihan/Brief_Latihan_v1.0.md."
+1. Buka WorkBuddy dengan folder repo sebagai *workspace*, lalu pilih Expert **AI Videographer** dan model **glm-5.3-flash** (lihat [Panduan WorkBuddy](../5_WorkBuddy/Panduan_WorkBuddy_v1.0.md)). Memakai Claude Code? Buka Claude Code di folder repo.
+2. Ketik: "Buat reel dari brief latihan di 6_Kelas/3_Latihan/Brief_Latihan_v1.1.md."
 3. Agent membuat folder proyek di `5_Projects/` dan menyalin brief ini ke folder `0_Source` proyek itu. Isi `0_Source` tidak boleh diubah.
-4. Ikuti [Checklist per Tahap](Checklist_Per_Tahap_v1.0.md). Centang semua sebelum pindah tahap.
-5. Di tiga gerbang (look, animatic, video), kamu yang memutuskan, dan kamu sendiri yang mengetik kode persetujuan di terminalmu. Jangan bilang "approved" kalau kamu belum benar-benar melihat hasilnya.
+4. Ikuti [Checklist per Tahap](Checklist_Per_Tahap_v1.1.md). Centang semua sebelum pindah tahap. Bingung sedang di tahap mana? Tanya agent, atau jalankan sendiri `vg next` (Pelajaran 05), yang mencetak satu langkah berikutnya.
+5. Di tiga gerbang (look, animatic, video), kamu yang memutuskan, dan kamu sendiri yang mengklik tombol persetujuan di halaman review (`VG_APPROVAL_MODE=page`). Jangan klik Approve kalau kamu belum benar-benar melihat hasilnya.
 6. Untuk video, mulai dari **satu klip pilot**. Tonton dulu, baru putuskan sisanya.
 
 Semua yang ada di bawah garis ini adalah brief dari klien. Baca seperti kamu menerimanya dari klien sungguhan.
@@ -111,7 +111,7 @@ Aturan ini wajib. Agent mencatatnya di bagian `rules` shot list dan mematuhinya 
 - **Video:** paling banyak **4 klip AI** (Veo 3.1 Lite, 35 kredit per klip 8 detik di 1080p), jadi paling banyak 4 × 35 = 140 kredit. Mulai dari **1 klip pilot (35 kredit)**. Bagian lain boleh memakai gambar diam dengan gerak pelan di edit, yang gratis.
 - **Suara dan musik:** beberapa sen dolar lewat OpenRouter.
 
-Angka pastinya ditampilkan agent dari perintah estimate sebelum kamu menyetujui video. Jangan menebak.
+Angka pastinya tampil di bagian Video halaman review (dan di perintah estimate) sebelum kamu menyetujui video. Jangan menebak.
 
 ### Yang diserahkan
 

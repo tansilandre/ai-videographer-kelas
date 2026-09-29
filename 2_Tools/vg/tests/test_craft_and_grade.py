@@ -428,3 +428,97 @@ class FrameCountTests(unittest.TestCase):
             finish.check_frames(clip, 2.0)      # a 2 s render with 1 s of frames
         self.assertFalse(clip.exists())
         shutil.rmtree(str(tmp))
+
+
+@unittest.skipUnless(shutil.which("ffmpeg") and shutil.which("swiftc"), "needs ffmpeg and swiftc")
+class MuteClipTests(Base):
+    """A generated clip can carry a sound the reel must not have (Veo put a glass crash under the
+    Tebak Harga hook): "clip_volume": 0 mutes the clip's own sound, and that sound no longer ducks the
+    music as if someone spoke."""
+
+    def test_clip_volume_zero_mutes_a_clip_without_a_replacement_track(self):
+        from vglib import finish
+        import re
+        clip = self.project.path / "5_Clips" / "Clip_S01_v1.mp4"
+        clip.parent.mkdir(parents=True)
+        finish._run(["ffmpeg", "-v", "error", "-y", "-f", "lavfi", "-i", "testsrc2=s=1080x1920:r=30:d=2",
+                     "-f", "lavfi", "-i", "sine=f=440:d=2:sample_rate=48000", "-shortest", "-pix_fmt", "yuv420p",
+                     "-c:a", "aac", str(clip)])
+        original = self.project.selected
+        self.project.selected = lambda target, state=None: clip if target == "clip:S01" else original(target, state)
+        path = self.project.path / "6_Edit" / "Edit_Spec.json"
+        path.parent.mkdir(exist_ok=True)
+        path.write_text(json.dumps({"segments": [{"id": "S01", "clip": "S01", "in": 0, "out": 1.5, "clip_volume": 0}],
+                                    "graphics": [], "output": "Mute_Test_v1.0.mp4"}))
+        out = finish.final(self.project, draft=True)
+        log = finish._run(["ffmpeg", "-i", str(out), "-af", "volumedetect", "-f", "null", "-"])
+        self.assertLess(float(re.findall(r"max_volume: (-?[\d.inf]+)", log)[0]), -60)
+
+    def test_dim_darkens_a_clip_so_white_graphics_stay_readable(self):
+        """The Tebak Harga counter sits on a bright facade clip: "dim" darkens a clip segment as it does a
+        background image."""
+        from vglib import finish
+        import re
+        clip = self.project.path / "5_Clips" / "Clip_S01_v1.mp4"
+        clip.parent.mkdir(parents=True)
+        finish._run(["ffmpeg", "-v", "error", "-y", "-f", "lavfi", "-i", "color=c=0xE0E0E0:s=1080x1920:r=30:d=2",
+                     "-pix_fmt", "yuv420p", str(clip)])
+        original = self.project.selected
+        self.project.selected = lambda target, state=None: clip if target == "clip:S01" else original(target, state)
+        path = self.project.path / "6_Edit" / "Edit_Spec.json"
+        path.parent.mkdir(exist_ok=True)
+        luma = []
+        for n, extra in enumerate(({}, {"dim": 0.4})):
+            path.write_text(json.dumps({"segments": [dict({"id": "S01", "clip": "S01", "in": 0, "out": 1.0}, **extra)],
+                                        "graphics": [], "output": "Dim_Test_%d_v1.0.mp4" % n}))
+            out = finish.final(self.project, draft=True)
+            log = finish._run(["ffmpeg", "-i", str(out), "-vf", "signalstats,metadata=print:key=lavfi.signalstats.YAVG",
+                               "-frames:v", "1", "-f", "null", "-"])
+            luma.append(float(re.findall(r"YAVG=([\d.]+)", log)[0]))
+        self.assertLess(luma[1], luma[0] - 20)
+
+    def test_24fps_clips_cut_at_odd_times_keep_every_frame(self):
+        """Veo clips are 24 fps and the reel is 30: each trimmed piece must hold exactly its frames, or gaps add
+        up at the joins (Tebak Harga draft: 788 of 791 frames) and graphics drift off the picture."""
+        from vglib import finish
+        clip = self.project.path / "5_Clips" / "Clip_S01_v1.mp4"
+        clip.parent.mkdir(parents=True)
+        finish._run(["ffmpeg", "-v", "error", "-y", "-f", "lavfi", "-i", "testsrc2=s=1080x1920:r=24:d=6",
+                     "-f", "lavfi", "-i", "sine=f=300:d=6:sample_rate=48000", "-shortest", "-pix_fmt", "yuv420p",
+                     "-c:a", "aac", str(clip)])
+        original = self.project.selected
+        self.project.selected = lambda target, state=None: clip if target == "clip:S01" else original(target, state)
+        path = self.project.path / "6_Edit" / "Edit_Spec.json"
+        path.parent.mkdir(exist_ok=True)
+        windows = [(0.3, 1.7), (3.8, 5.2), (0.0, 1.8), (1.0, 3.4), (0.2, 2.65)]
+        path.write_text(json.dumps({"segments": [{"id": "C%d" % i, "clip": "S01", "in": a, "out": b, "clip_volume": 0}
+                                                 for i, (a, b) in enumerate(windows)],
+                                    "graphics": [], "output": "Frames_24_v1.0.mp4"}))
+        out = finish.final(self.project, draft=True)   # check_frames refuses a file missing frames
+        expected = sum(int(round((b - a) * 30)) for a, b in windows)
+        frames = int(finish._run(["ffprobe", "-v", "error", "-select_streams", "v", "-count_frames", "-show_entries",
+                                  "stream=nb_read_frames", "-of", "csv=p=0", str(out)]).strip().strip(","))
+        self.assertEqual(frames, expected)
+
+    def test_a_missing_clip_falls_back_to_its_first_frame(self):
+        """A shot whose picture is a first frame (a real photo, an imported still) and no storyboard panel:
+        the draft's stand-in for a clip not made yet uses the same picture the animatic shows."""
+        from vglib import finish
+        from test_vg import shotlist
+        data = shotlist()
+        s02 = data["shots"][1]
+        s02["storyboard"] = None
+        s02["first_frame"] = {"prompt": "aerial start", "refs": []}
+        s02.pop("last_frame", None)
+        self.write(data)
+        self.images_ready(visuals=False)
+        first = self.project.selected("first:S02", self.project.read_state())
+        finish._run(["ffmpeg", "-v", "error", "-y", "-f", "lavfi", "-i", "testsrc2=s=540x960", "-frames:v", "1",
+                     "-f", "image2", str(first)])  # a real picture in place of the fake download
+        path = self.project.path / "6_Edit" / "Edit_Spec.json"
+        path.parent.mkdir(exist_ok=True)
+        path.write_text(json.dumps({"segments": [{"id": "A", "clip": "S02", "in": 0, "out": 1.0, "fallback": "still",
+                                                  "fallback_duration": 1.0}],
+                                    "graphics": [], "output": "Fallback_v1.0.mp4"}))
+        out = finish.final(self.project, draft=True)
+        self.assertTrue(out.is_file())

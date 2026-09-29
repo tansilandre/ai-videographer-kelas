@@ -203,6 +203,12 @@ def shot_inputs(project, sl, shot, state):
     elif mode == "character":
         anchor = still_target(shot)
         out.append(("%s anchor (%s)" % (sid, anchor), project.selected(anchor, state)))
+    elif mode == "lipsync":  # the presenter's picture, then the narration she says (cut in build_video_job)
+        anchor = still_target(shot)
+        out.append(("%s anchor (%s)" % (sid, anchor), project.selected(anchor, state)))
+        audio = (shot.get("lipsync") or {}).get("audio") or ""
+        out.append(("%s lipsync audio" % sid, resolve_image(project, state, audio) if audio.startswith("file:")
+                    else None))
     if mode in ("character", "text"):
         for ref in shot.get("video_refs") or []:
             kind, value = sl.normalize_ref(ref)
@@ -237,7 +243,7 @@ def visual_items(project, sl, state):
         items["%s picture (%s)" % (sid, still_target(shot))] = _sha(project.selected(still_target(shot), state))
         for label, path in shot_inputs(project, sl, shot, state):
             items[label] = _sha(path)
-        items["%s words" % sid] = sha256_json({k: shot.get(k) for k in ("dialogue", "vo", "on_screen_text")})
+        items["%s words" % sid] = sha256_json({k: shot.get(k) for k in ("dialogue", "vo", "on_screen_text", "lipsync")})
         if shot.get("mode") == "character":
             for name in shot.get("characters") or []:
                 char = sl.characters.get(name) or {}
@@ -358,7 +364,7 @@ def animatic_mark(record):
     return "%s@%s" % (record["path"], record["at"]) if record else None
 
 
-def approve_look(project, expected=None):
+def approve_look(project, expected=None, via_page=False):
     """`expected`: the look snapshot the human was shown (the review page sends it); anything else on
     disk is refused, so an approval never covers a picture that changed after it was shown."""
     from vglib.generate import _human_confirm_text, load, say  # generate imports this module
@@ -376,7 +382,8 @@ def approve_look(project, expected=None):
                       "Refresh the page, look again, then approve.")
     for frame in sl.look_frames():
         say("look   %-12s %s" % (frame["id"], project.rel(project.selected("look:" + frame["id"], state))))
-    _human_confirm_text("Approve the look (%d style frame(s))?" % len(sl.look_frames()), _command(project, "look"))
+    _human_confirm_text("Approve the look (%d style frame(s))?" % len(sl.look_frames()), _command(project, "look"),
+                        via_page)
     with project.transaction() as st:
         if snapshot(look_items(project, sl, st)) != snapshot(items):
             raise Refused("The look changed while waiting for the code; nothing was approved. Show it again.")
@@ -385,7 +392,7 @@ def approve_look(project, expected=None):
     say("approved the look. Changing a style frame or the look text voids it, and with it the visuals approval.")
 
 
-def approve_visuals(project, expected=None, expected_animatic=None):
+def approve_visuals(project, expected=None, expected_animatic=None, via_page=False):
     """`expected` / `expected_animatic`: the visuals snapshot and the animatic (animatic_mark) the human
     was shown on the review page; a mismatch is refused."""
     from vglib.generate import _human_confirm_text, load, say
@@ -423,7 +430,7 @@ def approve_visuals(project, expected=None, expected_animatic=None):
     frames = [label for label, _ in shot_frames(sl)]
     say("visuals: %d AI frame(s), %d edit-plan image(s), animatic %s"
         % (len(frames), len([k for k in items if k.startswith("image ")]), latest["path"]))
-    _human_confirm_text("Approve the visuals of the whole reel?", _command(project, "visuals"))
+    _human_confirm_text("Approve the visuals of the whole reel?", _command(project, "visuals"), via_page)
     with project.transaction() as st:
         if snapshot(visual_items(project, sl, st)) != snapshot(items):
             raise Refused("The visuals changed while waiting for the code; nothing was approved. Show them again.")

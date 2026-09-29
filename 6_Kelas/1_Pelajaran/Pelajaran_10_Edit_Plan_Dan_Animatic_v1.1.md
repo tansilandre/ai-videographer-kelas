@@ -100,7 +100,7 @@ Rumah di gambar ini dibuat AI karena proyek contohnya fiktif. Di proyek nyata, r
 
 ## 6. Gerbang 2: setujui seluruh reel sebagai gambar
 
-1. Agent menonton animatic-nya sendiri dulu. Lalu ia membukakan halaman review untukmu (kamu juga bisa menjalankannya sendiri di terminal):
+1. Agent menonton animatic-nya sendiri dulu. Lalu ia membukakan halaman review untukmu dan mengirim tautannya di chat (kamu juga bisa menjalankannya sendiri di terminal):
 
    ```bash
    python3 2_Tools/vg/vg.py review -p NAMA_PROYEK
@@ -108,15 +108,11 @@ Rumah di gambar ini dibuat AI karena proyek contohnya fiktif. Di proyek nyata, r
 
 2. Di halaman itu kamu melihat setiap beat, mengganti take, menulis catatan di samping gambar, dan menonton animatic. Kalau sudah, klik **Done, back to the agent**.
 3. Agent memperbaiki hanya yang kamu tandai, merender animatic baru, lalu membuka halaman lagi. Ulangi sampai kamu puas.
-4. Kalau sudah puas, katakan dengan jelas di chat bahwa kamu setuju. Persetujuannya dicatat dengan:
+4. Kalau sudah puas, klik **Approve reel** di bawah animatic, lalu **Done, back to the agent**, dan bilang di chat bahwa kamu sudah selesai. Tombol itu baru muncul kalau animatic-nya menunjukkan persis gambar yang sekarang.
 
-   ```bash
-   python3 2_Tools/vg/vg.py approve visuals -p NAMA_PROYEK
-   ```
+   Cara lain, di mode `terminal`: halaman review menampilkan perintah `python3 2_Tools/vg/vg.py approve visuals -p NAMA_PROYEK`. Kamu menjalankannya di Terminal-mu sendiri dan mengetik kode acak 4 digit.
 
-   Di pengaturan bawaan, alat meminta kode acak 4 digit yang diketik manusia di terminalnya sendiri. Halaman review menampilkan perintah yang harus kamu ketik. Agent tidak bisa mengetik kode itu, dan tidak boleh mencobanya.
-
-Agent tidak pernah mengklik tombol di halaman review. Halaman itu milikmu.
+Agent tidak pernah mengklik tombol di halaman review. Halaman itu milikmu. Di mode `page`, perintah `vg approve visuals` dari agent selalu ditolak.
 
 Alat juga menjaga gerbang ini. Ia menolak persetujuan kalau animatic terakhir tidak menunjukkan gambar dan rencana edit yang sekarang. Setelah disetujui, perubahan pada frame, foto, grade, narasi, atau teks dan waktu di rencana edit membatalkan persetujuan. Kamu harus menonton animatic baru dan menyetujui lagi. Perubahan musik, efek suara, atau nama file output tidak membatalkannya.
 
@@ -145,6 +141,6 @@ Tonton `Contoh_Tebak_Harga_Animatic_v1.0.mp4` sekali tanpa berhenti. Lalu tulis 
 - Potong keras hampir di semua tempat. Whip + whoosh untuk pindah tempat. Flash + ding hanya sekali, untuk jawaban.
 - Animatic adalah seluruh reel dari gambar diam, dengan suara. Gratis, dan dirender ulang setiap ada perbaikan.
 - Tonton sebagai penonton dulu, baru menilai. Tulis catatan yang konkret.
-- Gerbang 2: kamu yang menyetujui, dan kamu yang mengetik kodenya.
+- Gerbang 2: kamu yang menyetujui, dengan klik **Approve reel** di halaman review.
 
-Berikutnya: [Pelajaran 11 · Prompt Video dan Gerbang Biaya](Pelajaran_11_Video_Dan_Gerbang_Biaya_v1.0.md)
+Berikutnya: [Pelajaran 11 · Prompt Video dan Gerbang Biaya](Pelajaran_11_Video_Dan_Gerbang_Biaya_v1.1.md)

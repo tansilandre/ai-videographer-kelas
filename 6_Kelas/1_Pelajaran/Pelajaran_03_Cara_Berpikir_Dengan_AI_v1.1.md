@@ -131,4 +131,4 @@ Constraints dan Avoid-nya sama persis dengan `Look_Rumah_Depan`. Cahaya dan bata
 - Setiap kelemahan AI punya jalan keluar di alur kerja: referensi karakter, teks di edit, voice-over, foto asli, dan klip pendek.
 - Jujur kepada penonton: beri label, jangan palsukan produk, minta izin untuk foto dan wajah, cek harga dengan S&K.
 
-Berikutnya: [Pelajaran 04 · Persiapan Alat](Pelajaran_04_Persiapan_Alat_v1.0.md)
+Berikutnya: [Pelajaran 04 · Persiapan Alat](Pelajaran_04_Persiapan_Alat_v1.1.md)

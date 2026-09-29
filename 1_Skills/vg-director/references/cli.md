@@ -23,7 +23,7 @@ whenever you are unsure.
 
 | Command | Does |
 |---|---|
-| `vg doctor` | checks Python, ffmpeg (+libass), node, `.env`, the API key, the balance |
+| `vg doctor` | checks Python, ffmpeg (+libass), swiftc, `.env`, the API keys, the balance, the approval mode, and the skills folders Claude Code and WorkBuddy read |
 | `vg credits` | prints the kie.ai credit balance |
 | `vg models` | lists models in the registry, their kind and test status |
 | `vg new <Slug> [--client "Name"]` | creates `5_Projects/<YYYY-MM-DD>_<Slug>/` from the template |
@@ -31,7 +31,9 @@ whenever you are unsure.
 | `vg status -p P` | every target with its state, version, and credits spent, plus the look gate and visuals gate lines |
 | `vg estimate -p P [--stage images\|video\|all]` | cost of what is still missing |
 | `vg board -p P` | rebuilds `Board_<Project>.html`: review gates, Look (style frames + look text), Filmstrip (every beat in timeline order + the latest animatic), references, timeline |
-| `vg review -p P [--port N] [--no-open]` | opens the **review page** on this machine (127.0.0.1, one-time token in the URL): the look text and style frames, the reference sheets and every reel beat with the frames behind it, takes to switch between (same as `vg select`), a change-note box per card, the animatic, and Approve look / Approve reel buttons (in `VG_APPROVAL_MODE=terminal` the page shows the approve command to type instead). Blocks until the human clicks **Done, back to the agent**, then prints `GATE`, `NOTE` and `NEXT` lines; exit 0 (130 on Ctrl-C). Prints "Nothing to review yet" and exits 0 when no image exists. Run it in the background; never click its buttons or call its API yourself. |
+| `vg next -p P` | **the one next step**, from Shotlist.json, the ledger and the disk: `STAGE` (where the project is), then `RUN` (a command; `TIME` when it is long), `WRITE` (a file to write and the skill to read), `DO`, `NOTE` (the human's notes), `ASK` (stop and wait for the human), `THEN`, or `DONE`. Runs nothing. Start here when unsure. |
+| `vg review -p P --detach` / `--summary` / `--stop` | for agent apps whose commands must end: `--detach` starts the review page in its own process, prints its link and returns (a second call reuses the open page); `--summary` prints the `GATE`/`NOTE`/`APPROVED`/`NEXT` lines without a page; `--stop` ends a detached page. |
+| `vg review -p P [--port N] [--no-open]` | opens the **review page** on this machine (127.0.0.1, one-time token in the URL): the look text and style frames, the reference sheets and every reel beat with the frames behind it, takes to switch between (same as `vg select`), a change-note box per card, the animatic, Approve look / Approve reel buttons, and a Video section (once both are approved) with every clip, its cost and an Approve button that asks once more before it approves (in `VG_APPROVAL_MODE=terminal` the page shows the approve command to type instead; in `page` mode these clicks are the only way to approve). Blocks until the human clicks **Done, back to the agent**, then prints `GATE`, `NOTE` and `NEXT` lines; exit 0 (130 on Ctrl-C). Prints "Nothing to review yet" and exits 0 when no image exists. Run it in the background; never click its buttons or call its API yourself. |
 | `vg upload -p P <file>` | uploads a file, prints its URL (cached ~20 h by file hash) |
 
 ## Images (paid, no approval needed)

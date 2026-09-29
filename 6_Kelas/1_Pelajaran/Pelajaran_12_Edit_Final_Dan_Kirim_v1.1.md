@@ -119,4 +119,4 @@ Buka `6_Kelas/2_Studi_Kasus/Tebak_Harga/Contoh_Tebak_Harga_Animatic_v1.0.mp4`. J
 - Cek sebelum kirim: caption tidak mendahului kata, jumlah frame = durasi × 30, suara jelas di atas musik, label ILUSTRASI RENCANA dan S&K, teks tidak menutupi wajah, nama berversi.
 - Jangan pernah menimpa versi yang sudah dikirim. Revisi berarti nomor versi baru.
 
-Berikutnya: [Pelajaran 13 · Kesalahan yang Kami Buat](Pelajaran_13_Kesalahan_Yang_Kami_Buat_v1.0.md)
+Berikutnya: [Pelajaran 13 · Kesalahan yang Kami Buat](Pelajaran_13_Kesalahan_Yang_Kami_Buat_v1.1.md)
