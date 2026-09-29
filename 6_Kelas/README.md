@@ -24,12 +24,12 @@ Hai, aku **Andre Tansil**, AI Specialist dan AI Automation Builder. Lebih dari 8
 
 - Untuk pemula total. Kamu belum pernah memakai *terminal* (jendela tempat mengetik perintah ke komputer) atau *coding agent*? Tidak apa-apa. Kita mulai dari nol.
 - Bagian 1 bisa dibaca tanpa komputer.
-- Untuk Bagian 2 kamu butuh sebuah Mac, internet, dan sedikit saldo di [kie.ai](https://kie.ai) (gambar dan video) dan [OpenRouter](https://openrouter.ai) (suara dan musik). Otak agent di WorkBuddy, model glm-5.3-flash, sudah ada di dalam WorkBuddy dan memakai kredit WorkBuddy-mu, jadi tidak perlu akun lain. Mac dibutuhkan karena caption dan grafis digambar dengan Swift, bahasa pemrograman buatan Apple.
+- Untuk Bagian 2 kamu butuh laptop Windows (10 atau 11) atau Mac, internet, dan sedikit saldo di [kie.ai](https://kie.ai) (gambar dan video) dan [OpenRouter](https://openrouter.ai) (suara dan musik). Otak agent di WorkBuddy, model glm-5.3-flash, sudah ada di dalam WorkBuddy dan memakai kredit WorkBuddy-mu, jadi tidak perlu akun lain.
 
 ## Mulai cepat: tiga langkah
 
 1. **Pasang WorkBuddy** dari https://www.workbuddy.ai, masuk dengan Google atau GitHub, lalu pilih model **glm-5.3-flash**.
-2. **Minta AI-nya memasang.** Di WorkBuddy, pilih folder kerja dan kirim satu pesan dari [Panduan WorkBuddy](5_WorkBuddy/Panduan_WorkBuddy_v1.1.md). AI-nya mengunduh folder kelas dan menjalankan `bash setup.sh`. Kamu hanya mengklik izinkan, mengklik Install kalau jendela Apple muncul, dan menempel satu baris di Terminal kalau Homebrew belum ada.
+2. **Minta AI-nya memasang.** Di WorkBuddy, pilih folder kerja dan kirim satu pesan dari [Panduan WorkBuddy](5_WorkBuddy/Panduan_WorkBuddy_v1.2.md). AI-nya mengunduh folder kelas dan menjalankan `setup.ps1` (Windows) atau `bash setup.sh` (Mac). Kamu hanya mengklik izinkan; di Mac juga mengklik Install kalau jendela Apple muncul, dan menempel satu baris di Terminal kalau Homebrew belum ada.
 3. **Tempel kunci, lalu buka ulang.** Di halaman **Setup AI Videographer** yang terbuka di browser, tempel kunci kie.ai dan OpenRouter, lalu klik **Simpan**. Kunci tidak pernah ditempel ke chat. Tutup WorkBuddy (Cmd + Q), buka lagi, buka folder yang disebut di akhir setup, dan pilih Expert **AI Videographer**.
 
 Setelah itu klik **Buat video baru**. Expert menanyakan lima hal tentang produkmu, lalu bekerja sendiri dan hanya berhenti di tiga gerbang, tempat kamu mengklik di halaman review. Langkah lengkapnya, termasuk cara memakai Claude Code, ada di [Pelajaran 04](1_Pelajaran/Pelajaran_04_Persiapan_Alat_v1.2.md).
@@ -126,7 +126,7 @@ Setelah Pelajaran 13, buat reelmu sendiri:
 
 Di workshop, agent-nya WorkBuddy, aplikasi agent desktop dari Tencent. Expert AI Videographer selalu bertanya ke alat dulu dengan `vg next`, lalu mengerjakan satu langkah itu saja. Karena itu model yang cepat dan murah, glm-5.3-flash, cukup untuk menjadi otaknya.
 
-- **[Panduan WorkBuddy](5_WorkBuddy/Panduan_WorkBuddy_v1.1.md)**: memasang dalam tiga langkah, lalu membuat satu reel dengan Expert AI Videographer.
+- **[Panduan WorkBuddy](5_WorkBuddy/Panduan_WorkBuddy_v1.2.md)**: memasang dalam tiga langkah, lalu membuat satu reel dengan Expert AI Videographer.
 - **[Runsheet Workshop](5_WorkBuddy/Runsheet_Workshop_v1.1.md)**: susunan acara untuk fasilitator.
 
 ## Deck

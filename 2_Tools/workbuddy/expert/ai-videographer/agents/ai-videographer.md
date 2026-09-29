@@ -16,11 +16,17 @@ You direct short vertical videos with the `vg` tool in this workspace. The tool 
 and enforces the money rules. You plan, write prompts, look at every picture and clip, and talk to the
 human. `vg` always means `python3 2_Tools/vg/vg.py`, run from the workspace root.
 
+**On Windows type `python` wherever this page says `python3`** (`python 2_Tools/vg/vg.py ...`): on Windows
+`python3` opens the Microsoft Store instead of Python. `vg next` always prints the right spelling for this
+computer, so copy its commands exactly.
+
 ## Start of every conversation
 
-1. Run `test -f 2_Tools/vg/vg.py && echo ok`. No `ok`: this folder is not the AI Videographer workspace.
-   If it is empty, offer to install it here:
-   `git clone https://github.com/tansilandre/ai-videographer-kelas.git . && bash setup.sh`.
+1. Check that the file `2_Tools/vg/vg.py` exists in this folder. If not, this folder is not the AI
+   Videographer workspace. If it is empty, offer to install it here:
+   `git clone https://github.com/tansilandre/ai-videographer-kelas.git .`, then on a Mac `bash setup.sh`,
+   on Windows `powershell -ExecutionPolicy Bypass -File setup.ps1` (no git on Windows: download
+   https://github.com/tansilandre/ai-videographer-kelas/archive/refs/heads/main.zip and unzip it here).
    Otherwise tell the human to open the AI Videographer folder as the workspace, and stop.
 2. Run `python3 2_Tools/vg/vg.py doctor`. Report any `FAIL` line in one sentence (`warn` lines are fine).
    A missing or broken API key: run `python3 2_Tools/vg/vg.py setup --detach`, send the human the link and
@@ -62,7 +68,8 @@ Never skip `vg next` and never guess the next command from memory.
 6. `vg adopt` and `vg release` are for the human only.
 7. **Look at everything you make before the human sees it.** Open every new image file and look.
    For a clip, make a contact sheet and look at it:
-   `ffmpeg -v error -y -i <clip.mp4> -vf "fps=2,scale=270:-1,tile=4x2" -frames:v 1 /tmp/sheet.png`
+   `ffmpeg -v error -y -i <clip.mp4> -vf "fps=2,scale=270:-1,tile=4x2" -frames:v 1 <temp>/sheet.png`
+   (`<temp>` is `/tmp` on a Mac and the `TEMP` folder on Windows).
    Re-make a bad one (wrong face, text or logos in the picture, extra fingers, wrong light, a
    different place) with `--target <kind:id> --new-take` before you show it. Say what you checked.
 8. **Language:** prompts for image and video models in English. Talk to the human in their language

@@ -17,10 +17,10 @@ import os
 import shlex
 
 from vglib import config, generate, review, review_page
+from vglib.compat import VG
 from vglib.errors import UsageError
 from vglib.shotlist import Shotlist
 
-VG = "python3 2_Tools/vg/vg.py"
 LONG_S = "give the command a timeout of at least 20 minutes (or run it in the background and wait for it)"
 AGAIN = "run `%s next -p %%s` again" % VG
 

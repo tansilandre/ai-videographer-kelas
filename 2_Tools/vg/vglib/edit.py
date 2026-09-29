@@ -77,7 +77,8 @@ def roughcut(project):
         if not pieces:
             raise UsageError("No shots to cut")
         listing = tmp / "list.txt"
-        listing.write_text("".join("file '%s'\n" % p for p in pieces), encoding="utf-8")
+        listing.write_text("".join("file '%s'\n" % Path(p).as_posix().replace("'", "'\\''") for p in pieces),
+                           encoding="utf-8")
         out_dir = project.path / "6_Edit"
         out_dir.mkdir(exist_ok=True)
         stem = "Roughcut_%s" % (sl.data.get("project") or project.name)

@@ -10,7 +10,11 @@ ok()   { echo "✓ $1"; }
 stop() { echo; echo "→ $1"; echo; echo "Setelah itu, jalankan lagi: bash setup.sh"; exit 1; }
 
 echo "== AI Videographer · setup"
-[ "$(uname)" = "Darwin" ] || stop "Butuh Mac: caption dan grafis digambar dengan Swift buatan Apple."
+case "$(uname)" in
+  Darwin) ;;
+  MINGW*|MSYS*|CYGWIN*) echo "Ini Windows. Jalankan: powershell -ExecutionPolicy Bypass -File setup.ps1"; exit 1 ;;
+  *) stop "Butuh Mac atau Windows. Di Windows, jalankan: powershell -ExecutionPolicy Bypass -File setup.ps1" ;;
+esac
 
 # 1. Xcode Command Line Tools: git, python3, swiftc
 if ! xcode-select -p >/dev/null 2>&1; then

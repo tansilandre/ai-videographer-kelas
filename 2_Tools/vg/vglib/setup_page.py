@@ -14,7 +14,7 @@ import threading
 import webbrowser
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 
-from vglib import config
+from vglib import compat, config
 from vglib.errors import UsageError, VgError
 from vglib.generate import say
 
@@ -174,7 +174,7 @@ def _summary(result):
         lines.append("KIE    the key works: %g credits" % result["kie_balance"])
     else:
         lines.append("KIE    the key did not work: %s" % result["kie_error"])
-    lines.append("NEXT   run `python3 2_Tools/vg/vg.py doctor`")
+    lines.append("NEXT   run `%s doctor`" % compat.VG)
     return lines
 
 
@@ -221,8 +221,8 @@ def detach(port=0, open_browser=True, timeout=20):
     log = _pid_file().replace(".json", ".log")
     cmd = [sys.executable, str(VG), "setup", "--port", str(port)] + ([] if open_browser else ["--no-open"])
     with open(log, "w", encoding="utf-8") as out:
-        proc = subprocess.Popen(cmd, stdout=out, stderr=subprocess.STDOUT, stdin=subprocess.DEVNULL,
-                                cwd=str(config.ROOT), start_new_session=True)
+        proc = compat.popen_detached(cmd, stdout=out, stderr=subprocess.STDOUT, stdin=subprocess.DEVNULL,
+                                     cwd=str(config.ROOT))
     deadline, url = time.time() + timeout, None
     while time.time() < deadline and not url:
         with open(log, encoding="utf-8", errors="replace") as fh:
@@ -240,12 +240,11 @@ def detach(port=0, open_browser=True, timeout=20):
         json.dump({"pid": proc.pid, "url": url}, fh)
     say("Setup page: %s" % url)
     say("Send the human this link: they paste their kie.ai key (and OpenRouter key) there and click Simpan. "
-        "Never ask for keys in the chat. When they say it is done, run: python3 2_Tools/vg/vg.py doctor")
+        "Never ask for keys in the chat. When they say it is done, run: %s doctor" % compat.VG)
     return url
 
 
 def stop_detached():
-    import signal
     try:
         with open(_pid_file(), encoding="utf-8") as fh:
             info = json.load(fh)
@@ -254,7 +253,7 @@ def stop_detached():
         return False
     from vglib.review_page import _alive
     if _alive(info.get("pid")):
-        os.kill(int(info["pid"]), signal.SIGTERM)
+        compat.stop_pid(info["pid"])
     os.remove(_pid_file())
     say("Setup page stopped.")
     return True

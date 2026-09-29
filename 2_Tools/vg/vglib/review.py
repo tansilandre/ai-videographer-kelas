@@ -8,7 +8,7 @@ text in the edit plan) changes the snapshot, so the approval is stale and the vi
 import json
 import shlex
 
-from vglib import config
+from vglib import compat, config
 from vglib.errors import Refused, UsageError
 from vglib.project import now_iso, sha256_file, sha256_json
 
@@ -355,7 +355,7 @@ def _latest_animatic(state):
 # ---------------------------------------------------------------------- approvals
 
 def _command(project, stage):
-    return "cd %s && python3 2_Tools/vg/vg.py approve %s -p %s" % (
+    return ("cd %s && " + compat.VG + " approve %s -p %s") % (
         shlex.quote(str(config.ROOT)), stage, shlex.quote(project.name))
 
 

@@ -24,6 +24,7 @@ import time
 import uuid
 
 from providers import get_provider
+from vglib import compat
 from vglib import config, registry, review
 from vglib.errors import ProviderError, Refused, UsageError, VgError
 from vglib.project import Project, now_iso, sha256_file, sha256_json
@@ -862,9 +863,9 @@ def _human_confirm_text(question, command, via_page=False):
     if mode == "page":
         if via_page:
             return
-        raise Refused("VG_APPROVAL_MODE=page: the human approves by clicking on the review page, never on the "
-                      "command line. Open it with `python3 2_Tools/vg/vg.py review -p %s --detach`, send the "
-                      "human the link, and wait until they say they clicked; then run `vg next -p %s`."
+        raise Refused(("VG_APPROVAL_MODE=page: the human approves by clicking on the review page, never on the "
+                       "command line. Open it with `" + compat.VG + " review -p %s --detach`, send the "
+                       "human the link, and wait until they say they clicked; then run `vg next -p %s`.")
                       % (project, project))
     if via_page:
         raise Refused("VG_APPROVAL_MODE=%s: approve in your own terminal, where you type the code it shows:\n  %s"
@@ -923,7 +924,7 @@ def approve_video(project, shot_ids, all_shots, confirm, new_take=False, allow_u
         say("%-6s %-10s %-9s %g" % (sid, job["mode"], "%ss" % job["params"]["duration"], job["cost"]))
     say("total  %g credits" % total)
     shots_arg = "--all" if all_shots else "--shots " + ",".join(sid for sid, _ in rows)
-    command = "cd %s && python3 2_Tools/vg/vg.py approve video -p %s %s --confirm %g%s%s%s" % (
+    command = ("cd %s && " + compat.VG + " approve video -p %s %s --confirm %g%s%s%s") % (
         shlex.quote(str(config.ROOT)), shlex.quote(project.name), shots_arg, total,
         " --new-take" if new_take else "", " --resolution %s" % resolution if resolution else "",
         " --allow-untested" if allow_untested else "")

@@ -1,7 +1,8 @@
 """`vg edit final`: assemble the finished video from 6_Edit/Edit_Spec.json.
 
 Local and free: FFmpeg for cutting and mixing, macOS `say` for a temporary voice-over, and the
-Swift renderer (2_Tools/vg/render/overlay.swift) for animated captions and motion graphics.
+Swift renderer (2_Tools/vg/render/overlay.swift) for animated captions and motion graphics; on
+Windows, Linux or a Mac without swiftc its Python + Pillow port (render/overlay.py) draws them.
 
 Edit_Spec.json (agent-written; see 1_Skills/vg-edit/references/edit-spec.md):
   segments[]  in timeline order. One of:
@@ -33,9 +34,11 @@ Edit_Spec.json (agent-written; see 1_Skills/vg-edit/references/edit-spec.md):
   output      file name inside 99_Output/
 """
 import json
+import os
 import re
 import shutil
 import subprocess
+import sys
 import tempfile
 from pathlib import Path
 
@@ -271,6 +274,22 @@ def _image_piece(image, dur, piece, zoom, pan, blur, dim, pan_x=None):
           "-crf", "18", "-c:a", "aac", "-ar", "48000", "-ac", "2", str(piece)])
 
 
+def filter_path(path):
+    """A file path for an FFmpeg filter option in single quotes (lut3d=file='...'): forward slashes,
+    and a Windows drive colon escaped (C\\:/...), because ':' separates filter options. macOS and
+    Linux paths come out as before."""
+    text = str(path).replace("\\", "/").replace("'", "\\'")
+    if re.match(r"[A-Za-z]:/", text):
+        text = text[0] + "\\:" + text[2:]
+    return text
+
+
+def concat_line(path):
+    """One `file` line of an FFmpeg concat list: forward slashes (Windows), and a single quote
+    written as '\\'' (close the quote, an escaped quote, reopen)."""
+    return "file '%s'\n" % str(path).replace("\\", "/").replace("'", "'\\''")
+
+
 def grade_filter(project, state, grade):
     """The FFmpeg filter chain for the edit plan's `grade` (None when there is none): a LUT, then
     contrast/brightness/saturation/gamma, colour temperature, and grain, in that order."""
@@ -280,7 +299,7 @@ def grade_filter(project, state, grade):
     parts = []
     if grade.get("lut"):
         lut = review.resolve_image(project, state, grade["lut"])
-        parts.append("lut3d=file='%s'" % str(lut).replace("\\", "/").replace("'", "\\'"))
+        parts.append("lut3d=file='%s'" % filter_path(lut))
     eq = ["%s=%g" % (k, grade[k]) for k in ("contrast", "brightness", "saturation", "gamma") if k in grade]
     if eq:
         parts.append("eq=" + ":".join(eq))
@@ -307,6 +326,42 @@ def renderer_binary():
         say("build  overlay renderer (one time)")
         _run(["swiftc", "-O", str(source), "-o", str(binary)])
     return binary
+
+
+def pillow_version():
+    """Pillow's version when it imports (the Python overlay renderer needs it), else None."""
+    try:
+        import PIL
+        from PIL import Image  # noqa: F401  (the compiled part, not only the package folder)
+    except Exception:
+        return None
+    return getattr(PIL, "__version__", None) or "?"
+
+
+def _swift_ready():
+    """The Swift renderer can run: swiftc is there to build it, or the built binary is up to date."""
+    if shutil.which("swiftc"):
+        return True
+    binary, source = RENDER_DIR / ".build" / "overlay", RENDER_DIR / "overlay.swift"
+    return binary.exists() and source.exists() and binary.stat().st_mtime >= source.stat().st_mtime
+
+
+def renderer_command():
+    """The command that draws the captions and graphics (the spec file is appended). On a Mac that
+    can build it, the Swift binary, as always; elsewhere (Windows, Linux, a Mac without swiftc) the
+    Python + Pillow port render/overlay.py, which writes the same frames. The environment variable
+    VG_OVERLAY=python (not .env) forces the port, e.g. to check it on a Mac."""
+    forced = os.environ.get("VG_OVERLAY", "").strip().lower() == "python"
+    mac = sys.platform == "darwin"
+    if mac and not forced and _swift_ready():
+        return [str(renderer_binary())]
+    if pillow_version():
+        return [sys.executable, str(RENDER_DIR / "overlay.py")]
+    message = ("Pillow is needed to draw captions and graphics on this computer: %s -m pip install pillow"
+               % ("python3" if mac else "python"))
+    if mac and not forced:
+        message += " (or install swiftc for the Swift renderer: xcode-select --install)"
+    raise UsageError(message)
 
 
 def _srt_time(t):
@@ -555,7 +610,7 @@ def final(project, draft=False, animatic=False):
             say("voice  narration %s, %d phrase(s)" % (project.rel(narration_track), len(narration_spans)))
 
         listing = tmp / "list.txt"
-        listing.write_text("".join("file '%s'\n" % p for p in pieces), encoding="utf-8")
+        listing.write_text("".join(concat_line(p) for p in pieces), encoding="utf-8")
         base = tmp / "base.mp4"
         _run(["ffmpeg", "-v", "error", "-y", "-f", "concat", "-safe", "0", "-i", str(listing), "-c", "copy",
               str(base)])
@@ -673,9 +728,9 @@ def final(project, draft=False, animatic=False):
         mixed = tmp / "mix.wav"
         _run(["ffmpeg", "-v", "error", "-y"] + inputs + ["-filter_complex", ";".join(chains), "-map", "[a]",
               "-c:a", "pcm_s16le", "-ar", "48000", "-t", "%.3f" % total, str(mixed)])
-        renderer = renderer_binary()
+        renderer = renderer_command()
         say("render %d overlay layer(s), %d caption word(s), %.1fs" % (len(layers), len(words), total))
-        overlay_proc = subprocess.Popen([str(renderer), str(spec_file)], stdout=subprocess.PIPE)
+        overlay_proc = subprocess.Popen(renderer + [str(spec_file)], stdout=subprocess.PIPE)
         # the picture alone (any audio stream in this pass lost frames too), then a stream-copy mux
         pictured = tmp / "picture.mp4"
         ffmpeg = subprocess.run(["ffmpeg", "-v", "error", "-y", "-reinit_filter", "0", "-i", str(base),
@@ -685,7 +740,9 @@ def final(project, draft=False, animatic=False):
             "-crf", "18", "-pix_fmt", "yuv420p", "-t", "%.3f" % total, str(pictured)],
             stdin=overlay_proc.stdout, stdout=subprocess.PIPE, stderr=subprocess.PIPE, timeout=1800)
         overlay_proc.stdout.close()
-        overlay_proc.wait()
+        if overlay_proc.wait() > 0:  # an error exit (a signal such as SIGPIPE at the end is negative)
+            say("warn   the overlay renderer stopped with exit %d (its message is above): captions and "
+                "graphics may be missing from part of this render" % overlay_proc.returncode)
         if ffmpeg.returncode != 0:
             raise UsageError("final render failed: %s" % ffmpeg.stderr.decode("utf-8", "replace").strip()[-400:])
         _run(["ffmpeg", "-v", "error", "-y", "-i", str(pictured), "-i", str(mixed), "-map", "0:v", "-map", "1:a",

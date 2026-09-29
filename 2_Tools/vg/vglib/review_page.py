@@ -9,7 +9,6 @@ import mimetypes
 import os
 import re
 import secrets
-import signal
 import subprocess
 import sys
 import threading
@@ -19,7 +18,7 @@ import webbrowser
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 
-from vglib import config, generate, review
+from vglib import compat, config, generate, review
 from vglib.errors import Refused, UsageError, VgError
 from vglib.generate import load, say
 from vglib.project import Project, now_iso
@@ -431,13 +430,7 @@ VG = Path(__file__).resolve().parents[1] / "vg.py"
 
 
 def _alive(pid):
-    try:
-        os.kill(int(pid), 0)
-    except (ProcessLookupError, TypeError, ValueError):
-        return False
-    except PermissionError:
-        return True
-    return True
+    return compat.pid_alive(pid)
 
 
 def detached(project):
@@ -458,7 +451,7 @@ def detached(project):
 
 def _after_detach(project):
     say("It stays open until the human clicks 'Done, back to the agent'. Send them the link. When they say "
-        "they are done, run: python3 2_Tools/vg/vg.py next -p %s" % project.name)
+        "they are done, run: %s next -p %s" % (compat.VG, project.name))
 
 
 def detach(project, port=0, open_browser=True, timeout=20):
@@ -477,8 +470,8 @@ def detach(project, port=0, open_browser=True, timeout=20):
     if not open_browser:
         cmd.append("--no-open")
     with open(str(log), "w", encoding="utf-8") as out:
-        proc = subprocess.Popen(cmd, stdout=out, stderr=subprocess.STDOUT, stdin=subprocess.DEVNULL,
-                                cwd=str(config.ROOT), start_new_session=True)
+        proc = compat.popen_detached(cmd, stdout=out, stderr=subprocess.STDOUT, stdin=subprocess.DEVNULL,
+                                     cwd=str(config.ROOT))
     deadline, url = time.time() + timeout, None
     while time.time() < deadline:
         found = re.search(r"Review page: (http\S+)", log.read_text(encoding="utf-8", errors="replace"))
@@ -503,7 +496,7 @@ def stop_detached(project):
     if not info:
         say("No review page is open for %s." % project.name)
         return False
-    os.kill(int(info["pid"]), signal.SIGTERM)
+    compat.stop_pid(info["pid"])
     for _ in range(50):
         if not _alive(info["pid"]):
             break

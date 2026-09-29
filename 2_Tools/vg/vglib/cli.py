@@ -2,6 +2,7 @@
 import argparse
 import datetime
 import json
+import os
 import platform
 import shutil
 import subprocess
@@ -42,10 +43,18 @@ def cmd_doctor(args):
         has_ass = " subtitles " in filters or " ass " in filters
         line(True if has_ass else None, "ffmpeg libass",
              "yes" if has_ass else "no (only needed for burned-in subtitles; see vg-setup)")
-    # the caption and graphics renderer is Swift with CoreGraphics: macOS with the Xcode command line tools
-    swiftc = shutil.which("swiftc")
-    line(True if swiftc else None, "swiftc", swiftc or "missing: xcode-select --install (macOS; needed for "
-         "captions and graphics in the edit)")
+    # captions and graphics: the Swift renderer (CoreGraphics) on macOS, else its Python + Pillow port
+    from vglib import finish
+    pillow = finish.pillow_version()
+    if sys.platform == "darwin":
+        swiftc = shutil.which("swiftc")
+        line(True if swiftc else None, "swiftc", swiftc or (
+            "missing: xcode-select --install (captions and graphics use python + Pillow %s instead)" % pillow
+            if pillow else "missing: xcode-select --install, or python3 -m pip install pillow (needed for "
+            "captions and graphics in the edit)"))
+    else:
+        line(True if pillow else None, "overlay renderer", "python + Pillow %s" % pillow if pillow else
+             "Pillow missing: python -m pip install pillow (needed for captions and graphics in the edit)")
     try:
         from vglib import audio
         audio.key()
@@ -80,8 +89,9 @@ def cmd_doctor(args):
     for agent, folder in (("Claude Code", ".claude/skills"), ("WorkBuddy", ".codebuddy/skills")):
         skills = config.ROOT / folder
         linked = (skills / "vg-director" / "SKILL.md").is_file()
-        line(True if linked else None, "skills (%s)" % agent, str(skills) if linked else "run install.sh")
-    if config.ENV_FILE.is_file() and config.ENV_FILE.stat().st_mode & 0o077:
+        fix = "run setup.ps1" if os.name == "nt" else "run install.sh"
+        line(True if linked else None, "skills (%s)" % agent, str(skills) if linked else fix)
+    if os.name != "nt" and config.ENV_FILE.is_file() and config.ENV_FILE.stat().st_mode & 0o077:
         line(None, ".env permissions", "readable by other users: chmod 600 .env")
     return 0 if ok else 1
 
@@ -197,7 +207,7 @@ def cmd_review(args):
 def cmd_upload(args):
     project = resolve(args.project)
     session = generate.Session(project)
-    say(session.upload(project.path / args.file if not args.file.startswith("/") else args.file))
+    say(session.upload(project.path / args.file if not os.path.isabs(args.file) else args.file))
     return 0
 
 
