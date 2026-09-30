@@ -220,6 +220,32 @@ text(s, M, 6.55, 8.2, 0.5, "Contoh: reel ‘Tebak Harga’ · nama fiktif, semua
      size=16, color=BODY_DARK)
 phone(s, "Frame_hook.jpg", W - M - 3.66, 0.6, 6.5)
 
+# icebreaker: which one is real? (script: 6_Kelas/5_WorkBuddy/Naskah_Pembuka_v1.0.md)
+PICS = [("Rani_Mobil.jpg", 0.5, "AI · tidak pernah ada", INK, WHITE),
+        ("Andre_Tansil.jpg", 0.3, "ASLI · ini aku", ORANGE, INK),
+        ("Look_Rumah_Depan.jpg", 0.5, "AI · tidak ada", INK, WHITE)]
+for reveal in (False, True):
+    s = new_slide(WHITE, "Tebak dulu: satu foto asli, dua dibuat AI. Minta peserta angkat tangan untuk nomor 1, 2, dan 3."
+                  if not reveal else "Yang asli cuma nomor 2. Rani tidak pernah ada, rumahnya juga tidak ada di dunia nyata. "
+                  "Hari ini kalian membuat yang seperti ini sendiri.")
+    header(s, "Tebak dulu: mana yang asli?" if not reveal else "Cuma satu yang asli", "Pembuka")
+    for i, (name, focus, label, fill, color) in enumerate(PICS):
+        x = 1.62 + i * 3.7
+        picture(s, name, x, 1.9, 2.7, 4.8, radius=0.06, focus_y=focus)
+        circle(s, x - 0.28, 1.65, 0.7, str(i + 1), size=22)
+        if reveal:
+            pill(s, x + 0.15, 6.0, 2.4, 0.5, label, fill=fill, color=color, size=14)
+
+s = new_slide(INK, "Kalau tadi ada yang ketipu, tenang: juri lomba foto dunia juga pernah ketipu. Ceritakan tanpa menampilkan "
+              "gambarnya (hak ciptanya milik Eldagsen). Tutup dengan pertanyaan: kita mau pakai AI untuk apa, dan kita jujur "
+              "tidak ke penonton?")
+text(s, M, 1.2, CW, 0.4, "2023 · SONY WORLD PHOTOGRAPHY AWARDS", size=20, bold=True, font=HEAD, color=ORANGE)
+text(s, M, 1.8, 11.0, 1.8, "Pemenangnya ternyata bukan foto.", size=54, bold=True, font=HEAD, color=WHITE, spacing=0.95)
+text(s, M, 3.9, 10.6, 2.0, "Gambar hitam-putih dua perempuan, dibuat dengan DALL-E 2 oleh seniman Jerman Boris Eldagsen, menang "
+     "di kategori Creative. Dia menolak hadiahnya, untuk memancing diskusi: gambar AI itu foto atau bukan?",
+     size=24, color=BODY_DARK, spacing=1.15)
+text(s, M, 6.6, CW, 0.4, "Sumber: CNN, PetaPixel, April 2023", size=14, color=BODY_DARK)
+
 s = new_slide(WHITE, "Kenalan dulu. Saya Andre Tansil. Delapan tahun lebih saya bekerja di software, business analysis dan "
               "product: mulai sebagai developer, lalu memimpin tim engineering, lalu product manager. Sekarang saya Senior "
               "Business Analyst di ROOTCLOUD dan memimpin komunitas AICLUB.ID Tangerang Selatan. Alat yang kita pakai hari "
@@ -415,6 +441,30 @@ text(s, 8.25, 2.0, 4.5, 4.9, ["Agent-nya **WorkBuddy** dengan Expert **AI Videog
                               "Agent juga bisa salah. Karena itu **gerbang persetujuan** tetap di tangan kamu."],
      size=21, after=14)
 
+
+s = new_slide(WHITE, "Tiga cara memakai AI. Level 1: AI menjawab, kita yang mengerjakan. Level 2: AI yang mengerjakan dengan alat, "
+              "kita memutuskan; kelas ini di sini. Level 3: AI membagi kerja ke beberapa agent sekaligus dan memeriksa hasilnya. "
+              "Makin tinggi levelnya, makin penting keputusan kita.")
+header(s, "Tiga level AI", "Bagian 1 · Dasar AI")
+levels = [("1", "Konsultan", "menjawab pertanyaan.", "mengerjakan sendiri.",
+           "Minta chatbot menulis naskah, lalu bikin videonya sendiri."),
+          ("2", "AI Agent", "mengerjakan langkah demi langkah dengan alat.", "memberi brief dan menyetujui.",
+           "Expert AI Videographer, hari ini."),
+          ("3", "Orkestrator", "membagi kerja ke banyak agent sekaligus.", "menetapkan tujuan dan standar.",
+           "Agent naskah, gambar, dan QC bekerja bersamaan.")]
+for i, (num, name, ai, you, example) in enumerate(levels):
+    x = M + i * 4.1
+    here = num == "2"
+    box(s, x, 1.95, 3.9, 4.25, fill=WHITE if here else CARD, line=ORANGE if here else LINE)
+    circle(s, x + 0.3, 2.25, 0.75, num)
+    text(s, x + 1.2, 2.35, 2.6, 0.6, name, size=26, bold=True, font=HEAD, color=INK)
+    if here:
+        pill(s, x + 2.3, 1.72, 1.4, 0.42, "Kelas ini", size=14)
+    text(s, x + 0.3, 3.3, 3.35, 1.9, ["**AI:** " + ai, "**Kamu:** " + you], size=19, after=8)
+    text(s, x + 0.3, 5.15, 3.35, 0.9, example, size=16, color=MUTED)
+text(s, M, 6.45, CW, 0.6, "Makin tinggi levelnya, makin sedikit kamu mengetik, dan makin penting keputusanmu.",
+     size=22, color=INK)
+
 s = new_slide(WHITE, "Enam prinsip ini dipakai di setiap tahap praktik nanti. Yang paling sering dilupakan pemula: nomor "
               "lima. Kalau kamu mengubah tiga hal sekaligus dan hasilnya membaik, kamu tidak tahu mana yang berhasil.")
 header(s, "Cara berpikir saat bekerja dengan AI", "Bagian 1 · Dasar AI")
@@ -523,6 +573,32 @@ for i, (name, desc) in enumerate(players):
     text(s, x + 0.35, 3.9, 2.9, 2.5, desc, size=21)
     if i < 2:
         arrow(s, x + 3.6, 4.08, 0.45, 0.34)
+
+
+s = new_slide(WHITE, "Model gambar, video dan suara tidak berjalan di laptop. Alat vg memanggil mereka lewat dua perantara: kie.ai "
+              "untuk gambar, video dan musik, OpenRouter untuk teks dan suara. Seperti aplikasi pesan-antar: satu akun, satu "
+              "dompet, banyak restoran. Rupiah dihitung dengan kurs sekitar Rp16.000 per dolar.")
+header(s, "Dari mana gambar, video, dan suaranya?", "Bagian 2 · Praktik")
+box(s, M, 1.9, 5.7, 0.95)
+text(s, M + 0.3, 1.9, 5.2, 0.95, "**WorkBuddy**: otak agent (glm-5.3-flash), pakai kredit WorkBuddy", size=18, color=INK,
+     anchor=MSO_ANCHOR.MIDDLE)
+arrow(s, M + 5.85, 2.2, 0.5, 0.34)
+box(s, M + 6.5, 1.9, 5.63, 0.95)
+text(s, M + 6.8, 1.9, 5.1, 0.95, "**vg**: memanggil model, mencatat biaya, menjaga gerbang", size=18, color=INK,
+     anchor=MSO_ANCHOR.MIDDLE)
+providers = [("kie.ai", "gambar, video, musik · 100+ model",
+              ["Kita pakai: gpt-image-2, Veo 3.1 Lite, Kling", "Bayar: kredit, 1 kredit ≈ Rp80",
+               "Gambar ≈ Rp800 · klip video 8 detik ≈ Rp2.900"]),
+             ("OpenRouter", "teks dan suara · 400+ model",
+              ["Kita pakai: Gemini TTS (narasi), Lyria (musik)", "Bayar: dolar, dipotong per pemakaian",
+               "Satu take narasi 20 detik ≈ Rp50"])]
+for i, (name, what, lines) in enumerate(providers):
+    x = M + i * 6.5
+    box(s, x, 3.1, 5.63 if i else 5.7, 3.1, fill=WHITE, line=ORANGE)
+    text(s, x + 0.3, 3.3, 5.0, 0.6, name, size=30, bold=True, font=HEAD, color=INK)
+    text(s, x + 0.3, 3.95, 5.0, 0.4, what, size=17, bold=True, color=ORANGE_TXT)
+    text(s, x + 0.3, 4.5, 5.1, 1.7, lines, size=18, bullets="dot", after=6)
+text(s, M, 6.45, CW, 0.6, "Seperti aplikasi pesan-antar: satu akun, satu dompet, banyak restoran.", size=22, color=INK)
 
 s = new_slide(WHITE, "Otak Expert adalah model yang cepat dan murah. Supaya tidak tersesat, ia tidak menghafal "
               "urutan kerja: setiap kali ia menjalankan vg next, yang menulis satu langkah berikutnya. Di gerbang, vg next "

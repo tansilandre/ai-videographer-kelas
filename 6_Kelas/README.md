@@ -87,7 +87,7 @@ Kerjakan berurutan. Setiap pelajaran memakai yang sebelumnya.
 |---|---|---|---|
 | 00 | [Mulai di Sini](1_Pelajaran/Pelajaran_00_Mulai_Di_Sini_v1.2.md) | isi kelas dan peta bahan, aturan emas, enam aturan keselamatan, biaya satu reel | ±12 menit |
 | 01 | [Apa Itu AI dan Cara Ia Belajar](1_Pelajaran/Pelajaran_01_Apa_Itu_AI_v1.1.md) | beda program biasa dan AI, empat langkah AI belajar, halusinasi, fakta yang wajib dicek manusia | ±8 menit |
-| 02 | [Model Gambar, Video, Suara, dan Agent](1_Pelajaran/Pelajaran_02_Model_Dan_Agent_v1.1.md) | lima model dan tugasnya, kenapa teks dan jari sering salah, kenapa klip pendek, apa itu agent | ±11 menit |
+| 02 | [Model Gambar, Video, Suara, dan Agent](1_Pelajaran/Pelajaran_02_Model_Dan_Agent_v1.2.md) | lima model dan tugasnya, kenapa teks dan jari sering salah, kenapa klip pendek, apa itu agent | ±11 menit |
 | 03 | [Cara Berpikir dengan AI: Prompt, Batas, dan Etika](1_Pelajaran/Pelajaran_03_Cara_Berpikir_Dengan_AI_v1.1.md) | enam prinsip kerja, prompt lima bagian, batas AI dan cara mengakalinya, lima aturan etika | ±10 menit |
 | 04 | [Persiapan Alat](1_Pelajaran/Pelajaran_04_Persiapan_Alat_v1.3.md) | memakai Terminal, WorkBuddy memasang semuanya dengan `bash setup.sh` (atau memasang sendiri untuk Claude Code), halaman setup untuk kunci API dan `VG_APPROVAL_MODE=page`, `vg doctor` sampai nol FAIL | ±16 menit, plus instalasi |
 | 05 | [Cara Kerja AI Videographer](1_Pelajaran/Pelajaran_05_Cara_Kerja_Harness_v1.2.md) | tiga pemain, `vg next`, tujuh tahap dan tiga gerbang, folder proyek dan nama file, kredit dan batas biaya | ±13 menit |
@@ -102,7 +102,7 @@ Kerjakan berurutan. Setiap pelajaran memakai yang sebelumnya.
 
 Setiap pelajaran punya bentuk yang sama: Tujuan, Kenapa ini penting, isi, Latihan kecil, Cek pemahaman, dan Ringkasan. Jawab Cek pemahaman dulu, baru buka jawabannya.
 
-Ketemu istilah yang belum kamu pahami? Cari di [Glosarium](Glosarium_v1.3.md).
+Ketemu istilah yang belum kamu pahami? Cari di [Glosarium](Glosarium_v1.4.md).
 
 ## Studi kasus: Tebak Harga
 
@@ -131,17 +131,18 @@ Semua materi workshop ada di folder ini, dan hanya di sini:
 | Materi | Untuk siapa | Isinya |
 |---|---|---|
 | [Pegangan Workshop](5_WorkBuddy/Pegangan_Workshop_v1.0.html) | peserta | PR sebelum workshop, Sesi 1 memasang, Sesi 2 reel pertama, kalau macet. Unduh lalu buka di browser |
-| [Pegangan AI Video Agent](5_WorkBuddy/Pegangan_AI_Video_Agent_v1.0.html) | peserta | cara kerja agent video AI, dengan gambar. Unduh lalu buka di browser |
+| [Pegangan AI Video Agent](5_WorkBuddy/Pegangan_AI_Video_Agent_v1.1.html) | peserta | cara kerja agent video AI, dengan gambar. Unduh lalu buka di browser |
 | [Panduan WorkBuddy](5_WorkBuddy/Panduan_WorkBuddy_v1.2.md) | peserta | versi teks dari Pegangan Workshop: pasang dalam tiga langkah, di Windows atau Mac |
-| [Deck](4_Deck/Kelas_AI_Videographer_Deck_v1.5.pdf) | layar besar | slide kelas ([PowerPoint](4_Deck/Kelas_AI_Videographer_Deck_v1.5.pptx)) |
-| [Runsheet Workshop](5_WorkBuddy/Runsheet_Workshop_v1.2.md) | fasilitator | persiapan, susunan dua sesi, kalimat di tiap gerbang, rencana B |
+| [Deck](4_Deck/Kelas_AI_Videographer_Deck_v1.6.pdf) | layar besar | slide kelas ([PowerPoint](4_Deck/Kelas_AI_Videographer_Deck_v1.6.pptx)) |
+| [Runsheet Workshop](5_WorkBuddy/Runsheet_Workshop_v1.3.md) | fasilitator | persiapan, susunan dua sesi, kalimat di tiap gerbang, rencana B |
+| [Naskah Pembuka](5_WorkBuddy/Naskah_Pembuka_v1.0.md) | fasilitator | icebreaker "Tebak: AI atau Asli?" dan cerita 2023, 3 sampai 4 menit |
 
 ## Deck
 
 Slide kelas, urutan dan isinya sama dengan pelajaran:
 
-- [Kelas_AI_Videographer_Deck_v1.5.pptx](4_Deck/Kelas_AI_Videographer_Deck_v1.5.pptx) (PowerPoint)
-- [Kelas_AI_Videographer_Deck_v1.5.pdf](4_Deck/Kelas_AI_Videographer_Deck_v1.5.pdf) (PDF)
+- [Kelas_AI_Videographer_Deck_v1.6.pptx](4_Deck/Kelas_AI_Videographer_Deck_v1.6.pptx) (PowerPoint)
+- [Kelas_AI_Videographer_Deck_v1.6.pdf](4_Deck/Kelas_AI_Videographer_Deck_v1.6.pdf) (PDF)
 
 ## Satu hal untuk diingat
 

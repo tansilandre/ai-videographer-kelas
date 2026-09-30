@@ -127,4 +127,4 @@ Isi satu baris untuk setiap fakta yang kamu temukan. Berapa banyak fakta yang ka
 - Model bahasa menulis satu kata demi satu kata. Jawabannya lancar, tapi bisa salah dengan yakin (halusinasi).
 - Harga, jarak dan nama selalu dicek manusia.
 
-Berikutnya: [Pelajaran 02 · Model Gambar, Video, Suara, dan Agent](Pelajaran_02_Model_Dan_Agent_v1.1.md)
+Berikutnya: [Pelajaran 02 · Model Gambar, Video, Suara, dan Agent](Pelajaran_02_Model_Dan_Agent_v1.2.md)

@@ -156,7 +156,7 @@ Di kelas ini, `vg <perintah>` adalah singkatan dari `python3 2_Tools/vg/vg.py <p
 | **Kartu penutup** | Lihat **End card**. | [Pelajaran 06][p06] |
 | **Kecerdasan buatan** | Lihat **AI**. | [Pelajaran 01][p01] |
 | **Kesinambungan (*continuity*)** | Semua shot terasa berasal dari satu dunia dan satu waktu: wajah, pakaian, arah dan warna cahaya, jam, tempat, dan rumah tetap sama. Dicek saat masih gambar, sebelum video. | [Pelajaran 08][p08] |
-| **kie.ai** | Layanan tempat alat vg memanggil model gambar dan video, dibayar dengan kredit. | [Pelajaran 00][p00] |
+| **kie.ai** | Perantara model gambar, video, dan musik: satu akun dan satu kunci untuk lebih dari 100 model (gpt-image-2, Veo, Kling). Dibayar dengan kredit; 1 kredit sekitar US$0,005. | [Pelajaran 02][p02] |
 | **Klip** | Potongan video hasil model video, misalnya `Clip_S05_v1.mp4` di `5_Clips/`. Klip kita pendek, paling lama 8 detik, dengan satu gerakan kamera. Di rencana edit, klip AI ditulis sebagai segmen `clip`. | [Pelajaran 00][p00] |
 | **Kode persetujuan** | Kode acak 4 digit yang diminta alat saat menyetujui di mode `terminal`. Hanya manusia yang mengetiknya, di terminalnya sendiri; agent tidak bisa. Di mode `page` tidak ada kode: kamu mengklik di halaman review. | [Pelajaran 00][p00] |
 | **Kredit** | Satuan bayar di kie.ai. Satu gambar 10 kredit, satu klip video 8 detik di 1080p 35 kredit. | [Pelajaran 00][p00] |
@@ -173,6 +173,7 @@ Di kelas ini, `vg <perintah>` adalah singkatan dari `python3 2_Tools/vg/vg.py <p
 | **Lembar referensi (*reference sheet*)** | Gambar acuan wajah, tempat, atau produk yang dibuat sekali lalu dipakai berulang, supaya tampilannya sama di setiap shot. | [Pelajaran 02][p02] |
 | **libass** | Bagian FFmpeg untuk cara cadangan membuat subtitle. `warn ffmpeg libass` di `vg doctor` boleh dibiarkan. | [Pelajaran 04][p04] |
 | **`lifestyle_broll`** | Kategori shot: suasana hidup di tempat itu, di bawah narasi. Contohnya S06: Rani berjalan di boulevard dengan mulut tertutup. | [Pelajaran 06][p06] |
+| **Level AI** | Tiga cara memakai AI. Level 1 konsultan: AI menjawab, kamu yang mengerjakan. Level 2 agent: AI yang mengerjakan dengan alat, kamu memutuskan. Level 3 orkestrator: AI membagi kerja ke beberapa agent sekaligus. Kelas ini di Level 2. | [Pelajaran 02][p02] |
 | **Lip-sync** | Gerak bibir yang cocok dengan suara. Bagian paling rapuh dari video AI, jadi orang di klip kita tidak bicara. | [Pelajaran 09][p09] |
 | **`live-tested`** | Tanda di daftar model bahwa model itu sudah dicoba dengan pembayaran nyata. | [Pelajaran 02][p02] |
 | **LOCKS** | Bagian prompt video yang menyebut apa yang tidak boleh berubah, misalnya rumahnya tetap persis seperti di frame pertama. | [Pelajaran 02][p02] |
@@ -202,7 +203,7 @@ Di kelas ini, `vg <perintah>` adalah singkatan dari `python3 2_Tools/vg/vg.py <p
 
 | Istilah | Arti | Pertama muncul |
 |---|---|---|
-| **OpenRouter** | Layanan tempat alat vg memanggil model suara dan musik, dibayar dalam dolar. | [Pelajaran 00][p00] |
+| **OpenRouter** | Perantara model teks dan suara: satu akun dan satu kunci untuk lebih dari 400 model. Alat vg memakainya untuk narasi dan musik, dibayar dalam dolar per pemakaian. | [Pelajaran 02][p02] |
 | **`output`** | Kolom di rencana edit berisi nama file final, misalnya `Contoh_Tebak_Harga_v1.0.mp4`. Untuk revisi, ganti nama ini ke versi baru; alat menolak menimpa file yang sudah ada. | [Pelajaran 12][p12] |
 
 ## P
@@ -349,7 +350,7 @@ Kembali ke [daftar kelas](README.md).
 
 [p00]: 1_Pelajaran/Pelajaran_00_Mulai_Di_Sini_v1.2.md
 [p01]: 1_Pelajaran/Pelajaran_01_Apa_Itu_AI_v1.1.md
-[p02]: 1_Pelajaran/Pelajaran_02_Model_Dan_Agent_v1.1.md
+[p02]: 1_Pelajaran/Pelajaran_02_Model_Dan_Agent_v1.2.md
 [p03]: 1_Pelajaran/Pelajaran_03_Cara_Berpikir_Dengan_AI_v1.1.md
 [p04]: 1_Pelajaran/Pelajaran_04_Persiapan_Alat_v1.3.md
 [p05]: 1_Pelajaran/Pelajaran_05_Cara_Kerja_Harness_v1.2.md

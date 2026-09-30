@@ -513,6 +513,14 @@ code,kbd,.code,.term,.prompt,.envfile,.field .box,.outpath,.menu,.url,.crumbs,.p
 .term .ok,.term .fl{color:var(--accent)}
 .term .wr{color:#D3CEC5}
 .term .dm{color:#A9A49B}
+
+/* where the models live (v1.1) */
+.where2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:26px}
+.where2 .card{padding:20px;display:flex;flex-direction:column;gap:10px;border-top:5px solid var(--c)}
+.where2 h3{display:flex;align-items:center;gap:12px;font-size:1.35rem}
+.where2 p{color:var(--muted);font-size:.98rem;line-height:1.45}
+.where2 p b{color:var(--ink)}
+@media (max-width:760px){.where2{grid-template-columns:minmax(0,1fr)}}
 </style>
 </head>
 <body>
@@ -574,8 +582,35 @@ code,kbd,.code,.term,.prompt,.envfile,.field .box,.outpath,.menu,.url,.crumbs,.p
 </div>
 
 <nav class="toc" aria-label="Sections">
-  <a href="#crew">Who does what</a><a href="#inputs">What goes in</a><a href="#recipes">Recipes</a><a href="#models">The models</a><a href="#route">Idea to reel</a><a href="#workbuddy">In WorkBuddy</a><a href="#tips">Good habits</a><a href="#words">Words</a>
+  <a href="#levels">Three levels</a><a href="#crew">Who does what</a><a href="#inputs">What goes in</a><a href="#recipes">Recipes</a><a href="#wherefrom">kie.ai and OpenRouter</a><a href="#models">The models</a><a href="#route">Idea to reel</a><a href="#workbuddy">In WorkBuddy</a><a href="#tips">Good habits</a><a href="#words">Words</a>
 </nav>
+
+<section id="levels">
+  <p class="eyebrow">The big picture</p>
+  <h2>Three levels of AI. This class is Level 2.</h2>
+  <p class="lead">The higher the level, the less you type, and the more your decisions matter.</p>
+  <div class="ingredients">
+    <article class="card ing c-voice">
+      <span class="tile"><svg class="ic"><use href="#i-words"/></svg></span>
+      <span class="what">Level 1</span>
+      <h3>Consultant</h3>
+      <p><b>AI:</b> answers your questions. <b>You:</b> do the work yourself.<br>A chatbot writes the script, then you make the video in other apps.</p>
+    </article>
+    <article class="card ing c-you" style="border-width:2px;border-color:var(--accent)">
+      <span class="tile"><svg class="ic"><use href="#i-brain"/></svg></span>
+      <span class="what">Level 2 · this class</span>
+      <h3>AI Agent</h3>
+      <p><b>AI:</b> does the work step by step, with tools. <b>You:</b> give the brief, check, and approve.<br>The AI Videographer expert plans, makes pictures and video through vg, and stops at three gates.</p>
+    </article>
+    <article class="card ing c-ink">
+      <span class="tile"><svg class="ic"><use href="#i-list"/></svg></span>
+      <span class="what">Level 3</span>
+      <h3>Orchestrator</h3>
+      <p><b>AI:</b> splits the work across several agents at once, then checks their results. <b>You:</b> set the goal, the standard and the budget.<br>One agent writes the script, one makes pictures, one checks quality, at the same time.</p>
+    </article>
+  </div>
+  <p class="watch"><svg class="ic" style="width:20px;height:20px;flex:none"><use href="#i-person"/></svg><span>Whatever the level, the decision stays with a person. The more the AI does, the more your three approval clicks matter.</span></p>
+</section>
 
 <!-- ============ CREW ============ -->
 <section id="crew">
@@ -731,6 +766,27 @@ code,kbd,.code,.term,.prompt,.envfile,.field .box,.outpath,.menu,.url,.crumbs,.p
   </div>
 </section>
 
+<section id="wherefrom">
+  <p class="eyebrow">Where the models live</p>
+  <h2>kie.ai and OpenRouter: one account, many models.</h2>
+  <p class="lead">The models don't run on your laptop. They run on their makers' servers: Google, OpenAI, Kuaishou and others. The vg tool calls them through two middlemen, like a food-delivery app: one app, one wallet, many restaurants.</p>
+  <div class="where2">
+    <article class="card c-pic">
+      <h3><span class="tile"><svg class="ic"><use href="#i-picture"/></svg></span>kie.ai</h3>
+      <p><b>Pictures, video and music.</b> 100+ models behind one key (<code>KIE_API_KEY</code>).</p>
+      <p>We use gpt-image-2 for pictures, Veo 3.1 Lite and Kling for video. You top up credits first; they don't expire.</p>
+      <div class="pricechips"><span class="cost"><span class="coin"></span>1 credit ≈ Rp80</span><span class="cost"><span class="coin"></span>picture 10 ≈ Rp800</span><span class="cost"><span class="coin"></span>8-second clip 35 ≈ Rp2.900</span></div>
+    </article>
+    <article class="card c-voice">
+      <h3><span class="tile"><svg class="ic"><use href="#i-wave"/></svg></span>OpenRouter</h3>
+      <p><b>Text and voice.</b> 400+ models behind one key (<code>OPENROUTER_API_KEY</code>).</p>
+      <p>We use Gemini TTS for the narration and Lyria for the music. You top up dollars; each use takes a little.</p>
+      <div class="pricechips"><span class="cost"><span class="coin"></span>20-second narration take ≈ Rp50</span></div>
+    </article>
+  </div>
+  <p class="watch"><svg class="ic" style="width:20px;height:20px;flex:none"><use href="#i-bulb"/></svg><span><b>A picture ≈ Rp800. A video clip ≈ Rp2.900.</b> That's why the whole reel is approved as pictures first. Why a middleman at all? One account, one top-up, and often cheaper than the official price. The catch: when it is busy, jobs wait, so vg keeps a receipt for every job and <code>vg resume</code> collects late results without paying twice. The agent's brain (glm-5.3-flash) is paid with WorkBuddy credits, not through these two. Rupiah at about Rp16.000 per US dollar.</span></p>
+</section>
+
 <!-- ============ MODELS ============ -->
 <section id="models">
   <p class="eyebrow">The makers</p>
@@ -836,7 +892,7 @@ code,kbd,.code,.term,.prompt,.envfile,.field .box,.outpath,.menu,.url,.crumbs,.p
     <div class="sw c-word" role="listitem" style="--col:6;--row:2"><span class="top"><span class="n">5</span><span class="who">AI</span></span><b>Check the setup</b><p>Click "Cek setup." It reports anything missing.</p></div>
   </div>
   <p class="homework"><svg class="ic"><use href="#i-lock"/></svg><span>Before that, at home: a kie.ai key (pictures and video, with a credit limit) and an OpenRouter key (voice and music). Those need a card, so the AI can't do them. Keys never go into the chat.</span></p>
-  <a class="guide" href="Kelas_AI_Videographer_Panduan_Workshop_v1.0.html"><div><b>Step-by-step workshop guide</b><span>Invite link, both sessions, the exact messages to paste. In Bahasa Indonesia.</span></div><svg class="ic"><use href="#i-arrow"/></svg></a>
+  <a class="guide" href="Pegangan_Workshop_v1.0.html"><div><b>Step-by-step workshop guide</b><span>Invite link, both sessions, the exact messages to paste. In Bahasa Indonesia.</span></div><svg class="ic"><use href="#i-arrow"/></svg></a>
 
   <h3 class="sub"><svg class="ic"><use href="#i-phone"/></svg>Every time you start: four choices</h3>
   <div class="card picks">
@@ -938,6 +994,8 @@ code,kbd,.code,.term,.prompt,.envfile,.field .box,.outpath,.menu,.url,.crumbs,.p
   <h2>The small dictionary</h2>
   <dl class="gloss">
     <div><dt>Credits</dt><dd>kie.ai's money. A picture ≈ 10, a clip ≈ 35.</dd></div>
+    <div><dt>OpenRouter</dt><dd>The middleman for text and voice models. One key, many models.</dd></div>
+    <div><dt>AI agent (Level 2)</dt><dd>An AI that does the work with tools while you decide.</dd></div>
     <div><dt>Prompt</dt><dd>The words you give a model.</dd></div>
     <div><dt>Frame</dt><dd>One still picture. Video is about 30 frames a second.</dd></div>
     <div><dt>Start and end frame</dt><dd>The pictures a clip begins and finishes on.</dd></div>
@@ -949,7 +1007,7 @@ code,kbd,.code,.term,.prompt,.envfile,.field .box,.outpath,.menu,.url,.crumbs,.p
     <div><dt>Pilot</dt><dd>One test clip before paying for all of them.</dd></div>
     <div><dt>Checkpoint</dt><dd>A stop where you must approve before the agent goes on.</dd></div>
     <div><dt>Take</dt><dd>One try at a picture or clip. A redo is take 2.</dd></div>
-    <div><dt>kie.ai</dt><dd>The service that runs the models and holds your credits.</dd></div>
+    <div><dt>kie.ai</dt><dd>The middleman for picture, video and music models: one key, many models, paid in credits.</dd></div>
     <div><dt>vg</dt><dd>The tool in this folder that sends jobs and guards the budget.</dd></div>
     <div><dt>9:16</dt><dd>Tall phone video, like Reels and TikTok.</dd></div>
   </dl>

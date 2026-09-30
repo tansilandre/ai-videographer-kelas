@@ -6,10 +6,11 @@ Untuk fasilitator. Peserta memakai laptop mereka sendiri (kebanyakan Windows, Ma
 
 | Materi | File | Untuk |
 |---|---|---|
-| Deck | `4_Deck/Kelas_AI_Videographer_Deck_v1.5.pptx` (+ `.pdf`) | layar besar |
+| Deck | `4_Deck/Kelas_AI_Videographer_Deck_v1.6.pptx` (+ `.pdf`) | layar besar |
 | Pegangan workshop | `5_WorkBuddy/Pegangan_Workshop_v1.0.html` | dibagikan ke peserta |
-| Pegangan AI Video Agent | `5_WorkBuddy/Pegangan_AI_Video_Agent_v1.0.html` | dibagikan ke peserta |
+| Pegangan AI Video Agent | `5_WorkBuddy/Pegangan_AI_Video_Agent_v1.1.html` | dibagikan ke peserta |
 | Panduan WorkBuddy | `5_WorkBuddy/Panduan_WorkBuddy_v1.2.md` | versi teks dari pegangan workshop |
+| Naskah pembuka | `5_WorkBuddy/Naskah_Pembuka_v1.0.md` | fasilitator: icebreaker "Tebak: AI atau Asli?" |
 | Repo | https://github.com/tansilandre/ai-videographer-kelas | yang diunduh AI di laptop peserta |
 
 Bagikan dua file pegangan HTML lewat grup chat atau Drive. Peserta membukanya di browser.
@@ -48,8 +49,9 @@ Di salinan proyek, persetujuan harus diklik ulang. Itu gratis, dan bagus untuk d
 
 | Waktu | Di layar | Peserta |
 |---|---|---|
-| 0:00 | putar reel final (C4) | menonton |
-| 0:05 | deck Bagian 1: model = otak, WorkBuddy = badan, Expert = uraian tugas | menonton |
+| 0:00 | pembuka: slide 2–4 "Tebak: AI atau Asli?" dan cerita 2023 ([Naskah Pembuka](Naskah_Pembuka_v1.0.md)), lalu slide "Kenalan dulu" | angkat tangan, menebak |
+| 0:05 | putar reel final (C4) | menonton |
+| 0:08 | deck Bagian 1: model = otak, WorkBuddy = badan, Expert = uraian tugas; tiga level AI | menonton |
 | 0:25 | buka WorkBuddy, pilih glm-5.3-flash, kirim pesan pasang (Windows atau Mac) | melakukan hal yang sama |
 | 0:35 | izinkan perintah, klik Yes/Install saat diminta | fasilitator keliling membantu |
 | 0:55 | halaman setup: tempel kunci, Simpan | tempel kunci sendiri, **tidak pernah di chat** |

@@ -7,7 +7,9 @@ Setelah pelajaran ini, kamu bisa:
 - menyebut lima model yang kita pakai dan tugas masing-masing;
 - menjelaskan kenapa model gambar sering salah di teks, logo, dan jari;
 - menjelaskan kenapa klip video kita pendek, dengan satu gerakan kamera;
-- menjelaskan apa itu agent (otak, badan, dan uraian tugasnya), dan kenapa persetujuan tetap di tanganmu.
+- menjelaskan apa itu agent (otak, badan, dan uraian tugasnya), dan kenapa persetujuan tetap di tanganmu;
+- membedakan tiga level memakai AI: konsultan, agent, dan orkestrator;
+- menjelaskan apa itu kie.ai dan OpenRouter, dan berapa kira-kira biayanya.
 
 ## Kenapa ini penting
 
@@ -123,6 +125,40 @@ Kamu cukup bicara ke agent dengan bahasa biasa, misalnya: "Buat reel dari brief 
 
 Tapi agent juga model bahasa. Ia bisa salah, bahkan salah dengan yakin. Karena itu tiga gerbang persetujuan tetap di tanganmu. Di kelas ini, di setiap gerbang kamu sendiri yang mengklik tombol setuju di halaman review. Perintah persetujuan dari *terminal* (layar tempat mengetik perintah) selalu ditolak, jadi agent tidak bisa menyetujui untukmu.
 
+## 6. Tiga level AI: konsultan, agent, orkestrator
+
+Cara kita memakai AI bisa dibagi tiga level. Makin tinggi levelnya, makin sedikit kamu mengetik, dan makin penting keputusanmu.
+
+| Level | AI berperan sebagai | Kamu berperan sebagai | Contoh di dunia video |
+|---|---|---|---|
+| 1 · Konsultan | penasihat: kamu bertanya, ia menjawab dengan teks | pekerja: menyalin, menempel, dan mengerjakan sendiri | kamu minta chatbot menulis naskah reel 25 detik, lalu membuat gambar dan videonya sendiri di aplikasi lain |
+| 2 · AI Agent | pekerja: memakai alat dan mengerjakan langkah demi langkah | manajer: memberi brief, memeriksa, dan menyetujui | kelas ini: Expert AI Videographer menulis rencana, membuat gambar dan video lewat vg, lalu berhenti di tiga gerbang |
+| 3 · Orkestrator | kepala produksi: membagi pekerjaan ke beberapa agent sekaligus, lalu memeriksa hasil mereka | pemilik: menetapkan tujuan, standar, dan anggaran | satu AI menyuruh satu agent menulis naskah, satu membuat gambar, dan satu memeriksa kualitas, bersamaan |
+
+Kelas ini ada di **Level 2**. Kamu akan merasakan sendiri: agent yang mengerjakan hampir semuanya, kamu yang memutuskan. Materi kelas ini sendiri disusun di Level 3: beberapa agent menulis dan memeriksa bagian yang berbeda secara bersamaan, lalu hasilnya digabung dan diperiksa lagi.
+
+Satu hal tidak berubah di level mana pun: keputusan dan tanggung jawab tetap di manusia. Makin banyak yang dikerjakan AI, makin penting gerbang persetujuanmu.
+
+## 7. kie.ai dan OpenRouter: tempat model tinggal
+
+Model gambar, video, dan suara tidak berjalan di laptopmu. Mereka berjalan di server pembuatnya: Google, OpenAI, Kuaishou, dan lainnya. Alat vg memanggil mereka lewat dua layanan perantara.
+
+Bayangkan aplikasi pesan-antar makanan: satu aplikasi, satu dompet, banyak restoran. kie.ai dan OpenRouter bekerja seperti itu untuk model AI. Kamu tidak perlu membuat akun di setiap perusahaan AI. Cukup satu akun dan satu kunci untuk masing-masing.
+
+| | kie.ai | OpenRouter |
+|---|---|---|
+| Isinya | lebih dari 100 model gambar, video, dan musik | lebih dari 400 model teks dan suara |
+| Yang kita pakai | gpt-image-2 (gambar), Veo 3.1 Lite dan Kling (video) | Gemini TTS (narasi) dan Lyria (musik) |
+| Cara bayar | isi saldo kredit dulu, kreditnya tidak hangus | isi saldo dolar, dipotong per pemakaian |
+| Contoh biaya | 1 kredit sekitar US$0,005 (± Rp80). Satu gambar 10 kredit (± Rp800), satu klip video 8 detik 35 kredit (± Rp2.900) | satu take narasi 20 detik sekitar US$0,003 (± Rp50) |
+| Kuncinya | `KIE_API_KEY` | `OPENROUTER_API_KEY` |
+
+Hitungan rupiah memakai kurs sekitar Rp16.000 per dolar.
+
+Kenapa lewat perantara, bukan langsung ke Google atau OpenAI? Satu akun untuk banyak model, satu tempat mengisi saldo, dan harganya sering lebih murah daripada harga resmi. Kekurangannya: kita bergantung pada layanan perantara. Kalau layanannya sedang sibuk atau gangguan, pembuatan gambar atau video ikut tertunda. Karena itu alat vg mencatat setiap pesanan, dan `vg resume` bisa mengambil hasil yang tertunda nanti, tanpa membayar dua kali.
+
+Otak agent (glm-5.3-flash) tidak lewat keduanya. Ia dibayar dengan kredit WorkBuddy.
+
 ## Latihan kecil
 
 Pasangkan setiap tugas dengan modelnya: model teks (glm-5.3-flash atau Claude), gpt-image-2, Veo 3.1 Lite, Gemini TTS, atau Lyria.
@@ -150,6 +186,8 @@ Yang paling mahal nomor 4, video: 35 kredit per klip. Ia paling akhir karena mem
 1. Kenapa tulisan di papan nama sering kacau kalau dibuat model gambar?
 2. Sebutkan tiga aturan yang membuat klip video kita lebih stabil.
 3. Apa bedanya chatbot dan agent?
+4. Kamu minta chatbot menulis naskah, lalu kamu membuat gambarnya sendiri di aplikasi lain. Itu level berapa? Kalau di kelas ini, level berapa?
+5. Apa bedanya kie.ai dan OpenRouter?
 
 <details>
 <summary>Jawaban</summary>
@@ -157,6 +195,8 @@ Yang paling mahal nomor 4, video: 35 kredit per klip. Ia paling akhir karena mem
 1. Model gambar menggambar yang paling masuk akal, bukan yang benar. Ia tidak mengeja; ia menggambar bentuk yang mirip huruf. Karena itu tulisan ditambahkan saat edit.
 2. Klip pendek, satu gerakan kamera per klip, dan frame pertama dari gambar yang sudah disetujui.
 3. Chatbot hanya menjawab dengan teks. Agent memakai alat dalam putaran rencanakan, kerjakan, periksa, perbaiki. Agent tetap bisa salah, jadi persetujuan di tangan manusia.
+4. Level 1: AI jadi konsultan, kamu yang mengerjakan. Di kelas ini Level 2: agent yang mengerjakan, kamu memutuskan.
+5. Keduanya perantara: satu akun untuk banyak model. kie.ai untuk gambar, video, dan musik, dibayar dengan kredit. OpenRouter untuk teks dan suara, dibayar dalam dolar per pemakaian.
 
 </details>
 
@@ -167,5 +207,7 @@ Yang paling mahal nomor 4, video: 35 kredit per klip. Ia paling akhir karena mem
 - Model video harus menjaga ratusan frame tetap konsisten. Maka: klip pendek, satu gerakan kamera, frame pertama yang sudah disetujui.
 - Agent adalah model bahasa dengan alat, bekerja dalam putaran. Otaknya model (di workshop: glm-5.3-flash), badannya aplikasi agent (WorkBuddy atau Claude Code), dan uraian tugasnya Expert AI Videographer.
 - Agent bisa salah, jadi gerbang tetap di tanganmu: kamu yang mengklik setuju di halaman review.
+- Tiga level AI: konsultan (kamu yang mengerjakan), agent (AI yang mengerjakan, kamu memutuskan), orkestrator (AI membagi kerja ke banyak agent). Kelas ini Level 2.
+- kie.ai dan OpenRouter adalah perantara: satu akun dan satu kunci untuk banyak model. Gambar sekitar Rp800, klip video sekitar Rp2.900.
 
 Berikutnya: [Pelajaran 03 · Cara Berpikir dengan AI: Prompt, Batas, dan Etika](Pelajaran_03_Cara_Berpikir_Dengan_AI_v1.1.md)
