@@ -32,7 +32,7 @@ Hai, aku **Andre Tansil**, AI Specialist dan AI Automation Builder. Lebih dari 8
 2. **Minta AI-nya memasang.** Di WorkBuddy, pilih folder kerja dan kirim satu pesan dari [Panduan WorkBuddy](5_WorkBuddy/Panduan_WorkBuddy_v1.2.md). AI-nya mengunduh folder kelas dan menjalankan `setup.ps1` (Windows) atau `bash setup.sh` (Mac). Kamu hanya mengklik izinkan; di Mac juga mengklik Install kalau jendela Apple muncul, dan menempel satu baris di Terminal kalau Homebrew belum ada.
 3. **Tempel kunci, lalu buka ulang.** Di halaman **Setup AI Videographer** yang terbuka di browser, tempel kunci kie.ai dan OpenRouter, lalu klik **Simpan**. Kunci tidak pernah ditempel ke chat. Tutup WorkBuddy (Cmd + Q), buka lagi, buka folder yang disebut di akhir setup, dan pilih Expert **AI Videographer**.
 
-Setelah itu klik **Buat video baru**. Expert menanyakan lima hal tentang produkmu, lalu bekerja sendiri dan hanya berhenti di tiga gerbang, tempat kamu mengklik di halaman review. Langkah lengkapnya, termasuk cara memakai Claude Code, ada di [Pelajaran 04](1_Pelajaran/Pelajaran_04_Persiapan_Alat_v1.2.md).
+Setelah itu klik **Buat video baru**. Expert menanyakan lima hal tentang produkmu, lalu bekerja sendiri dan hanya berhenti di tiga gerbang, tempat kamu mengklik di halaman review. Langkah lengkapnya, termasuk cara memakai Claude Code, ada di [Pelajaran 04](1_Pelajaran/Pelajaran_04_Persiapan_Alat_v1.3.md).
 
 ## Yang akan kamu buat
 
@@ -89,7 +89,7 @@ Kerjakan berurutan. Setiap pelajaran memakai yang sebelumnya.
 | 01 | [Apa Itu AI dan Cara Ia Belajar](1_Pelajaran/Pelajaran_01_Apa_Itu_AI_v1.1.md) | beda program biasa dan AI, empat langkah AI belajar, halusinasi, fakta yang wajib dicek manusia | ±8 menit |
 | 02 | [Model Gambar, Video, Suara, dan Agent](1_Pelajaran/Pelajaran_02_Model_Dan_Agent_v1.1.md) | lima model dan tugasnya, kenapa teks dan jari sering salah, kenapa klip pendek, apa itu agent | ±11 menit |
 | 03 | [Cara Berpikir dengan AI: Prompt, Batas, dan Etika](1_Pelajaran/Pelajaran_03_Cara_Berpikir_Dengan_AI_v1.1.md) | enam prinsip kerja, prompt lima bagian, batas AI dan cara mengakalinya, lima aturan etika | ±10 menit |
-| 04 | [Persiapan Alat](1_Pelajaran/Pelajaran_04_Persiapan_Alat_v1.2.md) | memakai Terminal, WorkBuddy memasang semuanya dengan `bash setup.sh` (atau memasang sendiri untuk Claude Code), halaman setup untuk kunci API dan `VG_APPROVAL_MODE=page`, `vg doctor` sampai nol FAIL | ±16 menit, plus instalasi |
+| 04 | [Persiapan Alat](1_Pelajaran/Pelajaran_04_Persiapan_Alat_v1.3.md) | memakai Terminal, WorkBuddy memasang semuanya dengan `bash setup.sh` (atau memasang sendiri untuk Claude Code), halaman setup untuk kunci API dan `VG_APPROVAL_MODE=page`, `vg doctor` sampai nol FAIL | ±16 menit, plus instalasi |
 | 05 | [Cara Kerja AI Videographer](1_Pelajaran/Pelajaran_05_Cara_Kerja_Harness_v1.2.md) | tiga pemain, `vg next`, tujuh tahap dan tiga gerbang, folder proyek dan nama file, kredit dan batas biaya | ±13 menit |
 | 06 | [Dari Brief ke Shot List](1_Pelajaran/Pelajaran_06_Brief_Ke_Shot_List_v1.1.md) | membaca brief, beat dulu baru shot, janji hook (`promise` dan `pays_off`), `vg validate` | ±10 menit |
 | 07 | [Look: Satu Dunia Visual, dan Halaman Review](1_Pelajaran/Pelajaran_07_Look_Dan_Review_v1.1.md) | satu look untuk seluruh reel, style frame, halaman review, Gerbang 1 dengan satu klik | ±10 menit |
@@ -97,12 +97,12 @@ Kerjakan berurutan. Setiap pelajaran memakai yang sebelumnya.
 | 09 | [Audio Dulu](1_Pelajaran/Pelajaran_09_Audio_Dulu_v1.2.md) | narasi voice-over, memilih suara dengan telinga, musik dan `music.at`, efek suara | ±10 menit |
 | 10 | [Rencana Edit dan Animatic](1_Pelajaran/Pelajaran_10_Edit_Plan_Dan_Animatic_v1.1.md) | `Edit_Spec.json`, transisi yang punya alasan, menonton animatic, Gerbang 2 | ±9 menit |
 | 11 | [Prompt Video dan Gerbang Biaya](1_Pelajaran/Pelajaran_11_Video_Dan_Gerbang_Biaya_v1.1.md) | prompt yang hanya menjelaskan gerak, estimasi biaya, bagian Video dan Gerbang 3, klip pilot, `vg resume` | ±11 menit |
-| 12 | [Edit Final dan Kirim](1_Pelajaran/Pelajaran_12_Edit_Final_Dan_Kirim_v1.1.md) | draft dan versi final, daftar cek sebelum kirim, versi tanpa menimpa | ±7 menit |
+| 12 | [Edit Final dan Kirim](1_Pelajaran/Pelajaran_12_Edit_Final_Dan_Kirim_v1.2.md) | draft dan versi final, daftar cek sebelum kirim, versi tanpa menimpa | ±7 menit |
 | 13 | [Kesalahan yang Kami Buat](1_Pelajaran/Pelajaran_13_Kesalahan_Yang_Kami_Buat_v1.1.md) | kenapa versi pertama gagal, aturan yang lahir darinya, tiga bug yang ditemukan dengan memeriksa | ±7 menit |
 
 Setiap pelajaran punya bentuk yang sama: Tujuan, Kenapa ini penting, isi, Latihan kecil, Cek pemahaman, dan Ringkasan. Jawab Cek pemahaman dulu, baru buka jawabannya.
 
-Ketemu istilah yang belum kamu pahami? Cari di [Glosarium](Glosarium_v1.2.md).
+Ketemu istilah yang belum kamu pahami? Cari di [Glosarium](Glosarium_v1.3.md).
 
 ## Studi kasus: Tebak Harga
 
@@ -126,15 +126,22 @@ Setelah Pelajaran 13, buat reelmu sendiri:
 
 Di workshop, agent-nya WorkBuddy, aplikasi agent desktop dari Tencent. Expert AI Videographer selalu bertanya ke alat dulu dengan `vg next`, lalu mengerjakan satu langkah itu saja. Karena itu model yang cepat dan murah, glm-5.3-flash, cukup untuk menjadi otaknya.
 
-- **[Panduan WorkBuddy](5_WorkBuddy/Panduan_WorkBuddy_v1.2.md)**: memasang dalam tiga langkah, lalu membuat satu reel dengan Expert AI Videographer.
-- **[Runsheet Workshop](5_WorkBuddy/Runsheet_Workshop_v1.1.md)**: susunan acara untuk fasilitator.
+Semua materi workshop ada di folder ini, dan hanya di sini:
+
+| Materi | Untuk siapa | Isinya |
+|---|---|---|
+| [Pegangan Workshop](5_WorkBuddy/Pegangan_Workshop_v1.0.html) | peserta | PR sebelum workshop, Sesi 1 memasang, Sesi 2 reel pertama, kalau macet. Unduh lalu buka di browser |
+| [Pegangan AI Video Agent](5_WorkBuddy/Pegangan_AI_Video_Agent_v1.0.html) | peserta | cara kerja agent video AI, dengan gambar. Unduh lalu buka di browser |
+| [Panduan WorkBuddy](5_WorkBuddy/Panduan_WorkBuddy_v1.2.md) | peserta | versi teks dari Pegangan Workshop: pasang dalam tiga langkah, di Windows atau Mac |
+| [Deck](4_Deck/Kelas_AI_Videographer_Deck_v1.5.pdf) | layar besar | slide kelas ([PowerPoint](4_Deck/Kelas_AI_Videographer_Deck_v1.5.pptx)) |
+| [Runsheet Workshop](5_WorkBuddy/Runsheet_Workshop_v1.2.md) | fasilitator | persiapan, susunan dua sesi, kalimat di tiap gerbang, rencana B |
 
 ## Deck
 
 Slide kelas, urutan dan isinya sama dengan pelajaran:
 
-- [Kelas_AI_Videographer_Deck_v1.4.pptx](4_Deck/Kelas_AI_Videographer_Deck_v1.4.pptx) (PowerPoint)
-- [Kelas_AI_Videographer_Deck_v1.4.pdf](4_Deck/Kelas_AI_Videographer_Deck_v1.4.pdf) (PDF)
+- [Kelas_AI_Videographer_Deck_v1.5.pptx](4_Deck/Kelas_AI_Videographer_Deck_v1.5.pptx) (PowerPoint)
+- [Kelas_AI_Videographer_Deck_v1.5.pdf](4_Deck/Kelas_AI_Videographer_Deck_v1.5.pdf) (PDF)
 
 ## Satu hal untuk diingat
 

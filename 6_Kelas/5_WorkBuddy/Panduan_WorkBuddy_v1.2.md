@@ -81,4 +81,4 @@ Video hanya dibuat setelah kamu klik. Klip yang gagal tidak memotong kredit.
 
 - **Memperbarui:** bilang ke Expert "perbarui AI Videographer". Ia mengunduh versi terbaru dan menjalankan setup lagi, lalu kamu membuka ulang WorkBuddy.
 - **Kredit WorkBuddy habis?** Pakai otak lewat gateway sendiri, misalnya SumoPod: tambahkan model di **Settings → Model** WorkBuddy (Mac juga bisa lewat `bash 2_Tools/workbuddy/install_workbuddy.sh --add-models`).
-- **Tanpa WorkBuddy?** Claude Code juga bisa. Lihat [Pelajaran 04](../1_Pelajaran/Pelajaran_04_Persiapan_Alat_v1.2.md).
+- **Tanpa WorkBuddy?** Claude Code juga bisa. Lihat [Pelajaran 04](../1_Pelajaran/Pelajaran_04_Persiapan_Alat_v1.3.md).

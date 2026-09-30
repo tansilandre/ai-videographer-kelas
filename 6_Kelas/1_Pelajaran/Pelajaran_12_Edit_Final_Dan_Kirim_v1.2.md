@@ -27,7 +27,7 @@ Alat ini lalu:
 - memberi satu *grade* (perlakuan warna yang sama) ke semua gambar;
 - menyamakan kekerasan suara ke sekitar −14 *LUFS* (satuan kekerasan suara yang dipakai platform video).
 
-Semuanya dikerjakan di komputermu, tanpa kredit. Grafis dan caption digambar oleh program kecil berbahasa Swift, karena itu kelas ini butuh Mac.
+Semuanya dikerjakan di komputermu, tanpa kredit. Grafis dan caption digambar oleh program kecil: di Mac berbahasa Swift, di Windows berbahasa Python. Hasilnya sama.
 
 ## Langkah 1: draft
 

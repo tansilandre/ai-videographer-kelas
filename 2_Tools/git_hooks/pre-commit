@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+# Refuses a commit that would publish private names. This repo is public on GitHub.
+# The names live in 4_Docs/Private/Private_Names.txt (git-ignored, one per line). Enable once per clone:
+#   git config core.hooksPath 2_Tools/git_hooks
+LIST="$(git rev-parse --show-toplevel)/4_Docs/Private/Private_Names.txt"
+[ -f "$LIST" ] || exit 0
+PATTERN="$(/usr/bin/grep -v -e '^#' -e '^[[:space:]]*$' "$LIST" | paste -sd'|' -)"
+[ -n "$PATTERN" ] || exit 0
+HITS="$(git diff --cached --name-only --diff-filter=ACMR -z | xargs -0 -I{} sh -c \
+  'git show ":{}" 2>/dev/null | LC_ALL=C /usr/bin/grep -a -I -i -w -q -E "$0" && echo "{}"' "$PATTERN")"
+if [ -n "$HITS" ]; then
+  echo "REFUSED: these staged files contain a private name from 4_Docs/Private/Private_Names.txt:"
+  echo "$HITS" | sed 's/^/  /'
+  echo "Anonymise them (or keep them in 4_Docs/Private/), then commit again."
+  exit 1
+fi

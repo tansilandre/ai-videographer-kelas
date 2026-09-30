@@ -63,7 +63,7 @@ Mau lihat hasilnya? Tonton [animatic reel contoh](../2_Studi_Kasus/Tebak_Harga/C
 | `6_Kelas/2_Studi_Kasus/Tebak_Harga/` | gambar, audio, rencana edit (`Edit_Spec.json`), naskah narasi (`Narasi.txt`) dan animatic reel contoh |
 | `6_Kelas/3_Latihan/` | [brief latihan](../3_Latihan/Brief_Latihan_v1.2.md) dan [checklist per tahap](../3_Latihan/Checklist_Per_Tahap_v1.2.md) |
 | `6_Kelas/4_Deck/` | slide kelas (.pptx dan .pdf), urutannya sama dengan pelajaran |
-| `6_Kelas/5_WorkBuddy/` | [panduan WorkBuddy](../5_WorkBuddy/Panduan_WorkBuddy_v1.1.md) untuk memasang dan memakai agent workshop, dan run-sheet untuk fasilitator |
+| `6_Kelas/5_WorkBuddy/` | [panduan WorkBuddy](../5_WorkBuddy/Panduan_WorkBuddy_v1.2.md) untuk memasang dan memakai agent workshop, dan run-sheet untuk fasilitator |
 
 ## Cara memakai pelajaran
 

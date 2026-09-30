@@ -149,4 +149,4 @@ Hitungan di latihan kecil: 3 × 35 = 105 kredit di 1080p, 3 × 30 = 90 kredit di
 - Mulai dari satu klip pilot. Satu klik membayar tepat satu take; klip gagal atau diulang butuh klik baru.
 - Waktu habis? `vg resume`, jangan kirim ulang. Lalu tonton setiap klip.
 
-Berikutnya: [Pelajaran 12 · Edit Final dan Kirim](Pelajaran_12_Edit_Final_Dan_Kirim_v1.1.md)
+Berikutnya: [Pelajaran 12 · Edit Final dan Kirim](Pelajaran_12_Edit_Final_Dan_Kirim_v1.2.md)

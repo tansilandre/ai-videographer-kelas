@@ -12,7 +12,7 @@ python3 2_Tools/vg/vg.py doctor
 
 Lalu:
 
-1. Buka WorkBuddy di folder kelas (folder yang disebut di akhir setup), pilih Expert **AI Videographer** dan model **glm-5.3-flash**, lalu klik quick prompt **Buat video baru** (lihat [Panduan WorkBuddy](../5_WorkBuddy/Panduan_WorkBuddy_v1.1.md)).
+1. Buka WorkBuddy di folder kelas (folder yang disebut di akhir setup), pilih Expert **AI Videographer** dan model **glm-5.3-flash**, lalu klik quick prompt **Buat video baru** (lihat [Panduan WorkBuddy](../5_WorkBuddy/Panduan_WorkBuddy_v1.2.md)).
 2. Expert menanyakan lima hal dalam satu pesan: brand, apa yang dijual beserta lokasi dan harga mulainya, tiga alasan, ajakan di akhir video, dan foto asli. Jawab dari brief di bawah garis ini, misalnya:
 
    > 1. Griya Cerah, agen properti.

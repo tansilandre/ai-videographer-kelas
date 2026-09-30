@@ -40,7 +40,7 @@ Yang kamu butuhkan: laptop Windows (10 atau 11) atau Mac, akun [kie.ai](https://
 
 Lalu klik **Buat video baru**. Expert menanyakan lima hal tentang produkmu, bekerja sendiri, dan hanya berhenti di tiga gerbang: *Approve look*, *Approve reel*, dan *Approve* untuk satu klip pilot di bagian Video. Setelah setiap klik, bilang "sudah" di WorkBuddy.
 
-**Tanpa WorkBuddy (misalnya Claude Code):** pasang Xcode Command Line Tools, Homebrew, FFmpeg, Git, dan Python 3.9 atau lebih baru dengan mengikuti [Pelajaran 04 · Persiapan Alat](6_Kelas/1_Pelajaran/Pelajaran_04_Persiapan_Alat_v1.2.md), lalu jalankan di Terminal, satu baris sekali:
+**Tanpa WorkBuddy (misalnya Claude Code):** pasang Xcode Command Line Tools, Homebrew, FFmpeg, Git, dan Python 3.9 atau lebih baru dengan mengikuti [Pelajaran 04 · Persiapan Alat](6_Kelas/1_Pelajaran/Pelajaran_04_Persiapan_Alat_v1.3.md), lalu jalankan di Terminal, satu baris sekali:
 
 ```bash
 git clone https://github.com/tansilandre/ai-videographer-kelas.git

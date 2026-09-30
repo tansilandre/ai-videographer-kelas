@@ -11,14 +11,14 @@
 
 Semua pelajaran praktik berjalan di atas persiapan ini. Kalau satu alat hilang, pekerjaan macet di tengah jalan, sering di tahap edit, saat kamu sudah capek. Lebih baik semuanya beres sekarang. `vg doctor` yang memastikannya.
 
-Yang kamu butuhkan: sebuah Mac, internet, dan sedikit saldo di kie.ai dan OpenRouter. Kalau kamu memakai WorkBuddy, otak agent-nya (model glm-5.3-flash) sudah ada di dalam WorkBuddy dan memakai kredit WorkBuddy-mu, jadi tidak perlu akun lain. Kenapa Mac? *Renderer* (program penggambar) caption dan grafis di alat ini memakai Swift, bahasa pemrograman buatan Apple.
+Yang kamu butuhkan: laptop Windows (10 atau 11) atau Mac, internet, dan sedikit saldo di kie.ai dan OpenRouter. Kalau kamu memakai WorkBuddy, otak agent-nya (model glm-5.3-flash) sudah ada di dalam WorkBuddy dan memakai kredit WorkBuddy-mu, jadi tidak perlu akun lain. *Renderer* (program penggambar) caption dan grafis memakai Swift di Mac dan Python di Windows; setup memasang yang dibutuhkan.
 
 ## Dua jalan
 
 Pilih satu:
 
 - **WorkBuddy (workshop, paling mudah).** Baca Langkah 1, buat kunci di Langkah 5, lalu kerjakan Langkah 6. Di sana AI di WorkBuddy mengunduh folder kelas dan menjalankan `bash setup.sh`, yang mengerjakan Langkah 2, 3, 4 dan 7 untukmu. Langkah 8 menjelaskan halaman tempat kamu menempel kunci. Terakhir, Langkah 9.
-- **Claude Code, atau memasang sendiri.** Kerjakan Langkah 1 sampai 9 berurutan.
+- **Claude Code, atau memasang sendiri.** Kerjakan Langkah 1 sampai 9 berurutan. Langkah-langkah manual ini ditulis untuk Mac; di Windows, pakai jalur WorkBuddy, yang menjalankan `setup.ps1` untukmu (lihat [Panduan WorkBuddy](../5_WorkBuddy/Panduan_WorkBuddy_v1.2.md)).
 
 ## Langkah 1 · Kenalan dengan Terminal
 
@@ -98,7 +98,7 @@ Agent adalah AI yang nanti kamu ajak bicara (Pelajaran 02). Di workshop, agent k
 - **Expert AI Videographer**, uraian tugas agent kita. Ia dipasang dari folder kelas.
 - **glm-5.3-flash**, model yang cepat dan murah sebagai otaknya. Model ini sudah ada di WorkBuddy dan memakai kredit WorkBuddy-mu. Tidak perlu akun atau kunci lain.
 
-Pasangnya tiga langkah. Pesan yang kamu kirim ke AI-nya tertulis di [Panduan WorkBuddy](../5_WorkBuddy/Panduan_WorkBuddy_v1.1.md). Salin persis dari sana.
+Pasangnya tiga langkah. Pesan yang kamu kirim ke AI-nya tertulis di [Panduan WorkBuddy](../5_WorkBuddy/Panduan_WorkBuddy_v1.2.md). Salin persis dari sana.
 
 1. **Pasang WorkBuddy.** Unduh dari https://www.workbuddy.ai, pindahkan ke folder Applications, buka, lalu masuk dengan Google atau GitHub. Di pemilih model, pilih **glm-5.3-flash**.
 2. **Minta AI-nya memasang.** Di WorkBuddy, pilih folder kerja, misalnya folder baru `AI_Videographer` di Documents. Lalu kirim satu pesan dari Panduan. Pesan itu meminta AI-nya mengunduh folder kelas ke folder kerjamu dan menjalankan `bash setup.sh`. AI-nya bekerja sendiri. Kamu hanya perlu:

@@ -239,7 +239,7 @@ Di kelas ini, `vg <perintah>` adalah singkatan dari `python3 2_Tools/vg/vg.py <p
 | **Reference sheet** | Lihat **Lembar referensi**. | [Pelajaran 07][p07] |
 | **REFUSED** | Awal pesan saat alat vg menolak sebuah langkah, misalnya karena gerbangnya belum disetujui atau batas biaya terlewati. Penolakan terjadi sebelum ada kredit terpakai. | [Pelajaran 05][p05] |
 | **Render** | Punya dua arti. Pertama, gambar 3D arsitek yang terlalu mulus, yang kita hindari dengan *not a render*. Kedua, proses menyusun gambar dan suara menjadi file video, misalnya render animatic. | [Pelajaran 03][p03] |
-| **Renderer** | Program penggambar caption dan grafis di alat vg. Memakai Swift, karena itu kelas ini butuh Mac. | [Pelajaran 04][p04] |
+| **Renderer** | Program penggambar caption dan grafis di alat vg. Di Mac memakai Swift, di Windows memakai Python (Pillow). | [Pelajaran 04][p04] |
 | **Repo** | Folder proyek yang disimpan di GitHub. Repo kelas berisi alat dan kelasnya sekaligus. | [Pelajaran 00][p00] |
 | **Reveal** | Saat sesuatu dibuka atau diperlihatkan, misalnya jawaban harga. Shot seperti ini bisa butuh frame terakhir. | [Pelajaran 03][p03] |
 | **`room_reveal`** | Kategori shot: ruang asli dari foto klien. | [Pelajaran 06][p06] |
@@ -272,7 +272,7 @@ Di kelas ini, `vg <perintah>` adalah singkatan dari `python3 2_Tools/vg/vg.py <p
 | **Take** | Satu hasil dari satu kali pembuatan: gambar, suara, atau klip. Membuat ulang berarti take baru; untuk video, setiap take butuh persetujuan sendiri. | [Pelajaran 00][p00] |
 | **Tap** | Efek suara kecil saat judul atau callout muncul. | [Pelajaran 09][p09] |
 | **Teal-orange** | Olahan warna biru-oranye khas film. Dilarang di grade reel contoh. | [Pelajaran 07][p07] |
-| **Terminal** | Aplikasi Mac untuk memberi perintah dengan mengetik, bukan mengklik. Buka dengan Cmd + Spasi, ketik "Terminal", lalu Enter. | [Pelajaran 00][p00] |
+| **Terminal** | Aplikasi untuk memberi perintah dengan mengetik, bukan mengklik. Di Mac: Cmd + Spasi, ketik "Terminal", lalu Enter. Di Windows namanya PowerShell atau Terminal, ada di menu Start. | [Pelajaran 00][p00] |
 | **Tick** | Efek suara saat angka berjalan (counter). | [Pelajaran 09][p09] |
 | **Timeout** | Waktu tunggu habis sebelum hasil selesai. Ambil hasilnya dengan `vg resume`, jangan kirim ulang, supaya tidak membayar dua kali. | [Pelajaran 00][p00] |
 | **Title_Case_With_Underscores** | Pola nama file: huruf besar di awal kata, garis bawah pengganti spasi, tanpa karakter aneh. | [Pelajaran 05][p05] |
@@ -351,7 +351,7 @@ Kembali ke [daftar kelas](README.md).
 [p01]: 1_Pelajaran/Pelajaran_01_Apa_Itu_AI_v1.1.md
 [p02]: 1_Pelajaran/Pelajaran_02_Model_Dan_Agent_v1.1.md
 [p03]: 1_Pelajaran/Pelajaran_03_Cara_Berpikir_Dengan_AI_v1.1.md
-[p04]: 1_Pelajaran/Pelajaran_04_Persiapan_Alat_v1.2.md
+[p04]: 1_Pelajaran/Pelajaran_04_Persiapan_Alat_v1.3.md
 [p05]: 1_Pelajaran/Pelajaran_05_Cara_Kerja_Harness_v1.2.md
 [p06]: 1_Pelajaran/Pelajaran_06_Brief_Ke_Shot_List_v1.1.md
 [p07]: 1_Pelajaran/Pelajaran_07_Look_Dan_Review_v1.1.md
@@ -359,5 +359,5 @@ Kembali ke [daftar kelas](README.md).
 [p09]: 1_Pelajaran/Pelajaran_09_Audio_Dulu_v1.2.md
 [p10]: 1_Pelajaran/Pelajaran_10_Edit_Plan_Dan_Animatic_v1.1.md
 [p11]: 1_Pelajaran/Pelajaran_11_Video_Dan_Gerbang_Biaya_v1.1.md
-[p12]: 1_Pelajaran/Pelajaran_12_Edit_Final_Dan_Kirim_v1.1.md
+[p12]: 1_Pelajaran/Pelajaran_12_Edit_Final_Dan_Kirim_v1.2.md
 [p13]: 1_Pelajaran/Pelajaran_13_Kesalahan_Yang_Kami_Buat_v1.1.md

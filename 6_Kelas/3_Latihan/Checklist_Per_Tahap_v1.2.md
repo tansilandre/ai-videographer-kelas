@@ -12,7 +12,7 @@ Alurnya: **1** Brief dan shot list → **2** Look (Gerbang 1) → **3** Karakter
 
 ## Sebelum mulai · Persiapan
 
-Tiga langkah dari [Panduan WorkBuddy](../5_WorkBuddy/Panduan_WorkBuddy_v1.1.md), lalu doctor:
+Tiga langkah dari [Panduan WorkBuddy](../5_WorkBuddy/Panduan_WorkBuddy_v1.2.md), lalu doctor:
 
 - [ ] **1 · WorkBuddy terpasang.** Kamu masuk dengan Google atau GitHub, dan memilih model **glm-5.3-flash**. Model ini sudah ada di WorkBuddy: tidak perlu akun atau kunci lain.
 - [ ] **2 · AI-nya sudah memasang.** Kamu memilih folder kerja dan mengirim satu pesan dari Panduan. AI-nya mengunduh folder kelas dan menjalankan `bash setup.sh` sampai selesai. Kamu hanya mengklik izinkan, mengklik Install di jendela Apple, atau menempel satu baris Homebrew di Terminal kalau diminta.
@@ -25,7 +25,7 @@ Tiga langkah dari [Panduan WorkBuddy](../5_WorkBuddy/Panduan_WorkBuddy_v1.1.md),
 python3 2_Tools/vg/vg.py doctor
 ```
 
-Memakai Claude Code? Ganti langkah 1–3 dengan Langkah 1–8 di [Pelajaran 04](../1_Pelajaran/Pelajaran_04_Persiapan_Alat_v1.2.md): pasang alatnya sendiri, jalankan `bash install.sh`, lalu tempel kunci di halaman setup (`python3 2_Tools/vg/vg.py setup`) atau isi `.env` sendiri.
+Memakai Claude Code? Ganti langkah 1–3 dengan Langkah 1–8 di [Pelajaran 04](../1_Pelajaran/Pelajaran_04_Persiapan_Alat_v1.3.md): pasang alatnya sendiri, jalankan `bash install.sh`, lalu tempel kunci di halaman setup (`python3 2_Tools/vg/vg.py setup`) atau isi `.env` sendiri.
 
 ---
 

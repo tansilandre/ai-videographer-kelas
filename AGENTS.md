@@ -48,6 +48,17 @@ full path is run every time. Most commands take `-p P` for the project folder, e
 (the command to run, the file to write, or what to ask the human): follow it when unsure. Reference:
 `1_Skills/vg-director/references/cli.md`. Run `vg doctor` if anything looks wrong.
 
+## One source of truth
+
+This folder **is** the public GitHub repo https://github.com/tansilandre/ai-videographer-kelas. There is no
+other copy: the harness, skills, WorkBuddy expert, setup scripts and every class material live here
+(`6_Kelas/`: lessons, handouts, deck and its builder in `6_Kelas/4_Deck/Build/`, run-sheet) and are pushed
+there. Private work stays in this folder but git ignores it: `5_Projects/`, `99_Output/`, `0_Source/`,
+`4_Docs/Private/` (client-named originals and plans) and `.env`. The real client's name must never be
+committed; the pre-commit hook refuses it (enable once per clone: `git config core.hooksPath 2_Tools/git_hooks`).
+Class material goes into `6_Kelas/`, never into `99_Output/` or a second folder; keep only the newest
+version of a class file there (git keeps the old ones).
+
 ## Workspace convention
 
 - Folders are numbered by stage; `0_Source/` holds untouched inputs, `99_Output/` final deliverables.

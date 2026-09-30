@@ -19,3 +19,8 @@ __pycache__/
 
 # compiled renderer
 2_Tools/vg/render/.build/
+
+# private: stays in this folder, never goes to GitHub
+/0_Source/
+4_Docs/Private/
+6_Kelas/4_Deck/Build/Draft_*
