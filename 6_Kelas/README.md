@@ -130,11 +130,10 @@ Semua materi workshop ada di folder ini, dan hanya di sini:
 
 | Materi | Untuk siapa | Isinya |
 |---|---|---|
-| [Pegangan Workshop](5_WorkBuddy/Pegangan_Workshop_v1.0.html) | peserta | PR sebelum workshop, Sesi 1 memasang, Sesi 2 reel pertama, kalau macet. Unduh lalu buka di browser |
-| [Pegangan AI Video Agent](5_WorkBuddy/Pegangan_AI_Video_Agent_v1.1.html) | peserta | cara kerja agent video AI, dengan gambar. Unduh lalu buka di browser |
-| [Panduan WorkBuddy](5_WorkBuddy/Panduan_WorkBuddy_v1.2.md) | peserta | versi teks dari Pegangan Workshop: pasang dalam tiga langkah, di Windows atau Mac |
+| [Pegangan AI Videographer](5_WorkBuddy/Pegangan_AI_Videographer_v1.0.html) | peserta | satu pegangan: paham dulu (tiga level AI, kie.ai dan OpenRouter), PR, Sesi 1 memasang, Sesi 2 reel pertama, kalau macet, kamus. Unduh lalu buka di browser |
+| [Panduan WorkBuddy](5_WorkBuddy/Panduan_WorkBuddy_v1.2.md) | peserta | versi teks dari bagian memasang dan membuat reel, di Windows atau Mac |
 | [Deck](4_Deck/Kelas_AI_Videographer_Deck_v1.6.pdf) | layar besar | slide kelas ([PowerPoint](4_Deck/Kelas_AI_Videographer_Deck_v1.6.pptx)) |
-| [Runsheet Workshop](5_WorkBuddy/Runsheet_Workshop_v1.3.md) | fasilitator | persiapan, susunan dua sesi, kalimat di tiap gerbang, rencana B |
+| [Runsheet Workshop](5_WorkBuddy/Runsheet_Workshop_v1.4.md) | fasilitator | persiapan, susunan dua sesi, kalimat di tiap gerbang, rencana B |
 | [Naskah Pembuka](5_WorkBuddy/Naskah_Pembuka_v1.0.md) | fasilitator | icebreaker "Tebak: AI atau Asli?" dan cerita 2023, 3 sampai 4 menit |
 
 ## Deck

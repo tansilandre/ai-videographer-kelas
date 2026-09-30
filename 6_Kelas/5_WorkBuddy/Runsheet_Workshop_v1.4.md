@@ -7,17 +7,16 @@ Untuk fasilitator. Peserta memakai laptop mereka sendiri (kebanyakan Windows, Ma
 | Materi | File | Untuk |
 |---|---|---|
 | Deck | `4_Deck/Kelas_AI_Videographer_Deck_v1.6.pptx` (+ `.pdf`) | layar besar |
-| Pegangan workshop | `5_WorkBuddy/Pegangan_Workshop_v1.0.html` | dibagikan ke peserta |
-| Pegangan AI Video Agent | `5_WorkBuddy/Pegangan_AI_Video_Agent_v1.1.html` | dibagikan ke peserta |
+| Pegangan AI Videographer | `5_WorkBuddy/Pegangan_AI_Videographer_v1.0.html` | dibagikan ke peserta: paham dulu, PR, Sesi 1, Sesi 2, kalau macet, kamus |
 | Panduan WorkBuddy | `5_WorkBuddy/Panduan_WorkBuddy_v1.2.md` | versi teks dari pegangan workshop |
 | Naskah pembuka | `5_WorkBuddy/Naskah_Pembuka_v1.0.md` | fasilitator: icebreaker "Tebak: AI atau Asli?" |
 | Repo | https://github.com/tansilandre/ai-videographer-kelas | yang diunduh AI di laptop peserta |
 
-Bagikan dua file pegangan HTML lewat grup chat atau Drive. Peserta membukanya di browser.
+Bagikan satu file, Pegangan AI Videographer, lewat grup chat atau Drive (peserta membukanya di browser), atau link halaman claude.ai-nya setelah kamu membagikannya.
 
 ## Seminggu sebelumnya: PR peserta
 
-Kirim ke peserta, bersama dua pegangan:
+Kirim ke peserta, bersama Pegangan AI Videographer:
 
 1. Daftar WorkBuddy lewat link undangan: https://workbuddy.ai/invite?code=ULLL7X4E
 2. Buat akun kie.ai, isi saldo, buat kunci khusus kelas dengan batas kredit.
